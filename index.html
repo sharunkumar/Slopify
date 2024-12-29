@@ -1,367 +1,472 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Slopify</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            margin: 0;
-            padding: 0;
-            background-color: #282828;
-            color: #ebdbb2;
-        }
-        header {
-            background: #3c3836;
-            color: #ebdbb2;
-            padding: 20px 0;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-        header h1 {
-            margin: 0;
-            font-size: 2.5rem;
-        }
-        main {
-            padding: 20px;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        footer {
-            text-align: center;
-            padding: 10px 0;
-            background: #3c3836;
-            color: #ebdbb2;
-            margin-top: 20px;
-        }
-        a {
-            color: #b8bb26;
-            text-decoration: underline;
-        }
-        a:hover {
-            color: #83a598
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Slopify</title>
 
-        .importante {
-            display: inline-flex;
-        }
+  <!-- Existing inline CSS for Slopify layout -->
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      margin: 0;
+      padding: 0;
+      background-color: #282828;
+      color: #ebdbb2;
+    }
+    header {
+      background: #3c3836;
+      color: #ebdbb2;
+      padding: 20px 0;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 2.5rem;
+    }
+    main {
+      padding: 20px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    footer {
+      text-align: center;
+      padding: 10px 0;
+      background: #3c3836;
+      color: #ebdbb2;
+      margin-top: 20px;
+    }
+    a {
+      color: #b8bb26;
+      text-decoration: underline;
+    }
+    a:hover {
+      color: #83a598;
+    }
+    .importante {
+      display: inline-flex;
+    }
+    .fishtank-container {
+      position: relative;
+      width: 100%;
+      height: 400px;
+      margin: 20px 0;
+      overflow: hidden;
+      background: rgba(40, 40, 40, 0.5);
+      border-radius: 8px;
+    }
+    .fishtank-canvas {
+      width: 100%;
+      height: 100%;
+      cursor: crosshair;
+    }
+    @media (max-width: 768px) {
+      .fishtank-container {
+        height: 300px;
+      }
+    }
+    @media (max-width: 480px) {
+      .fishtank-container {
+        height: 250px;
+      }
+    }
+    .fishtank-placeholder {
+      position: absolute;
+      inset: 0;
+      background: #3c3836;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.3s ease-out;
+    }
+    #frog {
+      width: 400px;
+      margin: 10px;
+    }
+    #stock_img {
+      width: 400px;
+      height: 400px;
+    }
 
-        .fishtank-container {
-            position: relative;
-            width: 100%;
-            height: 400px;
-            margin: 20px 0;
-            overflow: hidden;
-            background: rgba(40, 40, 40, 0.5);
-            border-radius: 8px;
-        }
+    /* INLINE STYLES FOR THE STATIC MAP + AUTO-SUGGEST */
+    .map-container {
+      /* Adjust width/height to your actual world_map.png size */
+      position: relative;
+      width: 800px;
+      height: 403px;
+      margin: 20px auto;
+      /* Path to your static map image. If not correct, adjust the path below. */
+      background: url("static/images/world_map.png") no-repeat center center;
+      background-size: cover;
+      border: 2px solid #3c3836;
+      border-radius: 8px;
+    }
+    #mapOverlay {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+    /* Suggestion input + list */
+    #cityInput {
+      width: 300px;
+      padding: 8px;
+      margin: 6px 0;
+      border: 1px solid #3c3836;
+      border-radius: 4px;
+      background-color: #3c3836;
+      color: #ebdbb2;
+    }
+    #suggestions {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      max-width: 300px;
+      background-color: #3c3836;
+      border: 1px solid #3c3836;
+      border-radius: 4px;
+    }
+    #suggestions li {
+      padding: 6px 8px;
+      cursor: pointer;
+      border-bottom: 1px solid #282828;
+    }
+    #suggestions li:hover {
+      background-color: #504945;
+    }
+    /* Red dot markers on the map */
+    .city-marker {
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      background-color: red;
+      border-radius: 50%;
+      border: 2px solid #fff;
+      transform: translate(-50%, -50%);
+      cursor: pointer;
+    }
+  </style>
 
-        .fishtank-canvas {
-            width: 100%;
-            height: 100%;
-            cursor: crosshair;
-        }
-
-        @media (max-width: 768px) {
-            .fishtank-container {
-                height: 300px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .fishtank-container {
-                height: 250px;
-            }
-        }
-
-        /* Optional loading placeholder */
-        .fishtank-placeholder {
-            position: absolute;
-            inset: 0;
-            background: #3c3836;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: opacity 0.3s ease-out;
-         }
-        #frog {
-            width: 400px;
-            margin: 10px;
-        }
-        #stock_img {
-            width: 400px;
-            height: 400px;
-        }
-    </style>
-    <audio id="vibeAudio">
-        <source src="https://cdn.pixabay.com/download/audio/2024/10/22/audio_5b87be5f9b.mp3?filename=smooth-jazz-saxophone-solo-with-a-lofi-vibe-253950.mp3" type="audio/mp3">
-        Your browser does not support the audio element.
-    </audio>
-    <script type="module" src="static/js/index.js"></script>
+  <audio id="vibeAudio">
+    <source src="https://cdn.pixabay.com/download/audio/2024/10/22/audio_5b87be5f9b.mp3?filename=smooth-jazz-saxophone-solo-with-a-lofi-vibe-253950.mp3" type="audio/mp3">
+    Your browser does not support the audio element.
+  </audio>
+  <script type="module" src="static/js/index.js"></script>
 </head>
+
 <body>
-    <header>
-        <h1>Slopify</h1>
-        <p><em>"The <a href="https://www.newmanmentalism.com/blog/a-mentalist-explains-how-ouija-boards-work-and-the-ideomotor-effect" target="_blank">ideomotor effect</a> of software"</em></p>
-        <image id="frog" src="static/images/frog.webp"></image>
-        <button id="vibeButton">Improve the Mood</button>
-    </header>
-    <main>
-        <section>
-            <h2>About Slopify</h2>
-            <p>Slopify is a 100% community-built open-source website and product. Its unique premise invites contributors to:</p>
-            <ul>
-                <li>Commit whatever code they want</li>
-                <li>Add whatever features they desire</li>
-                <li>Write in whatever language they prefer</li>
-            </ul>
-            <p>The only rules? Everything must work together and remain legal.</p>
-        </section>
-        <section class="importante">
-            <section>
-                <canvas id="glCanvas" width="400" height="400"></canvas>
-                <script>
-                    const canvas = document.getElementById('glCanvas');
-                    const gl = canvas.getContext('webgl2');
-        
-                    if (!gl) {
-                        console.error('WebGL2 not supported');
-                        throw new Error('WebGL2 not supported');
-                    }
-        
-                    const vertexShader = gl.createShader(gl.VERTEX_SHADER);
-                    gl.shaderSource(vertexShader, `#version 300 es
-                    in vec4 position;
-                    in vec4 color;
-                    out vec4 vColor;
-                    uniform mat4 mvp;
-        
-                    void main() {
-                        vColor = color;
-                        gl_Position = mvp * position;
-                    }`);
-                    gl.compileShader(vertexShader);
-        
-                    const fragmentShader = gl.createShader(gl.FRAGMENT_SHADER);
-                    gl.shaderSource(fragmentShader, `#version 300 es
-                    precision mediump float;
-                    in vec4 vColor;
-                    out vec4 fragColor;
-        
-                    void main() {
-                        fragColor = vColor;
-                    }`);
-                    gl.compileShader(fragmentShader);
-        
-                    const program = gl.createProgram();
-                    gl.attachShader(program, vertexShader);
-                    gl.attachShader(program, fragmentShader);
-                    gl.linkProgram(program);
-                    gl.useProgram(program);
-        
-                    const positions = new Float32Array([
-                        // Front
-                        -0.5, -0.5,  0.5,
-                        0.5, -0.5,  0.5,
-                        0.5,  0.5,  0.5,
-                        -0.5,  0.5,  0.5,
-                        // Back
-                        -0.5, -0.5, -0.5,
-                        0.5, -0.5, -0.5,
-                        0.5,  0.5, -0.5,
-                        -0.5,  0.5, -0.5,
-                    ]);
-        
-                    const colors = new Float32Array([
-                        // Front - red
-                        1.0, 0.0, 0.0, 1.0,
-                        1.0, 0.0, 0.0, 1.0,
-                        1.0, 0.0, 0.0, 1.0,
-                        1.0, 0.0, 0.0, 1.0,
-                        // Back - green
-                        0.0, 1.0, 0.0, 1.0,
-                        0.0, 1.0, 0.0, 1.0,
-                        0.0, 1.0, 0.0, 1.0,
-                        0.0, 1.0, 0.0, 1.0,
-                    ]);
-        
-                    const indices = new Uint16Array([
-                        // Front
-                        0, 1, 2, 0, 2, 3,
-                        // Back
-                        4, 5, 6, 4, 6, 7,
-                        // Top
-                        3, 2, 6, 3, 6, 7,
-                        // Bottom
-                        0, 1, 5, 0, 5, 4,
-                        // Right
-                        1, 2, 6, 1, 6, 5,
-                        // Left
-                        0, 3, 7, 0, 7, 4
-                    ]);
-        
-                    const positionBuffer = gl.createBuffer();
-                    gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
-                    gl.bufferData(gl.ARRAY_BUFFER, positions, gl.STATIC_DRAW);
-        
-                    const colorBuffer = gl.createBuffer();
-                    gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer);
-                    gl.bufferData(gl.ARRAY_BUFFER, colors, gl.STATIC_DRAW);
-        
-                    const indexBuffer = gl.createBuffer();
-                    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, indexBuffer);
-                    gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, indices, gl.STATIC_DRAW);
-        
-                    const vao = gl.createVertexArray();
-                    gl.bindVertexArray(vao);
-        
-                    const positionLoc = gl.getAttribLocation(program, 'position');
-                    gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
-                    gl.enableVertexAttribArray(positionLoc);
-                    gl.vertexAttribPointer(positionLoc, 3, gl.FLOAT, false, 0, 0);
-        
-                    const colorLoc = gl.getAttribLocation(program, 'color');
-                    gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer);
-                    gl.enableVertexAttribArray(colorLoc);
-                    gl.vertexAttribPointer(colorLoc, 4, gl.FLOAT, false, 0, 0);
-        
-                    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, indexBuffer);
-        
-                    gl.enable(gl.DEPTH_TEST);
-                    gl.viewport(0, 0, canvas.width, canvas.height);
-        
-                    const mvpLoc = gl.getUniformLocation(program, 'mvp');
-                    let rotation = 0;
-        
-                    function render() {
-                        rotation += 0.01;
-        
-                        const aspect = canvas.width / canvas.height;
-                        const projectionMatrix = mat4.create();
-                        mat4.perspective(projectionMatrix, Math.PI/4, aspect, 0.1, 100.0);
-        
-                        const modelViewMatrix = mat4.create();
-                        mat4.translate(modelViewMatrix, modelViewMatrix, [0, 0, -4]);
-                        mat4.rotateY(modelViewMatrix, modelViewMatrix, rotation);
-                        mat4.rotateX(modelViewMatrix, modelViewMatrix, rotation * 0.5);
-        
-                        const mvpMatrix = mat4.create();
-                        mat4.multiply(mvpMatrix, projectionMatrix, modelViewMatrix);
-        
-                        gl.uniformMatrix4fv(mvpLoc, false, mvpMatrix);
-        
-                        gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-                        gl.drawElements(gl.TRIANGLES, indices.length, gl.UNSIGNED_SHORT, 0);
-        
-                        requestAnimationFrame(render);
-                    }
-        
-                    // Include gl-matrix library for matrix operations
-                    const script = document.createElement('script');
-                    script.src = 'https://cdnjs.cloudflare.com/ajax/libs/gl-matrix/2.8.1/gl-matrix-min.js';
-                    script.onload = () => {
-                        gl.clearColor(0.0, 0.0, 0.0, 1.0);
-                        render();
-                    };
-                    document.head.appendChild(script);
-                </script>
-            </section>
-            <section>
-                <a href="https://ja.wikipedia.org/wiki/%E3%83%95%E3%83%BC%E3%83%AA%E3%82%A8%E5%A4%89%E6%8F%9B">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/2/2b/Fourier_series_and_transform.gif">
-                </a>
-            </section>
-        </section>
-        <section class="fishtank-container">
-            <div class="fishtank-placeholder">
-                <div class="loading-spinner">Loading...</div>
-            </div>
-            <canvas id="main-fishtank" class="fishtank-canvas"></canvas>
-        </section>
-        <section>
-            <h2>Stockify</h2>
-            <p>Throw your money to the wind with random stock decisions!</p>
-            <p><span id="stock_ticker" style="color:yellow;"></span><span id="stock_msg"></span></p>
-            <img src="" id="stock_img">
-        </section>
-    
-    </main>
-    <footer>
-        <div style="text-align:center; margin-top: 20px;">
-            <img src="static/images/aol-sucks.gif" alt="Banner 1" width="88" height="31">
-            <img src="static/images/bestview.gif" alt="Banner 2" width="88" height="31">
-            <img src="static/images/w95link.gif" alt="Banner 3" width="88" height="31">
-            <img src="static/images/800x600.gif" alt="Banner 3" width="88" height="31">
-        </div>
-        <p>&copy; 2024 DishpitDev. <a href="https://github.com/dishpitdev/slopify">Built by the community</a>, for the community.</p>
-    </footer>
-    <script src="fishtank.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const container = document.querySelector('.fishtank-container');
-            
-            function initFishtank() {
-                const projectTank = new FishTank('main-fishtank', {
-                    fishCount: 8,
-                    minSpeed: 0.3,
-                    maxSpeed: 1.5,
-                    buffer: 50,
-                });
-                projectTank.initialize();
+  <header>
+    <h1>Slopify</h1>
+    <p>
+      <em>"The
+        <a href="https://www.newmanmentalism.com/blog/a-mentalist-explains-how-ouija-boards-work-and-the-ideomotor-effect"
+           target="_blank">
+           ideomotor effect
+        </a>
+        of software"
+      </em>
+    </p>
+    <img id="frog" src="static/images/frog.webp" alt="Frog">
+    <button id="vibeButton">Improve the Mood</button>
+  </header>
 
-                // Remove placeholder after initialization
-                const placeholder = container.querySelector('.fishtank-placeholder');
-                if (placeholder) {
-                    placeholder.style.opacity = '0';
-                    setTimeout(() => placeholder.remove(), 300);
-                }
-            }
+  <main>
+    <!-- About Slopify -->
+    <section>
+      <h2>About Slopify</h2>
+      <p>Slopify is a 100% community-built open-source website and product. Its unique premise invites contributors to:</p>
+      <ul>
+        <li>Commit whatever code they want</li>
+        <li>Add whatever features they desire</li>
+        <li>Write in whatever language they prefer</li>
+      </ul>
+      <p>The only rules? Everything must work together and remain legal.</p>
+    </section>
 
-            initFishtank();
+    <!-- WebGL Cube + Fourier image side by side -->
+    <section class="importante">
+      <section>
+        <canvas id="glCanvas" width="400" height="400"></canvas>
+        <script>
+          const canvas = document.getElementById('glCanvas');
+          const gl = canvas.getContext('webgl2');
 
-            // Handle window resize
-            window.addEventListener('resize', () => {
-                const width = container.clientWidth;
-                const canvas = document.getElementById('main-fishtank');
-                canvas.width = width;
-                canvas.height = width < 480 ? 250 : width < 768 ? 300 : 400;
-            });
+          if (!gl) {
+            console.error('WebGL2 not supported');
+            throw new Error('WebGL2 not supported');
+          }
+
+          const vertexShader = gl.createShader(gl.VERTEX_SHADER);
+          gl.shaderSource(vertexShader, `#version 300 es
+          in vec4 position;
+          in vec4 color;
+          out vec4 vColor;
+          uniform mat4 mvp;
+
+          void main() {
+            vColor = color;
+            gl_Position = mvp * position;
+          }`);
+          gl.compileShader(vertexShader);
+
+          const fragmentShader = gl.createShader(gl.FRAGMENT_SHADER);
+          gl.shaderSource(fragmentShader, `#version 300 es
+          precision mediump float;
+          in vec4 vColor;
+          out vec4 fragColor;
+
+          void main() {
+            fragColor = vColor;
+          }`);
+          gl.compileShader(fragmentShader);
+
+          const program = gl.createProgram();
+          gl.attachShader(program, vertexShader);
+          gl.attachShader(program, fragmentShader);
+          gl.linkProgram(program);
+          gl.useProgram(program);
+
+          const positions = new Float32Array([
+              // Front
+              -0.5, -0.5,  0.5,
+               0.5, -0.5,  0.5,
+               0.5,  0.5,  0.5,
+              -0.5,  0.5,  0.5,
+              // Back
+              -0.5, -0.5, -0.5,
+               0.5, -0.5, -0.5,
+               0.5,  0.5, -0.5,
+              -0.5,  0.5, -0.5,
+          ]);
+
+          const colors = new Float32Array([
+              // Front - red
+              1.0, 0.0, 0.0, 1.0,
+              1.0, 0.0, 0.0, 1.0,
+              1.0, 0.0, 0.0, 1.0,
+              1.0, 0.0, 0.0, 1.0,
+              // Back - green
+              0.0, 1.0, 0.0, 1.0,
+              0.0, 1.0, 0.0, 1.0,
+              0.0, 1.0, 0.0, 1.0,
+              0.0, 1.0, 0.0, 1.0,
+          ]);
+
+          const indices = new Uint16Array([
+              // Front
+              0, 1, 2, 0, 2, 3,
+              // Back
+              4, 5, 6, 4, 6, 7,
+              // Top
+              3, 2, 6, 3, 6, 7,
+              // Bottom
+              0, 1, 5, 0, 5, 4,
+              // Right
+              1, 2, 6, 1, 6, 5,
+              // Left
+              0, 3, 7, 0, 7, 4
+          ]);
+
+          const positionBuffer = gl.createBuffer();
+          gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+          gl.bufferData(gl.ARRAY_BUFFER, positions, gl.STATIC_DRAW);
+
+          const colorBuffer = gl.createBuffer();
+          gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer);
+          gl.bufferData(gl.ARRAY_BUFFER, colors, gl.STATIC_DRAW);
+
+          const indexBuffer = gl.createBuffer();
+          gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, indexBuffer);
+          gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, indices, gl.STATIC_DRAW);
+
+          const vao = gl.createVertexArray();
+          gl.bindVertexArray(vao);
+
+          const positionLoc = gl.getAttribLocation(program, 'position');
+          gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+          gl.enableVertexAttribArray(positionLoc);
+          gl.vertexAttribPointer(positionLoc, 3, gl.FLOAT, false, 0, 0);
+
+          const colorLoc = gl.getAttribLocation(program, 'color');
+          gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer);
+          gl.enableVertexAttribArray(colorLoc);
+          gl.vertexAttribPointer(colorLoc, 4, gl.FLOAT, false, 0, 0);
+
+          gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, indexBuffer);
+          gl.enable(gl.DEPTH_TEST);
+          gl.viewport(0, 0, canvas.width, canvas.height);
+
+          const mvpLoc = gl.getUniformLocation(program, 'mvp');
+          let rotation = 0;
+
+          function render() {
+            rotation += 0.01;
+
+            const aspect = canvas.width / canvas.height;
+            const projectionMatrix = mat4.create();
+            mat4.perspective(projectionMatrix, Math.PI/4, aspect, 0.1, 100.0);
+
+            const modelViewMatrix = mat4.create();
+            mat4.translate(modelViewMatrix, modelViewMatrix, [0, 0, -4]);
+            mat4.rotateY(modelViewMatrix, modelViewMatrix, rotation);
+            mat4.rotateX(modelViewMatrix, modelViewMatrix, rotation * 0.5);
+
+            const mvpMatrix = mat4.create();
+            mat4.multiply(mvpMatrix, projectionMatrix, modelViewMatrix);
+
+            gl.uniformMatrix4fv(mvpLoc, false, mvpMatrix);
+
+            gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+            gl.drawElements(gl.TRIANGLES, indices.length, gl.UNSIGNED_SHORT, 0);
+
+            requestAnimationFrame(render);
+          }
+
+          // Load gl-matrix for mat4
+          const script = document.createElement('script');
+          script.src = 'https://cdnjs.cloudflare.com/ajax/libs/gl-matrix/2.8.1/gl-matrix-min.js';
+          script.onload = () => {
+            gl.clearColor(0.0, 0.0, 0.0, 1.0);
+            render();
+          };
+          document.head.appendChild(script);
+        </script>
+      </section>
+
+      <!-- Fourier image or any other content -->
+      <section>
+        <a href="https://ja.wikipedia.org/wiki/%E3%83%95%E3%83%BC%E3%83%AA%E3%82%A8%E5%A4%89%E6%8F%9B" target="_blank">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/2/2b/Fourier_series_and_transform.gif"
+               alt="Fourier transform animation">
+        </a>
+      </section>
+    </section>
+
+    <!-- Auto-Suggest & Static Map Section -->
+    <section>
+      <h2>Where Are You?</h2>
+      <p>Start typing a city name to see suggestions, then pick one to place a marker on the map.</p>
+
+      <label for="cityInput">City:</label>
+      <input
+        type="text"
+        id="cityInput"
+        placeholder="Type a city..."
+        autocomplete="off"
+      />
+      <ul id="suggestions"></ul>
+
+      <!-- The static map container (inline CSS above includes background) -->
+      <div class="map-container">
+        <div id="mapOverlay"></div>
+      </div>
+    </section>
+
+    <!-- Fishtank Section -->
+    <section class="fishtank-container">
+      <div class="fishtank-placeholder">
+        <div class="loading-spinner">Loading...</div>
+      </div>
+      <canvas id="main-fishtank" class="fishtank-canvas"></canvas>
+    </section>
+
+    <!-- Stockify Section -->
+    <section>
+      <h2>Stockify</h2>
+      <p>Throw your money to the wind with random stock decisions!</p>
+      <p>
+        <span id="stock_ticker" style="color:yellow;"></span>
+        <span id="stock_msg"></span>
+      </p>
+      <img src="" id="stock_img" alt="Stock image">
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div style="text-align:center; margin-top: 20px;">
+      <img src="static/images/aol-sucks.gif" alt="Banner 1" width="88" height="31">
+      <img src="static/images/bestview.gif" alt="Banner 2" width="88" height="31">
+      <img src="static/images/w95link.gif" alt="Banner 3" width="88" height="31">
+      <img src="static/images/800x600.gif" alt="Banner 4" width="88" height="31">
+    </div>
+    <p>
+      &copy; 2024 DishpitDev.
+      <a href="https://github.com/dishpitdev/slopify">Built by the community</a>, for the community.
+    </p>
+  </footer>
+
+  <!-- Existing scripts -->
+  <script src="fishtank.js"></script>
+  <script>
+    // Fishtank initialization
+    document.addEventListener('DOMContentLoaded', function() {
+      const container = document.querySelector('.fishtank-container');
+
+      function initFishtank() {
+        const projectTank = new FishTank('main-fishtank', {
+          fishCount: 8,
+          minSpeed: 0.3,
+          maxSpeed: 1.5,
+          buffer: 50,
         });
-    </script>
+        projectTank.initialize();
 
-    <script type="text/javascript">
-        var stock_url = "https://raw.githubusercontent.com/rreichel3/US-Stock-Symbols/main/all/all_tickers.txt";
-        var stock_list;
-        var ticker;
-        var buy = Math.random() < 0.5;
-
-        fetch(stock_url).then(function(resp) {
-            resp.text().then(function(text) {
-                stock_list = text.split("\n");
-                stock_list.pop();
-                ticker = stock_list[Math.floor(Math.random() * stock_list.length)];
-                done();
-            });
-        });
-
-        function done() {
-            var msg = "";
-            if (buy) {
-                msg = " to the moon! BUY BUY BUY";
-                document.getElementById("stock_img").src = "static/images/wojak_stock_up.webp";
-            } else {
-                msg = " down the toilet! SELL SELL SELL";
-                document.getElementById("stock_img").src = "static/images/wojak_stock_down.gif";
-            }
-            document.getElementById("stock_ticker").textContent = ticker;
-            document.getElementById("stock_msg").textContent = msg;
+        // Remove placeholder after initialization
+        const placeholder = container.querySelector('.fishtank-placeholder');
+        if (placeholder) {
+          placeholder.style.opacity = '0';
+          setTimeout(() => placeholder.remove(), 300);
         }
+      }
 
-    </script>
+      initFishtank();
+
+      // Handle window resize
+      window.addEventListener('resize', () => {
+        const width = container.clientWidth;
+        const canvas = document.getElementById('main-fishtank');
+        canvas.width = width;
+        canvas.height = width < 480 ? 250 : width < 768 ? 300 : 400;
+      });
+    });
+  </script>
+
+  <script type="text/javascript">
+    // Stockify random pick
+    var stock_url = "https://raw.githubusercontent.com/rreichel3/US-Stock-Symbols/main/all/all_tickers.txt";
+    var stock_list;
+    var ticker;
+    var buy = Math.random() < 0.5;
+
+    fetch(stock_url).then(function(resp) {
+      resp.text().then(function(text) {
+        stock_list = text.split("\n");
+        stock_list.pop();
+        ticker = stock_list[Math.floor(Math.random() * stock_list.length)];
+        done();
+      });
+    });
+
+    function done() {
+      var msg = "";
+      if (buy) {
+        msg = " to the moon! BUY BUY BUY";
+        document.getElementById("stock_img").src = "static/images/wojak_stock_up.webp";
+      } else {
+        msg = " down the toilet! SELL SELL SELL";
+        document.getElementById("stock_img").src = "static/images/wojak_stock_down.gif";
+      }
+      document.getElementById("stock_ticker").textContent = ticker;
+      document.getElementById("stock_msg").textContent = msg;
+    }
+  </script>
+
+  <!-- Local auto-suggest + map logic (world_map.js) -->
+  <script src="scripts/world_map.js"></script>
 </body>
 </html>
