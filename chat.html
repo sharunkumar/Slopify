@@ -61,11 +61,10 @@
             align-items: center;
         }
 
-        .username {
-            font-weight: bold;
-            margin-right: 5px;
-            position: relative;
-        }
+      .username:after {
+          content: ": "; 
+          margin-right: 6px; /* forgot that the space wouldn't render lol */
+      }
 
         .username:after {
             content: ": ";
