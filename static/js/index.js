@@ -1,6 +1,7 @@
 const frog = document.getElementById('frog');
 const moreVibeAudio = document.getElementById('moreVibeAudio');
 const vibeAudio = document.getElementById('vibeAudio');
+let allQuotes = [];
 
 function vibe() {
     moreVibeAudio.pause(); moreVibeAudio.currentTime = 0;
@@ -38,26 +39,33 @@ function enableQuotes() {
     alert("Your browser does not support the wisdom of the frog.");
     return;
   }
-
   fetch("static/js/quotes.json")
     .then((response) => response.json())
     .then((data) => {
-      function readRandomQuote() {
-        const randomQuote = data[Math.floor(Math.random() * data.length)];
-        readQuote(randomQuote);
-        const randomTime = Math.floor(Math.random() * 25000) + 10000; // 10-35 seconds
-        setTimeout(readRandomQuote, randomTime);
+      allQuotes = data.quotes || [];
+      if (allQuotes.length > 0) {
+        readQuote();
+      } else {
+        alert("The frog has no wisdom to share.");
       }
-      readRandomQuote();
+    })
+    .catch((error) => {
+      console.error("Error fetching quotes:", error);
+      alert("Failed to load quotes.");
     });
 }
 
-function readQuote(theQuote) {
+function readQuote() {
+  if (allQuotes.length === 0) return;
+  let currentQuote = allQuotes[Math.floor(Math.random() * allQuotes.length)];
   var msg = new SpeechSynthesisUtterance();
-  msg.text = theQuote;
+  msg.text = currentQuote;
   msg.rate = 0.3;
   msg.pitch = 0.1;
+  vibeAudio.volume = 0.3;
   window.speechSynthesis.speak(msg);
+  vibeAudio.volume = 1;
+  setTimeout(readQuote, 10000);
 }
 
 document.getElementById("wisdomButton").addEventListener("click", enableQuotes);
