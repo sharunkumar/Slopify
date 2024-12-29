@@ -22,7 +22,7 @@
             overflow: hidden;
             background-color: var(--bg-primary);
             color: var(--text-primary);
-            font-family: 'Courier New', monospace;
+            font-family: monospace;
         }
 
         #chatContainer {
@@ -63,6 +63,7 @@
 
         .username {
             font-weight: bold;
+            margin-right: 5px;
             position: relative;
         }
 
@@ -86,8 +87,13 @@
             font-family: 'Courier New', monospace;
         }
 
-        button:hover {
+        button {
+            color: var(--text-primary);
             background-color: var(--border-color);
+        }
+
+        button:hover {
+            border-color: var(--border-color);
         }
 
         #controls {
