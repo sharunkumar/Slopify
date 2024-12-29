@@ -557,6 +557,50 @@
           <li><a href="https://nohello.net/" target="_blank">no hello - please don't say just hello in chat</a></li>
         </ul>
       </section>
+      <section>
+        <button id="widenButton">Toggle Widening</button>
+      
+        <script>
+          const widenButton = document.getElementById("widenButton");
+          let widening = false;
+          let interval;
+      
+          widenButton.addEventListener("click", () => {
+            if (!widening) {
+              widening = true;
+              interval = setInterval(() => {
+                let currentWidth = parseInt(window.getComputedStyle(widenButton).width);
+                widenButton.style.width = (currentWidth + 1) + "px";
+              }, 10);
+            } else {
+              widening = false;
+              clearInterval(interval);
+            }
+          });
+        </script>
+      </section>
+      <section>
+        <button id="lengthenButton">Toggle Lengthening</button>
+
+        <script>
+        const lengthenButton = document.getElementById("lengthenButton");
+          let lengthening = false;
+          let lengthenInterval;
+
+          lengthenButton.addEventListener("click", () => {
+            if (!lengthening) {
+              lengthening = true;
+              lengthenInterval = setInterval(() => {
+                let currentHeight = parseInt(window.getComputedStyle(lengthenButton).height);
+                lengthenButton.style.height = (currentHeight + 1) + "px";
+              }, 10);
+            } else {
+              lengthening = false;
+              clearInterval(lengthenInterval);
+            }
+          });
+        </script>
+      </section>
     </main>
     <footer>
       <div style="text-align: center; margin-top: 20px">
