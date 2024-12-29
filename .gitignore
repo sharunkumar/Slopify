@@ -1,0 +1,11 @@
+
+.idea/
+*.iml
+workspace.xml
+tasks.xml
+usage.statistics.xml
+dictionaries/
+runConfigurations/
+codeStyles/
+vcs.xml
+shelf/

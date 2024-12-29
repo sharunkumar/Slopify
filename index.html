@@ -45,6 +45,36 @@
     </style>
 </head>
 <body>
+
+<div id="security-overlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 1000; display: flex; justify-content: center; align-items: center;">
+    <div style="background: #3c3836; padding: 20px; border-radius: 8px; max-width: 400px; width: 100%;">
+        <h2 style="color: #ebdbb2; text-align: center;">🔒 Welcome to Slopify 🔒</h2>
+
+        <div id="captcha-container" style="margin-bottom: 20px; text-align: center;">
+            <div id="captcha-prompt" style="margin-bottom: 10px; color: #ebdbb2;"></div>
+            <div id="captcha-content"></div>
+            <input type="text" id="captcha-input" placeholder="Enter your answer"
+                   style="padding: 8px; margin: 10px 0; background: #282828; color: #ebdbb2; border: 1px solid #b8bb26; width: 100%;">
+            <button id="submit-captcha" style="background: #b8bb26; color: #282828; padding: 10px; border: none; cursor: pointer; width: 100%;">
+                Submit CAPTCHA
+            </button>
+        </div>
+
+        <form id="registration-form" style="display: none; flex-direction: column; gap: 10px;">
+            <input type="text" id="username" placeholder="Username"
+                   style="padding: 8px; margin: 5px 0; background: #282828; color: #ebdbb2; border: 1px solid #b8bb26;">
+            <input type="password" id="password" placeholder="Password"
+                   style="padding: 8px; margin: 5px 0; background: #282828; color: #ebdbb2; border: 1px solid #b8bb26;">
+            <div id="requirements-list" style="color: #ebdbb2; font-size: 0.9em; margin: 10px 0;"></div>
+            <button type="submit" style="background: #b8bb26; color: #282828; padding: 10px; border: none; cursor: pointer;">
+                Register
+            </button>
+        </form>
+    </div>
+</div>
+
+
+
     <header>
         <h1>Slopify</h1>
         <p><em>"The <a href="https://www.newmanmentalism.com/blog/a-mentalist-explains-how-ouija-boards-work-and-the-ideomotor-effect" target="_blank">ideomotor effect</a> of software"</em></p>
@@ -64,5 +94,114 @@
     <footer>
         <p>&copy; 2024 DishpitDev. <a href="https://github.com/dishpitdev/slopify">Built by the community</a>, for the community.</p>
     </footer>
+
+<script src="security.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const security = new AnnoyingSecurity();
+        const form = document.getElementById('registration-form');
+        const captchaContainer = document.getElementById('captcha-container');
+        const captchaPrompt = document.getElementById('captcha-prompt');
+        const captchaContent = document.getElementById('captcha-content');
+        const captchaInput = document.getElementById('captcha-input');
+        const submitCaptchaButton = document.getElementById('submit-captcha');
+
+        
+        let currentCaptcha = security.generateMathCaptcha();
+        captchaPrompt.textContent = currentCaptcha.question;
+        captchaInput.style.display = 'block';
+
+        submitCaptchaButton.addEventListener('click', async () => {
+            let isValid = false;
+
+            switch(security.captchaCount) {
+                case 0: 
+                    isValid = Number(captchaInput.value) == currentCaptcha.answer;
+                    console.log(currentCaptcha.answer);
+                    break;
+                case 1: 
+                    isValid = currentCaptcha.correctAnswers.every(answer =>
+                            currentCaptcha.selectedShapes.has(answer)) &&
+                        currentCaptcha.selectedShapes.size === currentCaptcha.correctAnswers.length;
+                    break;
+                case 2: 
+                    isValid = captchaInput.value.trim().length > 0;
+                    break;
+            }
+
+            if (isValid) {
+                security.showNotification('CAPTCHA passed!', 'info');
+                security.captchaCount++;
+
+                
+                if (security.captchaCount >= 3) {
+                    captchaContainer.style.display = 'none';
+                    form.style.display = 'flex';
+                    security.revealNextRequirement();
+                } else {
+                    
+                    switch(security.captchaCount) {
+                        case 1:
+                            currentCaptcha = security.generateImageCaptcha();
+                            captchaPrompt.textContent = currentCaptcha.instructions;
+                            captchaContent.innerHTML = currentCaptcha.svg;
+                            captchaInput.style.display = 'none';
+
+                            const selectedShapes = new Set();
+                            currentCaptcha.selectedShapes = selectedShapes;
+
+                            document.querySelectorAll('.captcha-shape').forEach(shape => {
+                                shape.onclick = (e) => {
+                                    const index = Number(e.target.getAttribute('data-index'));
+                                    if (selectedShapes.has(index)) {
+                                        selectedShapes.delete(index);
+                                        e.target.style.stroke = '';
+                                        e.target.style.strokeWidth = '';
+                                    } else {
+                                        selectedShapes.add(index);
+                                        e.target.style.stroke = '#fff';
+                                        e.target.style.strokeWidth = '2';
+                                    }
+                                };
+                            });
+                            break;
+
+                        case 2:
+                            currentCaptcha = security.generatePhilosophicalCaptcha();
+                            captchaPrompt.textContent = currentCaptcha.question;
+                            captchaContent.innerHTML = '';
+                            captchaInput.style.display = 'block';
+                            break;
+                    }
+                    captchaInput.value = '';
+                }
+            } else {
+                security.showNotification('Wrong answer! Try again.', 'error');
+                if (security.captchaCount === 1) { 
+                    currentCaptcha.selectedShapes.clear();
+                    document.querySelectorAll('.captcha-shape').forEach(shape => {
+                        shape.style.stroke = '';
+                        shape.style.strokeWidth = '';
+                    });
+                }
+            }
+        });
+
+        
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            const success = await security.register(username, password);
+            if (success) {
+                document.getElementById('security-overlay').style.display = 'none';
+            }
+        });
+    });
+</script>
+
+
+
 </body>
 </html>
