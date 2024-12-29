@@ -13,6 +13,24 @@
             background-color: #282828;
             color: #ebdbb2;
         }
+        .skipnav {
+            text-decoration: none;
+            padding: 4px 8px;
+            position: absolute;
+            left: -1000em;
+            top: 0;
+            font-weight: bold;
+        }
+        .skipnav:focus, .skipnav:active {
+            z-index: 99;
+            top: 1rem;
+            left: 1rem;
+            color: #ebdbb2;
+            outline: 4px dotted #ebdbb2;
+            background: #282828;
+            width: fit-content;
+            outline-offset: 2px;
+        }
         header {
             background: #3c3836;
             color: #ebdbb2;
@@ -130,6 +148,9 @@
 </head>
 <body>
 
+    <a href="#maincontent" class="skipnav">Skip to Content (Press Enter)</a>
+
+
 <div id="security-overlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 1000; display: flex; justify-content: center; align-items: center;">
     <div style="background: #3c3836; padding: 20px; border-radius: 8px; max-width: 400px; width: 100%;">
         <h2 style="color: #ebdbb2; text-align: center;">🔒 Welcome to Slopify 🔒</h2>
@@ -165,13 +186,14 @@
 
 
 
+
     <header>
         <marquee><img src="static/images/epic-logo.gif"></marquee>
         <p><em>"The <a href="https://www.newmanmentalism.com/blog/a-mentalist-explains-how-ouija-boards-work-and-the-ideomotor-effect" target="_blank">ideomotor effect</a> of software"</em></p>
         <image id="frog" src="static/images/frog.webp"></image>
         <button id="vibeButton">Improve the Mood</button>
     </header>
-    <main>
+    <main id="maincontent">
         <section>
             <h2>About Slopify</h2>
             <p>Slopify is a 100% community-built open-source website and product. Its unique premise invites contributors to:</p>
