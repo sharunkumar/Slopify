@@ -31,7 +31,7 @@ moreVibeAudio.addEventListener('pause', () => frog.src = 'static/images/frog.web
 // document.body.style.background = 'hsl('+Math.floor(Math.random() * 255)+', 40%, 50%)';
 // document.getElementsByTagName('header')[0].style.background = 'hsl('+Math.floor(Math.random() * 255)+', 50%, 40%)';
 // document.getElementsByTagName('footer')[0].style.background = 'hsl('+Math.floor(Math.random() * 255)+', 50%, 40%)';
-// document.getElementById('vibeButton').addEventListener('click', vibe);
+document.getElementById('vibeButton').addEventListener('click', vibe);
 
 function enableQuotes() {
   if (!("speechSynthesis" in window)) {
