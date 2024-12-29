@@ -83,6 +83,10 @@
         #frog {
             width: 400px;
         }
+        #stock_img {
+            width: 400px;
+            heigh: 400px;
+        }
     </style>
 </head>
 <body>
@@ -107,6 +111,12 @@
                 <div class="loading-spinner">Loading...</div>
             </div>
             <canvas id="main-fishtank" class="fishtank-canvas"></canvas>
+        </section>
+        <section>
+            <h2>Stockify</h2>
+            <p>Throw your money to the wind with random stock decisions!</p>
+            <p><span id="stock_ticker" style="color:yellow;"></span><span id="stock_msg"></span></p>
+            <img src="" id="stock_img">
         </section>
     </main>
     <footer>
@@ -144,6 +154,36 @@
                 canvas.height = width < 480 ? 250 : width < 768 ? 300 : 400;
             });
         });
+    </script>
+
+    <script type="text/javascript">
+        var stock_url = "https://raw.githubusercontent.com/rreichel3/US-Stock-Symbols/main/all/all_tickers.txt";
+        var stock_list;
+        var ticker;
+        var buy = Math.random() < 0.5;
+
+        fetch(stock_url).then(function(resp) {
+            resp.text().then(function(text) {
+                stock_list = text.split("\n");
+                stock_list.pop();
+                ticker = stock_list[Math.floor(Math.random() * stock_list.length)];
+                done();
+            });
+        });
+
+        function done() {
+            var msg = "";
+            if (buy) {
+                msg = " to the moon! BUY BUY BUY";
+                document.getElementById("stock_img").src = "static/images/wojak_stock_up.webp";
+            } else {
+                msg = " down the toilet! SELL SELL SELL";
+                document.getElementById("stock_img").src = "static/images/wojak_stock_down.gif";
+            }
+            document.getElementById("stock_ticker").textContent = ticker;
+            document.getElementById("stock_msg").textContent = msg;
+        }
+
     </script>
 </body>
 </html>
