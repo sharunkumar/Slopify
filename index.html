@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="apple-touch-icon" sizes="128x128" href="/static/images/apple-touch-icon.png">
     <link rel="icon" type="image/x-icon" href="/static/images/favicon.ico">
 	<style>
 	 #cfs-ad {
@@ -31,7 +32,9 @@
 		 color: #FFF !important;
 	 }
 	</style>
+    <link rel="stylesheet" href="static/css/error.css">
     <title>Slopify</title>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script>
     <script>
       const THE_OPPENHEIMER_INDEX = 69;
       function getRandomInt(max) {
@@ -95,12 +98,22 @@
       });
     </script>
     <style>
+      * {
+        border: 0;
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        cursor: url(static/images/win95_cursor_regular.png) 0 0, default;
+      }
+
       body {
         font-family: Arial, sans-serif;
         line-height: 1.6;
         margin: 0;
         padding: 0;
         color: #ebdbb2;
+        display: grid;
+        height: 100vh;
       }
 
       .skipnav {
@@ -249,7 +262,7 @@
         text-align: center;
       }
 
-      #l8rgt{
+      #l8rgt {
         display: block;
         margin: 10px 0;
         padding: 15px 30px;
@@ -257,6 +270,8 @@
         font-family: var(--font);
         background: radial-gradient(circle, #b00b69, rgb(145, 69, 221));
         color: white;
+      }
+      
       #foxy {
         height: 600px;
         width: auto;
@@ -267,6 +282,34 @@
       #foxy:hover {
         background: url('static/images/snarl.jpg');
         background-repeat: no-repeat;
+      }
+      
+      @keyframes spin {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+      }
+
+      @keyframes shake {
+        0%, 100% { transform: translate(0, 0); }
+        10%, 30%, 50%, 70%, 90% { transform: translate(-5px, 5px); }
+        20%, 40%, 60%, 80% { transform: translate(5px, -5px); }
+      }
+
+      @keyframes flash {
+        0% { background-color: black; }
+        50% { background-color: white; }
+        100% { background-color: black; }
+      }
+
+      .worst-theme {
+        font-family: 'Comic Sans MS', cursive, sans-serif;
+        animation: spin 10s linear infinite, flash 1s step-start infinite;
+      }
+
+      .worst-theme * {
+        animation: rainbow 1s linear infinite, shake 0.5s ease-in-out infinite;
+        text-shadow: 2px 2px 0px #FF00FF;
+        background-color: yellow;
       }
     </style>
     <audio id="vibeAudio" loop>
@@ -283,7 +326,13 @@
     <script type="module">
           import { rainbowCursor } from "https://unpkg.com/cursor-effects@latest/dist/esm.js";
 
-          new rainbowCursor();
+          const FLAGS = [
+            ["#FE0000", "#FD8C00", "#FFE500", "#119F0B", "#0644B3", "#C22EDC"],
+            ["#59C8F3","#F2A6B5","#fff","#F2A6B5","#59C8F3"]
+          ]
+          let chosenFlag = FLAGS[Math.floor(Math.random() * FLAGS.length)];
+          
+          new rainbowCursor({ colors: chosenFlag });
     </script>
     <script type="module" src="static/js/index.js"></script>
     <script>
@@ -450,6 +499,10 @@
 		  <iframe width="760" height="500" src="https://www.youtube.com/embed/ZIxISuZP69I?si=aXF1WX1hMHYQInyx" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 	  </div>
 	  
+
+      <a href="/second.html">
+        <button style="position: fixed;left:1%;top:2%;"><p>alan becker</p> <img src="static/images/alanbecker/alan.png" width="50" height="50"/></button>
+      </a>
       <div>
         <h1>MAXIMIZE YOUR WIN</h1>
         <div class="w-full flex gap-2">
@@ -462,8 +515,12 @@
           <a href="/embr" style="color: #b8bb26">Embr</a>
         </p>
       </div>
-      <img src="static/images/kofte.jpg" id="kofte" style="width: 400px; height: 400px;">
-      <image id="frog" src="static/images/frog.webp"></image>
+      <div id="gallery">
+        <img src="static/images/bobi.jpg" alt="Bobi" class="gallery-item" style="width: 480px; height: 640px;">
+        <img src="static/images/kofte.jpg" alt="Kofte" class="gallery-item" style="width: 400px; height: 400px;">
+        <img src="static/images/frog.webp" alt="Frog" class="gallery-item">
+      </div>
+    
       <button id="vibeButton">Improve the Mood</button>
       <button id="wisdomButton">ENABLE FROG WISDOM</button>
       <p>Vist SlopChat™ to chat with other slop enthusiasts. <a href="chat.html">Click here!/a></p>
@@ -475,6 +532,7 @@
           alt="Visit counter For Websites"
           border="0"
       /></a>
+      <button id="worseThemeButton">This can't get any worse, right?</button>
     </header>
     <main id="maincontent">
       <section>
@@ -507,11 +565,7 @@
         </div>
       </div>
       <img src="https://secret.kgncengiz.com/F.jpg" />
-      <section>
-        <div align="center">
-          <button id="l8rgt" onclick="location.href='O3O.mp4'">click me</button>
-        </div>
-      </section>
+     
       <section class="importante">
         <section>
           <canvas id="glCanvas" width="400" height="400"></canvas>
@@ -786,9 +840,31 @@
           });
         </script>
       </section>
+      <div id="cookiebanner" style="background: black; position:fixed; bottom:0px; height:auto !important;">
+      <p>This site may or may not use cookies. I actually don't know.</p>
+      <button id="hmmm yummy cookies" onclick="cookieclick()">Uh ok i guess</button>
+      <button id="ewww cookies no yummy" onclick="cookieclick()">Get out of my face</button>
+      <script type="text/javascript">
+        function cookieclick() {
+            let gfg_down =
+                document.getElementById("cookiebanner");
+            gfg_down.parentNode.removeChild(cookiebanner);
+        }
+      </script>
+      </div>
+      <section>
+        <iframe width="5%" height="1" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1633786749&auto_play=true"></iframe>
+      </section>
+      <section>
+        <h2>Flappy Musk</h2>
+        <canvas id="flappyMuskCanvas" width="400" height="600" style="border: 1px solid #000;"></canvas>
+        <p>Click to make Elon Musk fly! Avoid the obstacles!</p>
+      </section>
+      <script src="flappyMusk.js"></script>
 			<section id="slopcursion">
 			<h2>So you can Slopify while you Slopify</h2>
 			<iframe src="index.html?slopcursion=true" width="100%" height="500px" frameborder="0">
+      </iframe>
 			</section>
       <section>
         <h2>oh hewwo thewe, you gwot twhis fwar uwu~! wouwd you wike to wead somethin’ awesome~? >w<</h2>
@@ -830,6 +906,22 @@
           height="31"
         />
       </div>
+      <div id="error-0" class="window window--active" role="alertdialog" aria-modal="true" aria-labelledby="error-label-0" aria-describedby="error-desc-0" data-window hidden>
+        <div class="window__header" data-header>
+          <div id="error-label-0" class="window__title" data-label>Error</div>
+          <button class="window__button" type="button" disabled>
+            <span class="window__sprite window__sprite--close-disabled"></span>
+            <span class="window__sr">Close</span>
+          </button>
+        </div>
+        <div class="window__body">
+          <img class="window__body-icon" alt="White X on a red circle with dark red outline and drop shadow" src="https://assets.codepen.io/416221/win95_error_icon.png" width="32" height="32">
+          <p id="error-desc-0" class="window__body-text" data-desc></p>
+        </div>
+        <div class="window__footer">
+          <button class="window__button window__button--lg" type="button" data-ok>OK</button>
+        </div>
+      </div>
       <div>
         <iframe src="https://poeskatprinter.zepje.space/" width="600" height="400" style="border:none;"></iframe>
       </div>
@@ -840,7 +932,7 @@
         >, for the community.
       </p>
     </footer>
-
+    <script src="static/js/error.js"></script>
     <script src="security.js"></script>
     <script>
       document.addEventListener("DOMContentLoaded", () => {
@@ -1073,6 +1165,18 @@
         window.addEventListener("scroll", function() {
           clickMeBtn.style.position = "static";
         });
+    </script>
+    <script>
+      const worseThemeButton = document.getElementById("worseThemeButton");
+      document.addEventListener("DOMContentLoaded", () => {
+        const worseThemeButton = document.getElementById("worseThemeButton");
+        worseThemeButton.addEventListener("click", () => {
+          document.body.classList.toggle("worst-theme");
+          worseThemeButton.textContent = document.body.classList.contains("worst-theme") 
+            ? "Fix The Page Please!!" 
+            : "This can't get any worse, right?";
+        });
+      });
     </script>
 </body>
 </html>
