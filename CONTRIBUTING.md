@@ -8,12 +8,6 @@ Thank you for your interest in contributing to Slopify!
 
 3. Open a PR from your fork back into `main`
 
-4. Tag `@Dishpit` and `@ronnie-rios` for review
+4. ???
 
-5. Set yourself as the Assignee
-
-6. Set the appropriate label
-
-7. ???
-
-8. Profit
+5. Profit

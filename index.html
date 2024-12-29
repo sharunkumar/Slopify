@@ -1,226 +1,336 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Slopify</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            margin: 0;
-            padding: 0;
-            background-color: #282828;
-            color: #ebdbb2;
-        }
-        .skipnav {
-            text-decoration: none;
-            padding: 4px 8px;
-            position: absolute;
-            left: -1000em;
-            top: 0;
-            font-weight: bold;
-        }
-        .skipnav:focus, .skipnav:active {
-            z-index: 99;
-            top: 1rem;
-            left: 1rem;
-            color: #ebdbb2;
-            outline: 4px dotted #ebdbb2;
-            background: #282828;
-            width: fit-content;
-            outline-offset: 2px;
-        }
-        header {
-            background: #3c3836;
-            color: #ebdbb2;
-            padding: 20px 0;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-        header h1 {
-            margin: 0;
-            font-size: 2.5rem;
-        }
-        main {
-            padding: 20px;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        footer {
-            text-align: center;
-            padding: 10px 0;
-            background: #3c3836;
-            color: #ebdbb2;
-            margin-top: 20px;
-        }
-        a {
-            color: #b8bb26;
-            text-decoration: underline;
-        }
-        a:hover {
-            color: #83a598
-        }
+      body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        margin: 0;
+        padding: 0;
+        background-color: #282828;
+        color: #ebdbb2;
+      }
+      .skipnav {
+        text-decoration: none;
+        padding: 4px 8px;
+        position: absolute;
+        left: -1000em;
+        top: 0;
+        font-weight: bold;
+      }
+      .skipnav:focus,
+      .skipnav:active {
+        z-index: 99;
+        top: 1rem;
+        left: 1rem;
+        color: #ebdbb2;
+        outline: 4px dotted #ebdbb2;
+        background: #282828;
+        width: fit-content;
+        outline-offset: 2px;
+      }
+      header {
+        background: #3c3836;
+        color: #ebdbb2;
+        padding: 20px 0;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+      header h1 {
+        margin: 0;
+        font-size: 2.5rem;
+      }
+      main {
+        padding: 20px;
+        max-width: 800px;
+        margin: 0 auto;
+      }
+      footer {
+        text-align: center;
+        padding: 10px 0;
+        background: #3c3836;
+        color: #ebdbb2;
+        margin-top: 20px;
+      }
+      a {
+        color: #b8bb26;
+        text-decoration: underline;
+      }
+      a:hover {
+        color: #83a598;
+      }
 
-        .importante {
-            display: inline-flex;
-        }
+      .importante {
+        display: inline-flex;
+      }
 
+      .fishtank-container {
+        position: relative;
+        width: 100%;
+        height: 400px;
+        margin: 20px 0;
+        overflow: hidden;
+        background: rgba(40, 40, 40, 0.5);
+        border-radius: 8px;
+      }
+
+      .fishtank-canvas {
+        width: 100%;
+        height: 100%;
+        cursor: crosshair;
+      }
+
+      @media (max-width: 768px) {
         .fishtank-container {
-            position: relative;
-            width: 100%;
-            height: 400px;
-            margin: 20px 0;
-            overflow: hidden;
-            background: rgba(40, 40, 40, 0.5);
-            border-radius: 8px;
+          height: 300px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .fishtank-container {
+          height: 250px;
+        }
+      }
+
+      /* Optional loading placeholder */
+      .fishtank-placeholder {
+        position: absolute;
+        inset: 0;
+        background: #3c3836;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: opacity 0.3s ease-out;
+      }
+
+      #frog {
+        width: 400px;
+        margin: 10px;
+      }
+      @keyframes frogPulse {
+        0% {
+          transform: scale(1);
         }
 
-        .fishtank-canvas {
-            width: 100%;
-            height: 100%;
-            cursor: crosshair;
+        50% {
+          transform: scale(1.5);
         }
 
-        @media (max-width: 768px) {
-            .fishtank-container {
-                height: 300px;
-            }
+        100% {
+          transform: scale(1);
         }
+      }
 
-        @media (max-width: 480px) {
-            .fishtank-container {
-                height: 250px;
-            }
-        }
-
-        /* Optional loading placeholder */
-        .fishtank-placeholder {
-            position: absolute;
-            inset: 0;
-            background: #3c3836;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: opacity 0.3s ease-out;
-        }
-        
-        #frog {
-            width: 400px;
-            margin: 10px;
-        }
-        @keyframes frogPulse {
-            0% {
-                transform: scale(1);
-            }
-
-            50% {
-                transform: scale(1.5);
-            }
-
-            100% {
-                transform: scale(1);
-            }
-        }
-
-        #dancing-frog {
-            width: 400px;
-            margin: 10px;
-            animation: frogPulse 5s infinite;
-        }
-        #stock_img {
-            width: 400px;
-            height: 400px;
-        }
+      #dancing-frog {
+        width: 400px;
+        margin: 10px;
+        animation: frogPulse 5s infinite;
+      }
+      #stock_img {
+        width: 400px;
+        height: 400px;
+      }
     </style>
     <audio id="vibeAudio">
-        <source src="https://cdn.pixabay.com/download/audio/2024/10/22/audio_5b87be5f9b.mp3?filename=smooth-jazz-saxophone-solo-with-a-lofi-vibe-253950.mp3" type="audio/mp3">
-        Your browser does not support the audio element.
+      <source
+        src="https://cdn.pixabay.com/download/audio/2024/10/22/audio_5b87be5f9b.mp3?filename=smooth-jazz-saxophone-solo-with-a-lofi-vibe-253950.mp3"
+        type="audio/mp3"
+      />
+      Your browser does not support the audio element.
     </audio>
     <audio id="moreVibeAudio">
-        <source src="/static/audio/rick.m4a" type="audio/mp3">
-        Your browser does not support the audio element.
+      <source src="/static/audio/rick.m4a" type="audio/mp3" />
+      Your browser does not support the audio element.
     </audio>
     <script type="module" src="static/js/index.js"></script>
-</head>
-<body>
-
+  </head>
+  <body>
     <a href="#maincontent" class="skipnav">Skip to Content (Press Enter)</a>
+    <div
+      id="security-overlay"
+      style="
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.9);
+        z-index: 1000;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      "
+    >
+      <div
+        style="
+          background: #3c3836;
+          padding: 20px;
+          border-radius: 8px;
+          max-width: 400px;
+          width: 100%;
+        "
+      >
+        <h2 style="color: #ebdbb2; text-align: center">
+          🔒 Welcome to Slopify 🔒
+        </h2>
 
-
-<div id="security-overlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 1000; display: flex; justify-content: center; align-items: center;">
-    <div style="background: #3c3836; padding: 20px; border-radius: 8px; max-width: 400px; width: 100%;">
-        <h2 style="color: #ebdbb2; text-align: center;">🔒 Welcome to Slopify 🔒</h2>
-
-        <div id="captcha-container" style="margin-bottom: 20px; text-align: center;">
-            <div id="captcha-prompt" style="margin-bottom: 10px; color: #ebdbb2;"></div>
-            <div id="captcha-content"></div>
-            <input type="text" id="captcha-input" placeholder="Enter your answer"
-                   style="padding: 8px; margin: 10px 0; background: #282828; color: #ebdbb2; border: 1px solid #b8bb26; width: 100%;">
-            <button id="submit-captcha" style="background: #b8bb26; color: #282828; padding: 10px; border: none; cursor: pointer; width: 100%;">
-                Submit CAPTCHA
-            </button>
+        <div
+          id="captcha-container"
+          style="margin-bottom: 20px; text-align: center"
+        >
+          <div
+            id="captcha-prompt"
+            style="margin-bottom: 10px; color: #ebdbb2"
+          ></div>
+          <div id="captcha-content"></div>
+          <input
+            type="text"
+            id="captcha-input"
+            placeholder="Enter your answer"
+            style="
+              padding: 8px;
+              margin: 10px 0;
+              background: #282828;
+              color: #ebdbb2;
+              border: 1px solid #b8bb26;
+              width: 100%;
+            "
+          />
+          <button
+            id="submit-captcha"
+            style="
+              background: #b8bb26;
+              color: #282828;
+              padding: 10px;
+              border: none;
+              cursor: pointer;
+              width: 100%;
+            "
+          >
+            Submit CAPTCHA
+          </button>
         </div>
 
         <!-- Skip Security Button -->
-        <button id="skip-security" style="background: #d9534f; color: #fff; padding: 10px; border: none; cursor: pointer; width: 100%; margin-top: 20px;">
-            Skip Security :(
+        <button
+          id="skip-security"
+          style="
+            background: #d9534f;
+            color: #fff;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+          "
+        >
+          Skip Security :(
         </button>
 
-        <form id="registration-form" style="display: none; flex-direction: column; gap: 10px;">
-            <input type="text" id="username" placeholder="Username"
-                   style="padding: 8px; margin: 5px 0; background: #282828; color: #ebdbb2; border: 1px solid #b8bb26;">
-            <input type="password" id="password" placeholder="Password"
-                   style="padding: 8px; margin: 5px 0; background: #282828; color: #ebdbb2; border: 1px solid #b8bb26;">
-            <div id="requirements-list" style="color: #ebdbb2; font-size: 0.9em; margin: 10px 0;"></div>
-            <button type="submit" style="background: #b8bb26; color: #282828; padding: 10px; border: none; cursor: pointer;">
-                Register
-            </button>
+        <form
+          id="registration-form"
+          style="display: none; flex-direction: column; gap: 10px"
+        >
+          <input
+            type="text"
+            id="username"
+            placeholder="Username"
+            style="
+              padding: 8px;
+              margin: 5px 0;
+              background: #282828;
+              color: #ebdbb2;
+              border: 1px solid #b8bb26;
+            "
+          />
+          <input
+            type="password"
+            id="password"
+            placeholder="Password"
+            style="
+              padding: 8px;
+              margin: 5px 0;
+              background: #282828;
+              color: #ebdbb2;
+              border: 1px solid #b8bb26;
+            "
+          />
+          <div
+            id="requirements-list"
+            style="color: #ebdbb2; font-size: 0.9em; margin: 10px 0"
+          ></div>
+          <button
+            type="submit"
+            style="
+              background: #b8bb26;
+              color: #282828;
+              padding: 10px;
+              border: none;
+              cursor: pointer;
+            "
+          >
+            Register
+          </button>
         </form>
+      </div>
     </div>
-</div>
-
-
-
-
 
     <header>
-        <marquee><img src="static/images/epic-logo.gif"></marquee>
-        <p><em>"The <a href="https://www.newmanmentalism.com/blog/a-mentalist-explains-how-ouija-boards-work-and-the-ideomotor-effect" target="_blank">ideomotor effect</a> of software"</em></p>
-        <image id="frog" src="static/images/frog.webp"></image>
-        <button id="vibeButton">Improve the Mood</button>
-        <div>
-            <p>Try out the new coding language that is 100% better than anything: <a href="/embr" style="color: #b8bb26;">Embr</a></p>
-        </div>
+      <marquee><img src="static/images/epic-logo.gif" /></marquee>
+      <img src="SlopifyLogo.png" width="400px" />
+      <p>
+        <em
+          >"The
+          <a
+            href="https://www.newmanmentalism.com/blog/a-mentalist-explains-how-ouija-boards-work-and-the-ideomotor-effect"
+            target="_blank"
+            >ideomotor effect</a
+          >
+          of software"</em
+        >
+      </p>
+      <div>
+         <p>Try out the new coding language that is 100% better than anything: <a href="/embr" style="color: #b8bb26;">Embr</a></p>
+      </div>
+      <image id="frog" src="static/images/frog.webp"></image>
+      <button id="vibeButton">Improve the Mood</button>
     </header>
     <main id="maincontent">
+      <section>
+        <h2>About Slopify</h2>
+        <p>
+          Slopify is a 100% community-built open-source website and product. Its
+          unique premise invites contributors to:
+        </p>
+        <ul>
+          <li>Commit whatever code they want</li>
+          <li>Add whatever features they desire</li>
+          <li>Write in whatever language they prefer</li>
+        </ul>
+        <p>The only rules? Everything must work together and remain legal.</p>
+      </section>
+      <section class="importante">
         <section>
-            <h2>About Slopify</h2>
-            <p>Slopify is a 100% community-built open-source website and product. Its unique premise invites contributors to:</p>
-            <ul>
-                <li>Commit whatever code they want</li>
-                <li>Add whatever features they desire</li>
-                <li>Write in whatever language they prefer</li>
-            </ul>
-            <p>The only rules? Everything must work together and remain legal.</p>
-        </section>
-        <section class="importante">
-            <section>
-                <canvas id="glCanvas" width="400" height="400"></canvas>
-                <script>
-                    const canvas = document.getElementById('glCanvas');
-                    const gl = canvas.getContext('webgl2');
-        
-                    if (!gl) {
-                        console.error('WebGL2 not supported');
-                        throw new Error('WebGL2 not supported');
-                    }
-        
-                    const vertexShader = gl.createShader(gl.VERTEX_SHADER);
-                    gl.shaderSource(vertexShader, `#version 300 es
+          <canvas id="glCanvas" width="400" height="400"></canvas>
+          <script>
+            const canvas = document.getElementById("glCanvas");
+            const gl = canvas.getContext("webgl2");
+
+            if (!gl) {
+              console.error("WebGL2 not supported");
+              throw new Error("WebGL2 not supported");
+            }
+
+            const vertexShader = gl.createShader(gl.VERTEX_SHADER);
+            gl.shaderSource(
+              vertexShader,
+              `#version 300 es
                     in vec4 position;
                     in vec4 color;
                     out vec4 vColor;
@@ -229,349 +339,411 @@
                     void main() {
                         vColor = color;
                         gl_Position = mvp * position;
-                    }`);
-                    gl.compileShader(vertexShader);
-        
-                    const fragmentShader = gl.createShader(gl.FRAGMENT_SHADER);
-                    gl.shaderSource(fragmentShader, `#version 300 es
+                    }`
+            );
+            gl.compileShader(vertexShader);
+
+            const fragmentShader = gl.createShader(gl.FRAGMENT_SHADER);
+            gl.shaderSource(
+              fragmentShader,
+              `#version 300 es
                     precision mediump float;
                     in vec4 vColor;
                     out vec4 fragColor;
         
                     void main() {
                         fragColor = vColor;
-                    }`);
-                    gl.compileShader(fragmentShader);
-        
-                    const program = gl.createProgram();
-                    gl.attachShader(program, vertexShader);
-                    gl.attachShader(program, fragmentShader);
-                    gl.linkProgram(program);
-                    gl.useProgram(program);
-        
-                    const positions = new Float32Array([
-                        // Front
-                        -0.5, -0.5,  0.5,
-                        0.5, -0.5,  0.5,
-                        0.5,  0.5,  0.5,
-                        -0.5,  0.5,  0.5,
-                        // Back
-                        -0.5, -0.5, -0.5,
-                        0.5, -0.5, -0.5,
-                        0.5,  0.5, -0.5,
-                        -0.5,  0.5, -0.5,
-                    ]);
-        
-                    const colors = new Float32Array([
-                        // Front - red
-                        1.0, 0.0, 0.0, 1.0,
-                        1.0, 0.0, 0.0, 1.0,
-                        1.0, 0.0, 0.0, 1.0,
-                        1.0, 0.0, 0.0, 1.0,
-                        // Back - green
-                        0.0, 1.0, 0.0, 1.0,
-                        0.0, 1.0, 0.0, 1.0,
-                        0.0, 1.0, 0.0, 1.0,
-                        0.0, 1.0, 0.0, 1.0,
-                    ]);
-        
-                    const indices = new Uint16Array([
-                        // Front
-                        0, 1, 2, 0, 2, 3,
-                        // Back
-                        4, 5, 6, 4, 6, 7,
-                        // Top
-                        3, 2, 6, 3, 6, 7,
-                        // Bottom
-                        0, 1, 5, 0, 5, 4,
-                        // Right
-                        1, 2, 6, 1, 6, 5,
-                        // Left
-                        0, 3, 7, 0, 7, 4
-                    ]);
-        
-                    const positionBuffer = gl.createBuffer();
-                    gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
-                    gl.bufferData(gl.ARRAY_BUFFER, positions, gl.STATIC_DRAW);
-        
-                    const colorBuffer = gl.createBuffer();
-                    gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer);
-                    gl.bufferData(gl.ARRAY_BUFFER, colors, gl.STATIC_DRAW);
-        
-                    const indexBuffer = gl.createBuffer();
-                    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, indexBuffer);
-                    gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, indices, gl.STATIC_DRAW);
-        
-                    const vao = gl.createVertexArray();
-                    gl.bindVertexArray(vao);
-        
-                    const positionLoc = gl.getAttribLocation(program, 'position');
-                    gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
-                    gl.enableVertexAttribArray(positionLoc);
-                    gl.vertexAttribPointer(positionLoc, 3, gl.FLOAT, false, 0, 0);
-        
-                    const colorLoc = gl.getAttribLocation(program, 'color');
-                    gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer);
-                    gl.enableVertexAttribArray(colorLoc);
-                    gl.vertexAttribPointer(colorLoc, 4, gl.FLOAT, false, 0, 0);
-        
-                    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, indexBuffer);
-        
-                    gl.enable(gl.DEPTH_TEST);
-                    gl.viewport(0, 0, canvas.width, canvas.height);
-        
-                    const mvpLoc = gl.getUniformLocation(program, 'mvp');
-                    let rotation = 0;
-        
-                    function render() {
-                        rotation += 0.01;
-        
-                        const aspect = canvas.width / canvas.height;
-                        const projectionMatrix = mat4.create();
-                        mat4.perspective(projectionMatrix, Math.PI/4, aspect, 0.1, 100.0);
-        
-                        const modelViewMatrix = mat4.create();
-                        mat4.translate(modelViewMatrix, modelViewMatrix, [0, 0, -4]);
-                        mat4.rotateY(modelViewMatrix, modelViewMatrix, rotation);
-                        mat4.rotateX(modelViewMatrix, modelViewMatrix, rotation * 0.5);
-        
-                        const mvpMatrix = mat4.create();
-                        mat4.multiply(mvpMatrix, projectionMatrix, modelViewMatrix);
-        
-                        gl.uniformMatrix4fv(mvpLoc, false, mvpMatrix);
-        
-                        gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-                        gl.drawElements(gl.TRIANGLES, indices.length, gl.UNSIGNED_SHORT, 0);
-        
-                        requestAnimationFrame(render);
-                    }
-        
-                    // Include gl-matrix library for matrix operations
-                    const script = document.createElement('script');
-                    script.src = 'https://cdnjs.cloudflare.com/ajax/libs/gl-matrix/2.8.1/gl-matrix-min.js';
-                    script.onload = () => {
-                        gl.clearColor(0.0, 0.0, 0.0, 1.0);
-                        render();
-                    };
-                    document.head.appendChild(script);
-                </script>
-            </section>
-            <section>
-                <a href="https://ja.wikipedia.org/wiki/%E3%83%95%E3%83%BC%E3%83%AA%E3%82%A8%E5%A4%89%E6%8F%9B">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/2/2b/Fourier_series_and_transform.gif">
-                </a>
-            </section>
-        </section>
-        <section class="fishtank-container">
-            <div class="fishtank-placeholder">
-                <div class="loading-spinner">Loading...</div>
-            </div>
-            <canvas id="main-fishtank" class="fishtank-canvas"></canvas>
-        </section>
-        <section>
-            <h2>Stockify</h2>
-            <p>Throw your money to the wind with random stock decisions! Outperform the hedge funds with our incredible algorithm!</p>
-            <p><span id="stock_ticker" style="color:yellow;"></span><span id="stock_msg"></span></p>
-            <img src="" id="stock_img">
-        </section>
-        <section>
-            <script>
-            function setShaderToy() {
-                const ids = ['ld3Gz2', '4ttSWf', 'XslGRr', 'MdX3Rr', 'XsX3RB', 'WsSBzh']
-                let id = ids[parseInt(Math.random() * ids.length)]
-                ifrm_shadertoy.src = `https://www.shadertoy.com/embed/${id}?gui=true&paused=false&muted=false`
+                    }`
+            );
+            gl.compileShader(fragmentShader);
+
+            const program = gl.createProgram();
+            gl.attachShader(program, vertexShader);
+            gl.attachShader(program, fragmentShader);
+            gl.linkProgram(program);
+            gl.useProgram(program);
+
+            const positions = new Float32Array([
+              // Front
+              -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5,
+              // Back
+              -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, 0.5,
+              -0.5,
+            ]);
+
+            const colors = new Float32Array([
+              // Front - red
+              1.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0, 1.0,
+              0.0, 0.0, 1.0,
+              // Back - green
+              0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0,
+              1.0, 0.0, 1.0,
+            ]);
+
+            const indices = new Uint16Array([
+              // Front
+              0, 1, 2, 0, 2, 3,
+              // Back
+              4, 5, 6, 4, 6, 7,
+              // Top
+              3, 2, 6, 3, 6, 7,
+              // Bottom
+              0, 1, 5, 0, 5, 4,
+              // Right
+              1, 2, 6, 1, 6, 5,
+              // Left
+              0, 3, 7, 0, 7, 4,
+            ]);
+
+            const positionBuffer = gl.createBuffer();
+            gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+            gl.bufferData(gl.ARRAY_BUFFER, positions, gl.STATIC_DRAW);
+
+            const colorBuffer = gl.createBuffer();
+            gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer);
+            gl.bufferData(gl.ARRAY_BUFFER, colors, gl.STATIC_DRAW);
+
+            const indexBuffer = gl.createBuffer();
+            gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, indexBuffer);
+            gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, indices, gl.STATIC_DRAW);
+
+            const vao = gl.createVertexArray();
+            gl.bindVertexArray(vao);
+
+            const positionLoc = gl.getAttribLocation(program, "position");
+            gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+            gl.enableVertexAttribArray(positionLoc);
+            gl.vertexAttribPointer(positionLoc, 3, gl.FLOAT, false, 0, 0);
+
+            const colorLoc = gl.getAttribLocation(program, "color");
+            gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer);
+            gl.enableVertexAttribArray(colorLoc);
+            gl.vertexAttribPointer(colorLoc, 4, gl.FLOAT, false, 0, 0);
+
+            gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, indexBuffer);
+
+            gl.enable(gl.DEPTH_TEST);
+            gl.viewport(0, 0, canvas.width, canvas.height);
+
+            const mvpLoc = gl.getUniformLocation(program, "mvp");
+            let rotation = 0;
+
+            function render() {
+              rotation += 0.01;
+
+              const aspect = canvas.width / canvas.height;
+              const projectionMatrix = mat4.create();
+              mat4.perspective(
+                projectionMatrix,
+                Math.PI / 4,
+                aspect,
+                0.1,
+                100.0
+              );
+
+              const modelViewMatrix = mat4.create();
+              mat4.translate(modelViewMatrix, modelViewMatrix, [0, 0, -4]);
+              mat4.rotateY(modelViewMatrix, modelViewMatrix, rotation);
+              mat4.rotateX(modelViewMatrix, modelViewMatrix, rotation * 0.5);
+
+              const mvpMatrix = mat4.create();
+              mat4.multiply(mvpMatrix, projectionMatrix, modelViewMatrix);
+
+              gl.uniformMatrix4fv(mvpLoc, false, mvpMatrix);
+
+              gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+              gl.drawElements(
+                gl.TRIANGLES,
+                indices.length,
+                gl.UNSIGNED_SHORT,
+                0
+              );
+
+              requestAnimationFrame(render);
             }
-            </script>
-            
-            <input type="button" value="SHADERZ" onclick="setShaderToy()" />
-            <br />
-            <iframe id="ifrm_shadertoy" width="640" height="360" frameborder="0" src="https://www.shadertoy.com/embed/ld3Gz2?gui=false&paused=false&muted=false" allowfullscreen></iframe>
+
+            // Include gl-matrix library for matrix operations
+            const script = document.createElement("script");
+            script.src =
+              "https://cdnjs.cloudflare.com/ajax/libs/gl-matrix/2.8.1/gl-matrix-min.js";
+            script.onload = () => {
+              gl.clearColor(0.0, 0.0, 0.0, 1.0);
+              render();
+            };
+            document.head.appendChild(script);
+          </script>
         </section>
+        <section>
+          <a
+            href="https://ja.wikipedia.org/wiki/%E3%83%95%E3%83%BC%E3%83%AA%E3%82%A8%E5%A4%89%E6%8F%9B"
+          >
+            <img
+              src="https://upload.wikimedia.org/wikipedia/commons/2/2b/Fourier_series_and_transform.gif"
+            />
+          </a>
+        </section>
+      </section>
+      <section class="fishtank-container">
+        <div class="fishtank-placeholder">
+          <div class="loading-spinner">Loading...</div>
+        </div>
+        <canvas id="main-fishtank" class="fishtank-canvas"></canvas>
+      </section>
+      <section>
+        <h2>Stockify</h2>
+        <p>
+          Throw your money to the wind with random stock decisions! Outperform
+          the hedge funds with our incredible algorithm!
+        </p>
+        <p>
+          <span id="stock_ticker" style="color: yellow"></span
+          ><span id="stock_msg"></span>
+        </p>
+        <img src="" id="stock_img" />
+      </section>
+      <section>
+        <script>
+          function setShaderToy() {
+            const ids = [
+              "ld3Gz2",
+              "4ttSWf",
+              "XslGRr",
+              "MdX3Rr",
+              "XsX3RB",
+              "WsSBzh",
+            ];
+            let id = ids[parseInt(Math.random() * ids.length)];
+            ifrm_shadertoy.src = `https://www.shadertoy.com/embed/${id}?gui=true&paused=false&muted=false`;
+          }
+        </script>
+
+        <input type="button" value="SHADERZ" onclick="setShaderToy()" />
+        <br />
+        <iframe
+          id="ifrm_shadertoy"
+          width="640"
+          height="360"
+          frameborder="0"
+          src="https://www.shadertoy.com/embed/ld3Gz2?gui=false&paused=false&muted=false"
+          allowfullscreen
+        ></iframe>
+      </section>
     </main>
     <footer>
-        <div style="text-align:center; margin-top: 20px;">
-            <img src="static/images/aol-sucks.gif" alt="Banner 1" width="88" height="31">
-            <img src="static/images/bestview.gif" alt="Banner 2" width="88" height="31">
-            <img src="static/images/w95link.gif" alt="Banner 3" width="88" height="31">
-            <img src="static/images/800x600.gif" alt="Banner 3" width="88" height="31">
-        </div>
-        <p>&copy; 2024 DishpitDev. <a href="https://github.com/dishpitdev/slopify">Built by the community</a>, for the community.</p>
+      <div style="text-align: center; margin-top: 20px">
+        <img
+          src="static/images/aol-sucks.gif"
+          alt="Banner 1"
+          width="88"
+          height="31"
+        />
+        <img
+          src="static/images/bestview.gif"
+          alt="Banner 2"
+          width="88"
+          height="31"
+        />
+        <img
+          src="static/images/w95link.gif"
+          alt="Banner 3"
+          width="88"
+          height="31"
+        />
+        <img
+          src="static/images/800x600.gif"
+          alt="Banner 3"
+          width="88"
+          height="31"
+        />
+      </div>
+      <p>
+        &copy; 2024 DishpitDev.
+        <a href="https://github.com/dishpitdev/slopify"
+          >Built by the community</a
+        >, for the community.
+      </p>
     </footer>
 
-<script src="security.js"></script>
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
+    <script src="security.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
         const security = new AnnoyingSecurity();
-        const form = document.getElementById('registration-form');
-        const captchaContainer = document.getElementById('captcha-container');
-        const captchaPrompt = document.getElementById('captcha-prompt');
-        const captchaContent = document.getElementById('captcha-content');
-        const captchaInput = document.getElementById('captcha-input');
-        const submitCaptchaButton = document.getElementById('submit-captcha');
-        const skipSecurityButton = document.getElementById('skip-security'); // Add this line
+        const form = document.getElementById("registration-form");
+        const captchaContainer = document.getElementById("captcha-container");
+        const captchaPrompt = document.getElementById("captcha-prompt");
+        const captchaContent = document.getElementById("captcha-content");
+        const captchaInput = document.getElementById("captcha-input");
+        const submitCaptchaButton = document.getElementById("submit-captcha");
+        const skipSecurityButton = document.getElementById("skip-security"); // Add this line
 
         let currentCaptcha = security.generateMathCaptcha();
         captchaPrompt.textContent = currentCaptcha.question;
-        captchaInput.style.display = 'block';
+        captchaInput.style.display = "block";
 
-        submitCaptchaButton.addEventListener('click', async () => {
-            let isValid = false;
+        submitCaptchaButton.addEventListener("click", async () => {
+          let isValid = false;
 
-            switch(security.captchaCount) {
-                case 0:
-                    isValid = Number(captchaInput.value) == currentCaptcha.answer;
-                    break;
-                case 1:
-                    isValid = currentCaptcha.correctAnswers.every(answer =>
-                            currentCaptcha.selectedShapes.has(answer)) &&
-                        currentCaptcha.selectedShapes.size === currentCaptcha.correctAnswers.length;
-                    break;
-                case 2:
-                    isValid = captchaInput.value.trim().length > 0;
-                    break;
-            }
+          switch (security.captchaCount) {
+            case 0:
+              isValid = Number(captchaInput.value) == currentCaptcha.answer;
+              break;
+            case 1:
+              isValid =
+                currentCaptcha.correctAnswers.every((answer) =>
+                  currentCaptcha.selectedShapes.has(answer)
+                ) &&
+                currentCaptcha.selectedShapes.size ===
+                  currentCaptcha.correctAnswers.length;
+              break;
+            case 2:
+              isValid = captchaInput.value.trim().length > 0;
+              break;
+          }
 
-            if (isValid) {
-                security.showNotification('CAPTCHA passed!', 'info');
-                security.captchaCount++;
+          if (isValid) {
+            security.showNotification("CAPTCHA passed!", "info");
+            security.captchaCount++;
 
-                if (security.captchaCount >= 3) {
-                    captchaContainer.style.display = 'none';
-                    form.style.display = 'flex';
-                    security.revealNextRequirement();
-                } else {
-                    switch(security.captchaCount) {
-                        case 1:
-                            currentCaptcha = security.generateImageCaptcha();
-                            captchaPrompt.textContent = currentCaptcha.instructions;
-                            captchaContent.innerHTML = currentCaptcha.svg;
-                            captchaInput.style.display = 'none';
-
-                            const selectedShapes = new Set();
-                            currentCaptcha.selectedShapes = selectedShapes;
-
-                            document.querySelectorAll('.captcha-shape').forEach(shape => {
-                                shape.onclick = (e) => {
-                                    const index = Number(e.target.getAttribute('data-index'));
-                                    if (selectedShapes.has(index)) {
-                                        selectedShapes.delete(index);
-                                        e.target.style.stroke = '';
-                                        e.target.style.strokeWidth = '';
-                                    } else {
-                                        selectedShapes.add(index);
-                                        e.target.style.stroke = '#fff';
-                                        e.target.style.strokeWidth = '2';
-                                    }
-                                };
-                            });
-                            break;
-
-                        case 2:
-                            currentCaptcha = security.generatePhilosophicalCaptcha();
-                            captchaPrompt.textContent = currentCaptcha.question;
-                            captchaContent.innerHTML = '';
-                            captchaInput.style.display = 'block';
-                            break;
-                    }
-                    captchaInput.value = '';
-                }
+            if (security.captchaCount >= 3) {
+              captchaContainer.style.display = "none";
+              form.style.display = "flex";
+              security.revealNextRequirement();
             } else {
-                security.showNotification('Wrong answer! Try again.', 'error');
-                if (security.captchaCount === 1) {
-                    currentCaptcha.selectedShapes.clear();
-                    document.querySelectorAll('.captcha-shape').forEach(shape => {
-                        shape.style.stroke = '';
-                        shape.style.strokeWidth = '';
+              switch (security.captchaCount) {
+                case 1:
+                  currentCaptcha = security.generateImageCaptcha();
+                  captchaPrompt.textContent = currentCaptcha.instructions;
+                  captchaContent.innerHTML = currentCaptcha.svg;
+                  captchaInput.style.display = "none";
+
+                  const selectedShapes = new Set();
+                  currentCaptcha.selectedShapes = selectedShapes;
+
+                  document
+                    .querySelectorAll(".captcha-shape")
+                    .forEach((shape) => {
+                      shape.onclick = (e) => {
+                        const index = Number(
+                          e.target.getAttribute("data-index")
+                        );
+                        if (selectedShapes.has(index)) {
+                          selectedShapes.delete(index);
+                          e.target.style.stroke = "";
+                          e.target.style.strokeWidth = "";
+                        } else {
+                          selectedShapes.add(index);
+                          e.target.style.stroke = "#fff";
+                          e.target.style.strokeWidth = "2";
+                        }
+                      };
                     });
-                }
+                  break;
+
+                case 2:
+                  currentCaptcha = security.generatePhilosophicalCaptcha();
+                  captchaPrompt.textContent = currentCaptcha.question;
+                  captchaContent.innerHTML = "";
+                  captchaInput.style.display = "block";
+                  break;
+              }
+              captchaInput.value = "";
             }
+          } else {
+            security.showNotification("Wrong answer! Try again.", "error");
+            if (security.captchaCount === 1) {
+              currentCaptcha.selectedShapes.clear();
+              document.querySelectorAll(".captcha-shape").forEach((shape) => {
+                shape.style.stroke = "";
+                shape.style.strokeWidth = "";
+              });
+            }
+          }
         });
 
-        form.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
+        form.addEventListener("submit", async (e) => {
+          e.preventDefault();
+          const username = document.getElementById("username").value;
+          const password = document.getElementById("password").value;
 
-            const success = await security.register(username, password);
-            if (success) {
-                document.getElementById('security-overlay').style.display = 'none';
-            }
+          const success = await security.register(username, password);
+          if (success) {
+            document.getElementById("security-overlay").style.display = "none";
+          }
         });
 
         // Handle "Skip Security" button
-        skipSecurityButton.addEventListener('click', () => {
-            // Skip the security process by hiding the overlay and showing the registration form
-            document.getElementById('security-overlay').style.display = 'none';
-            form.style.display = 'flex';
+        skipSecurityButton.addEventListener("click", () => {
+          // Skip the security process by hiding the overlay and showing the registration form
+          document.getElementById("security-overlay").style.display = "none";
+          form.style.display = "flex";
         });
-    });
-
-</script>
-
-
+      });
+    </script>
 
     <script src="fishtank.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const container = document.querySelector('.fishtank-container');
+      document.addEventListener("DOMContentLoaded", function () {
+        const container = document.querySelector(".fishtank-container");
 
-            function initFishtank() {
-                const projectTank = new FishTank('main-fishtank', {
-                    fishCount: 8,
-                    minSpeed: 0.3,
-                    maxSpeed: 1.5,
-                    buffer: 50,
-                });
-                projectTank.initialize();
+        function initFishtank() {
+          const projectTank = new FishTank("main-fishtank", {
+            fishCount: 8,
+            minSpeed: 0.3,
+            maxSpeed: 1.5,
+            buffer: 50,
+          });
+          projectTank.initialize();
 
-                // Remove placeholder after initialization
-                const placeholder = container.querySelector('.fishtank-placeholder');
-                if (placeholder) {
-                    placeholder.style.opacity = '0';
-                    setTimeout(() => placeholder.remove(), 300);
-                }
-            }
+          // Remove placeholder after initialization
+          const placeholder = container.querySelector(".fishtank-placeholder");
+          if (placeholder) {
+            placeholder.style.opacity = "0";
+            setTimeout(() => placeholder.remove(), 300);
+          }
+        }
 
-            initFishtank();
+        initFishtank();
 
-            // Handle window resize
-            window.addEventListener('resize', () => {
-                const width = container.clientWidth;
-                const canvas = document.getElementById('main-fishtank');
-                canvas.width = width;
-                canvas.height = width < 480 ? 250 : width < 768 ? 300 : 400;
-            });
+        // Handle window resize
+        window.addEventListener("resize", () => {
+          const width = container.clientWidth;
+          const canvas = document.getElementById("main-fishtank");
+          canvas.width = width;
+          canvas.height = width < 480 ? 250 : width < 768 ? 300 : 400;
         });
+      });
     </script>
 
     <script type="text/javascript">
-        var stock_url = "https://raw.githubusercontent.com/rreichel3/US-Stock-Symbols/main/all/all_tickers.txt";
-        var stock_list;
-        var ticker;
-        var buy = Math.random() < 0.5;
+      var stock_url =
+        "https://raw.githubusercontent.com/rreichel3/US-Stock-Symbols/main/all/all_tickers.txt";
+      var stock_list;
+      var ticker;
+      var buy = Math.random() < 0.5;
 
-        fetch(stock_url).then(function(resp) {
-            resp.text().then(function(text) {
-                stock_list = text.split("\n");
-                stock_list.pop();
-                ticker = stock_list[Math.floor(Math.random() * stock_list.length)];
-                done();
-            });
+      fetch(stock_url).then(function (resp) {
+        resp.text().then(function (text) {
+          stock_list = text.split("\n");
+          stock_list.pop();
+          ticker = stock_list[Math.floor(Math.random() * stock_list.length)];
+          done();
         });
+      });
 
-        function done() {
-            var msg = "";
-            if (buy) {
-                msg = " to the moon! BUY BUY BUY";
-                document.getElementById("stock_img").src = "static/images/wojak_stock_up.webp";
-            } else {
-                msg = " down the toilet! SELL SELL SELL";
-                document.getElementById("stock_img").src = "static/images/wojak_stock_down.gif";
-            }
-            document.getElementById("stock_ticker").textContent = ticker;
-            document.getElementById("stock_msg").textContent = msg;
+      function done() {
+        var msg = "";
+        if (buy) {
+          msg = " to the moon! BUY BUY BUY";
+          document.getElementById("stock_img").src =
+            "static/images/wojak_stock_up.webp";
+        } else {
+          msg = " down the toilet! SELL SELL SELL";
+          document.getElementById("stock_img").src =
+            "static/images/wojak_stock_down.gif";
         }
-
+        document.getElementById("stock_ticker").textContent = ticker;
+        document.getElementById("stock_msg").textContent = msg;
+      }
     </script>
-</body>
+  </body>
 </html>
