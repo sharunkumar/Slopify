@@ -82,15 +82,18 @@
             flex: 1;
             padding: 8px;
             border: 2px inset var(--border-color);
+            border-right: 2px  var(--border-color);
+            border-bottom: 2px  var(--border-color);
             background-color: var(--bg-primary);
-            border-radius: 0;
             color: var(--text-primary);
-            font-family: 'Courier New', monospace;
+            font-family: monospace;
         }
 
         button {
             color: var(--text-primary);
+            
             background-color: var(--border-color);
+            font-family: monospace;
         }
 
         button:hover {
@@ -119,7 +122,7 @@
         <div id="bottomPanel">
             <div id="inputContainer">
                 <input type="text" id="messageInput" placeholder="Type a message..." maxlength="200">
-                <button id="sendButton" onclick="sendMessage()">Send</button>
+                <button id="sendButton" style="font-weight: bold;" onclick="sendMessage()">Send</button>
             </div>
             <div id="controls">
                 <button id="createButton" onclick="createOrJoinRoom()">Create or Join a Room</button>
