@@ -115,11 +115,12 @@
         </div>
     </div>
     <script>
-        // JavaScript remains exactly the same
-        window.usernames = new Set();
+          // Track usernames in the current room
+          window.usernames = new Set();
         window.usernameConnection = null;
 
         async function initUsernameTracking(room) {
+            // Create a separate subchannel for username management
             window.usernameConnection = new TunnelConnection(
                 'https://slopify_chat.infernity.dev/',
                 room,
@@ -140,12 +141,11 @@
                 } else if (data.type === 'username_released') {
                     window.usernames.delete(data.username);
                 } else if (data.type === 'username_request') {
+                    // If we have this username, respond that it's taken
                     if (data.username === window.userName) {
                         window.usernameConnection.send(JSON.stringify({
-                            type: 'username_response',
-                            username: data.username,
-                            taken: true,
-                            requestId: data.requestId
+                            type: 'username_taken',
+                            username: data.username
                         }));
                     }
                 }
@@ -158,6 +158,7 @@
             let room = prompt("Enter the name of the room you want to join or create, leave it blank to randomize:");
             window.chatConnection.close();
             if (window.usernameConnection) {
+                // Release old username from previous room
                 window.usernameConnection.send(JSON.stringify({
                     type: 'username_released',
                     username: window.userName
@@ -176,12 +177,14 @@
             await window.chatConnection.create();
             await window.chatConnection.connect();
             
+            // Initialize username tracking for new room
             window.usernames.clear();
             await initUsernameTracking(room);
             
             document.getElementById('roomInfo').textContent = `Connected to room: ${room}`;
             localMessage('System:', `${window.userName} connected to room ${room}. ---`, true);
             
+            // Announce username in new room
             window.usernameConnection.send(JSON.stringify({
                 type: 'username_taken',
                 username: window.userName
@@ -190,40 +193,21 @@
 
         async function isUsernameAvailable(username) {
             return new Promise((resolve) => {
-                let timeoutId;
-                let resolved = false;
-
-                function handleResponse(event) {
-                    try {
-                        let data = JSON.parse(event.data);
-                        if (data.type === 'username_response' && data.username === username) {
-                            if (data.taken) {
-                                cleanup(false);
-                            }
-                        }
-                    } catch (e) {
-                        console.error('Error handling username response:', e);
-                    }
+                if (window.usernames.has(username)) {
+                    resolve(false);
+                    return;
                 }
 
-                function cleanup(result) {
-                    if (!resolved) {
-                        resolved = true;
-                        clearTimeout(timeoutId);
-                        window.usernameConnection.eventSource.removeEventListener('message', handleResponse);
-                        resolve(result);
-                    }
-                }
-
-                window.usernameConnection.eventSource.addEventListener('message', handleResponse);
-
+                // Request if username is taken
                 window.usernameConnection.send(JSON.stringify({
                     type: 'username_request',
-                    username: username,
-                    requestId: Math.random().toString(36).substring(7)
+                    username: username
                 }));
 
-                timeoutId = setTimeout(() => cleanup(true), 1000);
+                // Wait a short time for responses
+                setTimeout(() => {
+                    resolve(!window.usernames.has(username));
+                }, 500);
             });
         }
 
@@ -234,6 +218,7 @@
                 return;
             }
 
+            // Username validation
             if (username.length < 3 || username.length > 15) {
                 alert('Username must be between 3 and 15 characters');
                 setUserName();
@@ -253,6 +238,7 @@
                 return;
             }
 
+            // Release old username if exists
             if (window.userName) {
                 window.usernameConnection.send(JSON.stringify({
                     type: 'username_released',
@@ -260,9 +246,11 @@
                 }));
             }
 
+            // Set new username
             window.userName = username;
             localStorage['userName'] = username;
             
+            // Announce new username
             window.usernameConnection.send(JSON.stringify({
                 type: 'username_taken',
                 username: username
@@ -325,6 +313,7 @@
         document.addEventListener('DOMContentLoaded', async () => {
             window.userName = localStorage['userName'] || null;
             
+            // Initialize connections
             window.chatConnection = getTunnelConnection('global');
             await window.chatConnection.init();
             await window.chatConnection.create();
@@ -335,6 +324,7 @@
             if (!window.userName) {
                 setUserName();
             } else {
+                // Announce existing username
                 window.usernameConnection.send(JSON.stringify({
                     type: 'username_taken',
                     username: window.userName
