@@ -764,6 +764,18 @@
           });
         </script>
       </section>
+      <div id="cookiebanner" style="background: black; position:fixed; bottom:0px; height:auto !important;">
+      <p>This site may or may not use cookies. I actually don't know.</p>
+      <button id="hmmm yummy cookies" onclick="cookieclick()">Uh ok i guess</button>
+      <button id="ewww cookies no yummy" onclick="cookieclick()">Get out of my face</button>
+      <script type="text/javascript">
+        function cookieclick() {
+            let gfg_down =
+                document.getElementById("cookiebanner");
+            gfg_down.parentNode.removeChild(cookiebanner);
+        }
+      </script>
+      </div>
       <section>
         <h2>Flappy Musk</h2>
         <canvas id="flappyMuskCanvas" width="400" height="600" style="border: 1px solid #000;"></canvas>
