@@ -1,101 +1,108 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>chat</title>
     <script src="static/js/tunnel_lib.js" defer></script>
     <style>
-      body {
-          margin: 0;
-          padding: 0;
-          height: 100vh;
-          overflow: hidden;
-      }
+        :root {
+            --bg-primary: #1a1a1a;
+            --bg-secondary: #252525;
+            --border-color: #333;
+            --text-primary: #e0e0e0;
+            --text-secondary: #b0b0b0;
+        }
 
-      #chatContainer {
-          height: 100vh;
-          display: flex;
-          flex-direction: column;
-      }
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            overflow: hidden;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: 'Courier New', monospace;
+        }
 
-      #mainContent {
-          flex: 1;
-          overflow: hidden;
-          position: relative;
-      }
+        #chatContainer {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
 
-      #roomInfo {
-          padding: 15px;
-          background-color: #f8f9fa;
-          border-bottom: 1px solid #dee2e6;
-      }
+        #mainContent {
+            flex: 1;
+            overflow: hidden;
+            position: relative;
+        }
 
-      #messages {
-          height: calc(100% - 80px); /* Subtract room info height */
-          overflow-y: auto;
-          padding: 20px;
-      }
+        #roomInfo {
+            padding: 15px;
+            background-color: var(--bg-secondary);
+            border-bottom: 1px solid var(--border-color);
+        }
 
-      #bottomPanel {
-          background-color: #f8f9fa;
-          border-top: 1px solid #dee2e6;
-          padding: 15px;
-      }
+        #messages {
+            height: calc(100% - 80px);
+            overflow-y: auto;
+            padding: 20px;
+        }
 
-      .message {
-          margin-bottom: 6px;
-          display: flex;
-          align-items: center;
-      }
+        #bottomPanel {
+            background-color: var(--bg-secondary);
+            border-top: 1px solid var(--border-color);
+            padding: 15px;
+        }
 
-      .username {
-          font-weight: bold;
-          position: relative;
-      }
+        .message {
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+        }
 
-      .username:after {
-          content: ": "; 
-      }
+        .username {
+            font-weight: bold;
+            position: relative;
+        }
 
-      #inputContainer {
-          display: flex;
-          gap: 10px;
-          margin-bottom: 10px;
-      }
+        .username:after {
+            content: ": ";
+            color: var(--text-primary);
+        }
 
-      #messageInput {
-          flex: 1;
-          padding: 8px;
-          border: 1px solid #ccc;
-          border-radius: 4px;
-      }
+        #inputContainer {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
 
-      #controls {
-          display: flex;
-          gap: 10px;
-      }
+        #messageInput {
+            flex: 1;
+            padding: 8px;
+            border: 1px solid var(--border-color);
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: 'Courier New', monospace;
+        }
 
-      button {
-          padding: 8px 16px;
-          background-color: #007bff;
-          color: white;
-          border: none;
-          border-radius: 4px;
-          cursor: pointer;
-      }
+        button:hover {
+            background-color: var(--border-color);
+        }
 
-      button:hover {
-          background-color: #0056b3;
-      }
+        #controls {
+            display: flex;
+            gap: 10px;
+        }
 
-      #usernameError {
-          color: red;
-          margin-top: 5px;
-          display: none;
-      }
+        #usernameError {
+            color: #ff6b6b;
+            margin-top: 5px;
+            display: none;
+        }
     </style>
 </head>
+
 <body>
     <div id="chatContainer">
         <div id="mainContent">
@@ -115,9 +122,14 @@
         </div>
     </div>
     <script>
-          // Track usernames in the current room
-          window.usernames = new Set();
+        // Track usernames in the current room
+        window.usernames = new Set();
         window.usernameConnection = null;
+
+        function getRandomSoftColor() {
+            const hue = Math.floor(Math.random() * 360);
+            return `hsl(${hue}, 70%, 75%)`; // fairly soft 
+        }
 
         async function initUsernameTracking(room) {
             // Create a separate subchannel for username management
@@ -165,25 +177,25 @@
                 }));
                 window.usernameConnection.close();
             }
-            
+
             if (room) {
                 window.chatConnection = getTunnelConnection(room);
             } else {
                 window.chatConnection = getTunnelConnection('');
                 room = window.chatConnection.tunnelId;
             }
-            
+
             await window.chatConnection.init();
             await window.chatConnection.create();
             await window.chatConnection.connect();
-            
+
             // Initialize username tracking for new room
             window.usernames.clear();
             await initUsernameTracking(room);
-            
+
             document.getElementById('roomInfo').textContent = `Connected to room: ${room}`;
             localMessage('System:', `${window.userName} connected to room ${room}. ---`, true);
-            
+
             // Announce username in new room
             window.usernameConnection.send(JSON.stringify({
                 type: 'username_taken',
@@ -249,7 +261,7 @@
             // Set new username
             window.userName = username;
             localStorage['userName'] = username;
-            
+
             // Announce new username
             window.usernameConnection.send(JSON.stringify({
                 type: 'username_taken',
@@ -275,19 +287,28 @@
             let usernameElement = document.createElement('div');
             usernameElement.textContent = username;
             usernameElement.classList.add('username');
+
+            // Set random color for username if not a system message
+            if (!isSystem) {
+                if (!window.userColors) window.userColors = {};
+                if (!window.userColors[username]) {
+                    window.userColors[username] = getRandomSoftColor();
+                }
+                usernameElement.style.color = window.userColors[username];
+            }
+
             let messageTextElement = document.createElement('div');
             messageTextElement.textContent = message;
             messageTextElement.classList.add('message-text');
             if (isSystem) {
-                usernameElement.style.color = '#f00';
-                messageTextElement.style.color = '#f00';
+                usernameElement.style.color = '#ff6b6b';
+                messageTextElement.style.color = '#ff6b6b';
             }
             messageContainer.appendChild(usernameElement);
             messageContainer.appendChild(messageTextElement);
             messagesContainer.appendChild(messageContainer);
             messagesContainer.scrollTop = messagesContainer.scrollHeight;
         }
-
         function processMessage(message) {
             try {
                 let messageData = JSON.parse(message);
@@ -301,7 +322,7 @@
         function sendMessage() {
             let userMessage = document.getElementById('messageInput').value;
             if (!userMessage.trim()) return;
-            
+
             let messageData = {
                 username: window.userName,
                 message: userMessage
@@ -312,15 +333,15 @@
 
         document.addEventListener('DOMContentLoaded', async () => {
             window.userName = localStorage['userName'] || null;
-            
+
             // Initialize connections
             window.chatConnection = getTunnelConnection('global');
             await window.chatConnection.init();
             await window.chatConnection.create();
             await window.chatConnection.connect();
-            
+
             await initUsernameTracking('global');
-            
+
             if (!window.userName) {
                 setUserName();
             } else {
@@ -331,7 +352,7 @@
                 }));
             }
 
-            document.addEventListener("keydown", function(event) {
+            document.addEventListener("keydown", function (event) {
                 if (event.key === "Enter") {
                     sendMessage();
                 }
@@ -339,4 +360,5 @@
         });
     </script>
 </body>
+
 </html>
