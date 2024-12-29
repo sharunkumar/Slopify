@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/x-icon" href="/static/images/favicon.ico">
     <title>Slopify</title>
     <style>
       body {
@@ -316,6 +317,7 @@
       </div>
       <image id="frog" src="static/images/frog.webp"></image>
       <button id="vibeButton">Improve the Mood</button>
+      <button onclick="enableQuotes()">ENABLE FROG WISDOM</button>
       <a href="https://www.hitwebcounter.com" target="_blank">
           <img src="https://hitwebcounter.com/counter/counter.php?page=18132009&style=0010&nbdigits=9&type=page&initCount=0" title="Counter Widget" Alt="Visit counter For Websites"   border="0" /></a>
     </header>
@@ -553,6 +555,8 @@
         </p>
         <ul>
           <li><a href="https://motherfuckingwebsite.com/" target="_blank">This is a motherfucking website. And it's fucking perfect.</a></li>
+          <li><a href="http://bettermotherfuckingwebsite.com/" target="_blank">This is still a motherfucking website.
+          And it's more fucking perfect than the last guy's.</a>
           <li><a href="https://nohello.net/" target="_blank">no hello - please don't say just hello in chat</a></li>
           <li><a href="https://dontasktoask.com/" target="_blank">Don't ask to ask, just ask</a></li>
         </ul>
@@ -780,5 +784,13 @@
         document.getElementById("stock_msg").textContent = msg;
       }
     </script>
-  </body>
+    <script>
+        function rainbowPulse() {
+            const hue = (Date.now() /10) % 360;
+            document.body.style.backgroundColor = `hsl(${hue}, 70%, 20%)`;
+            requestAnimationFrame(rainbowPulse);
+        }
+        rainbowPulse();
+    </script>
+</body>
 </html>
