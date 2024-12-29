@@ -95,6 +95,15 @@
           margin-top: 5px;
           display: none;
       }
+
+      body.hide-images .chat-image {
+        display: none;
+      }
+
+      .chat-image {
+        max-width: 50vw;
+        max-height: 50vh;
+      }
     </style>
 </head>
 <body>
@@ -111,7 +120,9 @@
             <div id="controls">
                 <button id="createButton" onclick="createOrJoinRoom()">Create or Join a Room</button>
                 <button id="setUsernameButton" onclick="setUserName()">Set Username</button>
+                <button id="toggleImagesButton" onclick="toggleImages()">Hide Images</button>
             </div>
+    
             <div id="usernameError"></div>
         </div>
     </div>
@@ -268,6 +279,39 @@
             )
         }
 
+        function handleImages(messageText) {
+            const re = /^(https?:\/\/[^ ]+)\.pic$/;
+            let messageTextElement = document.createElement('div');
+            messageTextElement.classList.add('message-text');
+
+            let match = messageText.match(re);
+
+            if (!match) {
+                messageTextElement.textContent = messageText;
+            } else {
+                let imageElement = document.createElement('img');
+                imageElement.classList.add('chat-image');
+                imageElement.src = match[1];
+                messageTextElement.appendChild(imageElement);
+            }
+
+            return messageTextElement;
+        }
+
+        function toggleImages() {
+            let btn = document.getElementById('toggleImagesButton');
+
+            if (document.body.classList.contains('hide-images')) {
+                document.body.classList.remove('hide-images');
+                btn.innerText = 'Hide Images';
+                localStorage.setItem('hideImages', "false");
+            } else {
+                document.body.classList.add('hide-images');
+                btn.innerText = 'Show Images';
+                localStorage.setItem('hideImages', "true");
+            }
+        }
+
         function localMessage(username, message, isSystem) {
             if (!isSystem) isSystem = false;
             let messagesContainer = document.getElementById('messages');
@@ -276,9 +320,7 @@
             let usernameElement = document.createElement('div');
             usernameElement.textContent = username;
             usernameElement.classList.add('username');
-            let messageTextElement = document.createElement('div');
-            messageTextElement.textContent = message;
-            messageTextElement.classList.add('message-text');
+            let messageTextElement = handleImages(message);
             if (isSystem) {
                 usernameElement.style.color = '#f00';
                 messageTextElement.style.color = '#f00';
@@ -337,6 +379,10 @@
                     sendMessage();
                 }
             });
+
+            if (localStorage.getItem('hideImages') === "true") {
+                toggleImages();
+            }
         });
     </script>
 </body>
