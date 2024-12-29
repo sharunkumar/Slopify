@@ -1,5 +1,3 @@
-// fishtank.js
-
 class ConstrainedPoint {
     constructor(x, y, constraintRadius, speed, isHead = false, canvasWidth, canvasHeight, buffer = 30) {
         this.x = x;
