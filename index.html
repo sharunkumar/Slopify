@@ -428,6 +428,7 @@
       <button id="vibeButton">Improve the Mood</button>
       <button id="wisdomButton">ENABLE FROG WISDOM</button>
       <p>Vist SlopChat™ to chat with other slop enthusiasts. <a href="chat.html">Click here!/a></p>
+      <button id="clickme">Click me!</button>
       <a href="https://www.hitwebcounter.com" target="_blank">
         <img
           src="https://hitwebcounter.com/counter/counter.php?page=18132009&style=0010&nbdigits=9&type=page&initCount=0"
@@ -1003,6 +1004,25 @@
       }
 
       runOnKonami(coolVideo)
+    </script>
+    <script>
+        const clickMeBtn = document.getElementById("clickme");
+        const clickMeBtnRect = clickMeBtn.getBoundingClientRect();
+        const clickMeBtnWidth = clickMeBtnRect.width;
+        const clickMeBtnHeight = clickMeBtnRect.height;
+
+        clickMeBtn.addEventListener("mouseover", function() {
+          let newTop = Math.random() * (window.innerHeight - clickMeBtnHeight);
+          let newRight = Math.random() * (window.innerWidth - clickMeBtnWidth);
+
+          clickMeBtn.style.position = "fixed";
+          clickMeBtn.style.top = `${newTop}px`;
+          clickMeBtn.style.right = `${newRight}px`;
+        });
+
+        window.addEventListener("scroll", function() {
+          clickMeBtn.style.position = "static";
+        });
     </script>
 </body>
 </html>
