@@ -208,6 +208,19 @@
       .fourier-container {
         text-align: center;
       }
+
+      #foxy {
+        height: 600px;
+        width: auto;
+        background: url('static/images/cute.jpg');
+        background-repeat: no-repeat;
+      }
+
+      #foxy:hover {
+        background: url('static/images/snarl.jpg');
+        background-repeat: no-repeat;
+
+      }
     </style>
     <audio id="vibeAudio" loop>
       <source
@@ -445,7 +458,7 @@
                     in vec4 color;
                     out vec4 vColor;
                     uniform mat4 mvp;
-        
+
                     void main() {
                         vColor = color;
                         gl_Position = mvp * position;
@@ -460,7 +473,7 @@
                     precision mediump float;
                     in vec4 vColor;
                     out vec4 fragColor;
-        
+
                     void main() {
                         fragColor = vColor;
                     }`
@@ -637,6 +650,10 @@
           src="https://www.shadertoy.com/embed/ld3Gz2?gui=false&paused=false&muted=false"
           allowfullscreen
         ></iframe>
+      </section>
+      <section>
+        <h1>The Fennec Fox in dis bish</h1>
+        <div id="foxy"></div>
       </section>
       <section>
         <h2>Things people should know</h2>
