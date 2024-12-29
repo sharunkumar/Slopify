@@ -61,10 +61,11 @@
             align-items: center;
         }
 
-      .username:after {
-          content: ": "; 
-          margin-right: 6px; /* forgot that the space wouldn't render lol */
-      }
+        .username:after {
+            content: ": ";
+            margin-right: 6px;
+            /* forgot that the space wouldn't render lol */
+        }
 
         .username:after {
             content: ": ";
@@ -80,8 +81,9 @@
         #messageInput {
             flex: 1;
             padding: 8px;
-            border: 1px solid var(--border-color);
+            border: 2px inset var(--border-color);
             background-color: var(--bg-primary);
+            border-radius: 0;
             color: var(--text-primary);
             font-family: 'Courier New', monospace;
         }
