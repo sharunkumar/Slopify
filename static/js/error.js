@@ -171,7 +171,10 @@ class Windows95Error {
             "RAHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH",
             "???????????????????",
             "FWÆH",
-            "This is illegal: The feds have been informed and are on their way"
+            "This is illegal: The feds have been informed and are on their way",
+            "You're in danger...",
+            "You disrespected the frog, now you must pay.",
+             "WINDOWS ME HAS BEEN INSTALLED, PREPARE FOR THE WORST"
         ];
         return errorList[Utils.randomInt(0, errorList.length - 1)];
     }
