@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="static/css/page-nav.css">
     <link rel="stylesheet" href="static/css/error.css">
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
 
 	<style>
 
@@ -237,6 +238,16 @@ img {
 
       #d {
         font-size: 0.75em;
+      }
+       
+      #mandelbrot-section {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+      }
+
+      canvas {
+          border: 2px solid black; /* Borde visible para el canvas */
       }
 
       .fourier-container {
@@ -961,8 +972,6 @@ document.addEventListener('DOMContentLoaded', () => {
 window.addEventListener('resize', handleResponsiveLayout);
 </script>
 
-
-
       <div>
         <p>
           Try out the new coding language that is 100% better than anything:
@@ -1025,6 +1034,16 @@ window.addEventListener('resize', handleResponsiveLayout);
         <img src="static/images/Jesus.png" />
       </div>
       <img src="https://secret.kgncengiz.com/F.jpg" />
+
+      <section class="importante" style="display: flex; justify-content: center; align-items: center; height:">        
+        <section id="mandelbrot-section">
+            <canvas id="fractalCanvas" width="400" height="400"></canvas>
+        </section>
+        <section class="mandelbrot-script">
+            <script src="mandelbrot_uwu.js"></script> 
+        </section>
+      </section>
+      
       <section class="importante">
         <section>
           <canvas id="glCanvas" width="400" height="400"></canvas>
