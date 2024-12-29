@@ -1,107 +1,157 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>chat</title>
     <script src="static/js/tunnel_lib.js" defer></script>
     <style>
-      body {
-          margin: 0;
-          padding: 0;
-          height: 100vh;
-          overflow: hidden;
-      }
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            overflow: hidden;
+            font-family: 'Comic Sans MS';
+        }
 
-      #chatContainer {
-          height: 100vh;
-          display: flex;
-          flex-direction: column;
-      }
+        #chatContainer {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background-color: #242424;
+        }
 
-      #mainContent {
-          flex: 1;
-          overflow: hidden;
-          position: relative;
-      }
+        #mainContent {
+            flex: 1;
+            overflow: hidden;
+            position: relative;
+            background-color: #222222;
+        }
 
-      #roomInfo {
-          padding: 15px;
-          background-color: #f8f9fa;
-          border-bottom: 1px solid #dee2e6;
-      }
+        #roomInfo {
+            padding: 15px;
+            background-color: #353535;
+            border-bottom: 1px solid #525252;
+            color: white;
+            font-size: large;
+        }
 
-      #messages {
-          height: calc(100% - 80px); /* Subtract room info height */
-          overflow-y: auto;
-          padding: 20px;
-      }
+        #roomInfo>p {
+            display: inline-block;
+            transform: translateX(100px)scale(2, 1);
+            /* W3C */
+        }
 
-      #bottomPanel {
-          background-color: #f8f9fa;
-          border-top: 1px solid #dee2e6;
-          padding: 15px;
-      }
+        #messages {
+            height: calc(100% - 80px);
+            /* Subtract room info height */
+            overflow-y: auto;
+            padding: 20px;
+            background-color: #525252;
+            color: white;
+            font-weight: lighter;
+        }
 
-      .message {
-          margin-bottom: 6px;
-          display: flex;
-          align-items: center;
-      }
+        #bottomPanel {
+            background-color: #525252;
+            border-top: 1px solid #525252;
+            padding: 15px;
+        }
 
-      .username {
-          font-weight: bold;
-          position: relative;
-      }
+        .message {
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+        }
 
-      .username:after {
-          content: ": "; 
-          margin-right: 6px; /* forgot that the space wouldn't render lol */
-      }
+        .username {
+            font-weight: bold;
+            position: relative;
+        }
 
-      #inputContainer {
-          display: flex;
-          gap: 10px;
-          margin-bottom: 10px;
-      }
+        .username:after {
+            content: ": ";
+            margin-right: 6px;
+            /* forgot that the space wouldn't render lol */
+        }
 
-      #messageInput {
-          flex: 1;
-          padding: 8px;
-          border: 1px solid #ccc;
-          border-radius: 4px;
-      }
+        #inputContainer {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+            background-color: #525252;
+        }
 
-      #controls {
-          display: flex;
-          gap: 10px;
-      }
+        #messageInput {
+            flex: 1;
+            padding: 8px;
+            border-radius: 4px;
+            background-color: #3e3d3d;
+            border: 1px rgb(226, 226, 226) solid;
+            color: white;
+        }
 
-      button {
-          padding: 8px 16px;
-          background-color: #007bff;
-          color: white;
-          border: none;
-          border-radius: 4px;
-          cursor: pointer;
-      }
+        #controls {
+            display: flex;
+            gap: 10px;
+            background-color: #525252;
+        }
 
-      button:hover {
-          background-color: #0056b3;
-      }
+        button {
+            padding: 8px 16px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
 
-      #usernameError {
-          color: red;
-          margin-top: 5px;
-          display: none;
-      }
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #usernameError {
+            color: red;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .hi {
+            position:absolute;top: 35px;left:700px;
+            transform: rotate3d(0, 1, 1, 0deg);
+            animation-name: gay;
+            animation-duration: 4s;
+            animation-iteration-count: infinite;
+        }
+
+        @keyframes gay {
+            0% {
+                transform: rotate3d(0, 1, 1, 0deg);
+            }
+            
+            100% {
+                transform: rotate3d(0, 1, 1, 360deg);
+            }
+        }
     </style>
 </head>
+
 <body>
+
     <div id="chatContainer">
         <div id="mainContent">
-            <div id="roomInfo">Connected to room: <strong>global</strong></div>
+            <div id="roomInfo">
+                <p>Connected to room: <strong>global</strong></p>
+            </div>
             <div id="messages"></div>
+        </div>
+        <div class="hi">
+            <a href="/index.html">
+                <img src="/static/images//4db62b6a70d285b0efb299ee6816504e.jpg" width="100" height="100">
+                <p style="color:magenta;">Go BACK</p>
+            </a>
         </div>
         <div id="bottomPanel">
             <div id="inputContainer">
@@ -114,11 +164,13 @@
             </div>
             <div id="usernameError"></div>
         </div>
+        
     </div>
     <script>
-          // Track usernames in the current room
-          window.usernames = new Set();
+        // Track usernames in the current room
+        window.usernames = new Set();
         window.usernameConnection = null;
+        let notificationSound = new Audio("/static/audio/youvegotmail.mp3")
 
         async function initUsernameTracking(room) {
             // Create a separate subchannel for username management
@@ -166,25 +218,25 @@
                 }));
                 window.usernameConnection.close();
             }
-            
+
             if (room) {
                 window.chatConnection = getTunnelConnection(room);
             } else {
                 window.chatConnection = getTunnelConnection('');
                 room = window.chatConnection.tunnelId;
             }
-            
+
             await window.chatConnection.init();
             await window.chatConnection.create();
             await window.chatConnection.connect();
-            
+
             // Initialize username tracking for new room
             window.usernames.clear();
             await initUsernameTracking(room);
-            
+
             document.getElementById('roomInfo').textContent = `Connected to room: ${room}`;
             localMessage('System:', `${window.userName} connected to room ${room}. ---`, true);
-            
+
             // Announce username in new room
             window.usernameConnection.send(JSON.stringify({
                 type: 'username_taken',
@@ -250,7 +302,7 @@
             // Set new username
             window.userName = username;
             localStorage['userName'] = username;
-            
+
             // Announce new username
             window.usernameConnection.send(JSON.stringify({
                 type: 'username_taken',
@@ -287,6 +339,10 @@
             messageContainer.appendChild(messageTextElement);
             messagesContainer.appendChild(messageContainer);
             messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+            if (message.includes(localStorage['userName'])) {
+                notificationSound.play();
+            }
         }
 
         function processMessage(message) {
@@ -302,7 +358,7 @@
         function sendMessage() {
             let userMessage = document.getElementById('messageInput').value;
             if (!userMessage.trim()) return;
-            
+
             let messageData = {
                 username: window.userName,
                 message: userMessage
@@ -313,15 +369,15 @@
 
         document.addEventListener('DOMContentLoaded', async () => {
             window.userName = localStorage['userName'] || null;
-            
+
             // Initialize connections
             window.chatConnection = getTunnelConnection('global');
             await window.chatConnection.init();
             await window.chatConnection.create();
             await window.chatConnection.connect();
-            
+
             await initUsernameTracking('global');
-            
+
             if (!window.userName) {
                 setUserName();
             } else {
@@ -332,7 +388,7 @@
                 }));
             }
 
-            document.addEventListener("keydown", function(event) {
+            document.addEventListener("keydown", function (event) {
                 if (event.key === "Enter") {
                     sendMessage();
                 }
@@ -340,4 +396,5 @@
         });
     </script>
 </body>
+
 </html>
