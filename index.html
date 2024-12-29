@@ -284,6 +284,35 @@
         text-shadow: 2px 2px 0px #FF00FF;
         background-color: yellow;
       }
+
+      .top-right-button {
+        position: fixed;
+        top: 10px;
+        right: 10px;
+        padding: 10px 20px;
+        background-color: #b8bb26;
+        color: #282828;
+        border: none;
+        cursor: pointer;
+        font-size: 16px;
+        border-radius: 5px;
+        z-index: 1000;
+      }
+
+      .top-right-button:hover {
+        background-color: #a1b024;
+      }
+
+      @keyframes epilepticFlash {
+        0%, 100% { background-color: white; }
+        50% { background-color: black; }
+      }
+
+      .epileptic-mode {
+        animation: epilepticFlash 0.1s infinite;
+      }
+
+
     </style>
     <audio id="vibeAudio" loop>
       <source
@@ -317,6 +346,41 @@
   </script>
   </head>
   <body>
+
+  <!-- Epileptic Mode Button -->
+  <button class="top-right-button" id="epicButton">Epileptic Mode</button>
+
+  <script>
+    const epilepticAudio = new Audio("static/audio/bustin.mp3");
+    let isEpilepticModeOn = false;
+
+    document.getElementById("epicButton").addEventListener("click", () => {
+      const images = document.querySelectorAll("img");
+      if (isEpilepticModeOn) {
+        document.body.classList.remove("epileptic-mode");
+        epilepticAudio.pause();
+        epilepticAudio.currentTime = 0;
+        images.forEach(img => {
+          if (img.src.includes("/static/images/")) {
+            img.src = img.dataset.originalSrc || img.src;
+          }
+        });
+      } else {
+        document.body.classList.add("epileptic-mode");
+        epilepticAudio.volume = 1;
+        epilepticAudio.play();
+        images.forEach(img => {
+          if (img.src.includes("/static/images/")) {
+            img.dataset.originalSrc = img.src;
+            img.src = "static/images/ray-parker-jr.webp";
+          }
+        });
+      }
+      isEpilepticModeOn = !isEpilepticModeOn;
+    });
+  </script>
+
+  
 	<script src="static/js/oneko.js"></script>
     <a href="#maincontent" class="skipnav">Skip to Content (Press Enter)</a>
     <div
