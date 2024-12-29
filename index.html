@@ -289,7 +289,19 @@
             <p><span id="stock_ticker" style="color:yellow;"></span><span id="stock_msg"></span></p>
             <img src="" id="stock_img">
         </section>
-    
+        <section>
+            <script>
+            function setShaderToy() {
+                const ids = ['ld3Gz2', '4ttSWf', 'XslGRr', 'MdX3Rr', 'XsX3RB', 'WsSBzh']
+                let id = ids[parseInt(Math.random() * ids.length)]
+                ifrm_shadertoy.src = `https://www.shadertoy.com/embed/${id}?gui=true&paused=false&muted=false`
+            }
+            </script>
+            
+            <input type="button" value="SHADERZ" onclick="setShaderToy()" />
+            <br />
+            <iframe id="ifrm_shadertoy" width="640" height="360" frameborder="0" src="https://www.shadertoy.com/embed/ld3Gz2?gui=false&paused=false&muted=false" allowfullscreen></iframe>
+        </section>
     </main>
     <footer>
         <div style="text-align:center; margin-top: 20px;">
