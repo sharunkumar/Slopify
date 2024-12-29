@@ -88,10 +88,30 @@
             align-items: center;
             justify-content: center;
             transition: opacity 0.3s ease-out;
-         }
+        }
+        
         #frog {
             width: 400px;
             margin: 10px;
+        }
+        @keyframes frogPulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.5);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        #dancing-frog {
+            width: 400px;
+            margin: 10px;
+            animation: frogPulse 5s infinite;
         }
         #stock_img {
             width: 400px;
