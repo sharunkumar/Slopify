@@ -2,17 +2,15 @@ document.addEventListener('DOMContentLoaded', function () {
     const canvas = document.getElementById('flappyMuskCanvas');
     const ctx = canvas.getContext('2d');
 
-    // Game variables
-    const gravity = 0.6;
+    const gravity = 0.4;
     const jump = -10;
     const pipeWidth = 50;
     const pipeGap = 150;
     let gameOver = false;
-    let gameStarted = false; // Tracks if the game has started
+    let gameStarted = false;
 
-    // Elon image as the bird
     const elonImage = new Image();
-    elonImage.src = 'static/images/elon_head.jpeg'; // Replace with a path to Elon Musk's head image
+    elonImage.src = 'static/images/elon_head.jpeg';
 
     const bird = {
         x: 50,
@@ -85,7 +83,6 @@ document.addEventListener('DOMContentLoaded', function () {
         drawPipes();
         drawBird();
 
-        // Update bird only if the game has started
         if (gameStarted) {
             bird.velocity += gravity;
             bird.y += bird.velocity;
