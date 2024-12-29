@@ -1,4 +1,4 @@
-# Slopify
+![Slopify](SlopifyLogo.png)
 
 _"The [ideomotor effect](https://www.newmanmentalism.com/blog/a-mentalist-explains-how-ouija-boards-work-and-the-ideomotor-effect) of software"_
 
