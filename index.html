@@ -133,6 +133,18 @@
         width: 400px;
         height: 400px;
       }
+
+      .donut-container {
+        background-color: #000;
+        width: 400px;
+        height: 400px;
+      }
+      #d {
+        font-size: 0.75em;
+      }
+      .fourier-container {
+        text-align: center;
+      }
     </style>
     <audio id="vibeAudio">
       <source
@@ -472,15 +484,15 @@
             document.head.appendChild(script);
           </script>
         </section>
-        <section>
-          <a
-            href="https://ja.wikipedia.org/wiki/%E3%83%95%E3%83%BC%E3%83%AA%E3%82%A8%E5%A4%89%E6%8F%9B"
-          >
-            <img
-              src="https://upload.wikimedia.org/wikipedia/commons/2/2b/Fourier_series_and_transform.gif"
-            />
-          </a>
+        <section class="donut-container">
+          <pre id="d"></pre>
+          <script src="donut.js"></script>
         </section>
+      </section>
+      <section class="fourier-container">
+        <a href="https://ja.wikipedia.org/wiki/%E3%83%95%E3%83%BC%E3%83%AA%E3%82%A8%E5%A4%89%E6%8F%9B">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/2/2b/Fourier_series_and_transform.gif" />
+        </a>
       </section>
       <section class="fishtank-container">
         <div class="fishtank-placeholder">
