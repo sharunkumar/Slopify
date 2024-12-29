@@ -222,7 +222,7 @@
         text-align: center;
       }
 
-      #l8rgt{
+      #l8rgt {
         display: block;
         margin: 10px 0;
         padding: 15px 30px;
@@ -230,6 +230,8 @@
         font-family: var(--font);
         background: radial-gradient(circle, #b00b69, rgb(145, 69, 221));
         color: white;
+      }
+      
       #foxy {
         height: 600px;
         width: auto;
@@ -240,6 +242,34 @@
       #foxy:hover {
         background: url('static/images/snarl.jpg');
         background-repeat: no-repeat;
+      }
+      
+      @keyframes spin {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+      }
+
+      @keyframes shake {
+        0%, 100% { transform: translate(0, 0); }
+        10%, 30%, 50%, 70%, 90% { transform: translate(-5px, 5px); }
+        20%, 40%, 60%, 80% { transform: translate(5px, -5px); }
+      }
+
+      @keyframes flash {
+        0% { background-color: black; }
+        50% { background-color: white; }
+        100% { background-color: black; }
+      }
+
+      .worst-theme {
+        font-family: 'Comic Sans MS', cursive, sans-serif;
+        animation: spin 10s linear infinite, flash 1s step-start infinite;
+      }
+
+      .worst-theme * {
+        animation: rainbow 1s linear infinite, shake 0.5s ease-in-out infinite;
+        text-shadow: 2px 2px 0px #FF00FF;
+        background-color: yellow;
       }
     </style>
     <audio id="vibeAudio" loop>
@@ -437,6 +467,7 @@
           alt="Visit counter For Websites"
           border="0"
       /></a>
+      <button id="worseThemeButton">This can't get any worse, right?</button>
     </header>
     <main id="maincontent">
       <section>
@@ -749,6 +780,9 @@
         </script>
       </section>
       <section>
+        <iframe width="5%" height="1" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1633786749&auto_play=true"></iframe>
+      </section>
+      <section>
         <h2>oh hewwo thewe, you gwot twhis fwar uwu~! wouwd you wike to wead somethin’ awesome~? >w<</h2>
         <button type="button">
           <a href='/uwu.html'>wets seee~ >w<<a/>
@@ -1031,6 +1065,18 @@
         window.addEventListener("scroll", function() {
           clickMeBtn.style.position = "static";
         });
+    </script>
+    <script>
+      const worseThemeButton = document.getElementById("worseThemeButton");
+      document.addEventListener("DOMContentLoaded", () => {
+        const worseThemeButton = document.getElementById("worseThemeButton");
+        worseThemeButton.addEventListener("click", () => {
+          document.body.classList.toggle("worst-theme");
+          worseThemeButton.textContent = document.body.classList.contains("worst-theme") 
+            ? "Fix The Page Please!!" 
+            : "This can't get any worse, right?";
+        });
+      });
     </script>
 </body>
 </html>
