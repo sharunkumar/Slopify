@@ -4,6 +4,68 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Slopify</title>
+    <script>
+      const THE_OPPENHEIMER_INDEX = 69;
+      function getRandomInt(max) {
+        return Math.floor(Math.random() * max);
+      }
+
+      function showFullScreenImage(
+        imageUrl,
+        displayDuration = 2000,
+        fadeDuration = 1500
+      ) {
+        const overlay = document.createElement("div");
+        overlay.style.position = "fixed";
+        overlay.style.top = "0";
+        overlay.style.left = "0";
+        overlay.style.width = "100%";
+        overlay.style.height = "100%";
+        overlay.style.display = "flex";
+        overlay.style.alignItems = "center";
+        overlay.style.justifyContent = "center";
+        overlay.style.backgroundColor = "rgba(0,0,0,0.8)";
+        overlay.style.zIndex = "999999";
+
+        overlay.style.opacity = "1";
+        overlay.style.transition = `opacity ${fadeDuration}ms ease`;
+
+        const image = document.createElement("img");
+        image.src = imageUrl;
+        image.style.position = "absolute";
+        image.style.top = "0";
+        image.style.left = "0";
+        image.style.width = "100%";
+        image.style.height = "100%";
+        image.style.objectFit = "contain";
+
+        overlay.appendChild(image);
+
+        document.body.appendChild(overlay);
+
+        setTimeout(() => {
+          overlay.style.opacity = "0";
+        }, displayDuration);
+
+        setTimeout(() => {
+          if (overlay.parentNode) {
+            overlay.parentNode.removeChild(overlay);
+          }
+        }, displayDuration + fadeDuration);
+      }
+
+      var audio = new Audio("static/audio/protocol.mp3");
+      document.addEventListener("click", function (event) {
+        // Check if the clicked element is a button
+
+        var LUCKY_NUMBER = getRandomInt(THE_OPPENHEIMER_INDEX);
+        if (LUCKY_NUMBER === 0) {
+          audio.volume = 1;
+          audio.play();
+          showFullScreenImage("static/images/handsome.jpg", 1500, 1500);
+        }
+      });
+    </script>
     <style>
       body {
         font-family: Arial, sans-serif;
@@ -293,12 +355,26 @@
         >
       </p>
       <div>
-         <p>Try out the new coding language that is 100% better than anything: <a href="/embr" style="color: #b8bb26;">Embr</a></p>
+        <h1>MAXIMIZE YOUR WIN</h1>
+        <div class="w-full flex gap-2">
+          <div class="bg-black rounded-2xl w-16 as"></div>
+        </div>
+      </div>
+      <div>
+        <p>
+          Try out the new coding language that is 100% better than anything:
+          <a href="/embr" style="color: #b8bb26">Embr</a>
+        </p>
       </div>
       <image id="frog" src="static/images/frog.webp"></image>
       <button id="vibeButton">Improve the Mood</button>
       <a href="https://www.hitwebcounter.com" target="_blank">
-          <img src="https://hitwebcounter.com/counter/counter.php?page=18132009&style=0010&nbdigits=9&type=page&initCount=0" title="Counter Widget" Alt="Visit counter For Websites"   border="0" /></a>
+        <img
+          src="https://hitwebcounter.com/counter/counter.php?page=18132009&style=0010&nbdigits=9&type=page&initCount=0"
+          title="Counter Widget"
+          alt="Visit counter For Websites"
+          border="0"
+      /></a>
     </header>
     <main id="maincontent">
       <section>
