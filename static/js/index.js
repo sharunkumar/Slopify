@@ -60,3 +60,4 @@ function readQuote(theQuote) {
   window.speechSynthesis.speak(msg);
 }
 
+document.getElementById("wisdomButton").addEventListener("click", enableQuotes);
