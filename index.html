@@ -780,5 +780,13 @@
         document.getElementById("stock_msg").textContent = msg;
       }
     </script>
-  </body>
+    <script>
+        function rainbowPulse() {
+            const hue = (Date.now() /10) % 360;
+            document.body.style.backgroundColor = `hsl(${hue}, 70%, 20%)`;
+            requestAnimationFrame(rainbowPulse);
+        }
+        rainbowPulse();
+    </script>
+</body>
 </html>

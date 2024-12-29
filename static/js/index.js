@@ -12,10 +12,11 @@ function vibe() {
 }
 
 // TODO: Refactor random number generation
-document.body.style.background = 'hsl('+Math.floor(Math.random() * 255)+', 40%, 50%)';
-document.getElementsByTagName('header')[0].style.background = 'hsl('+Math.floor(Math.random() * 255)+', 50%, 40%)';
-document.getElementsByTagName('footer')[0].style.background = 'hsl('+Math.floor(Math.random() * 255)+', 50%, 40%)';
-document.getElementById('vibeButton').addEventListener('click', vibe);
+
+// document.body.style.background = 'hsl('+Math.floor(Math.random() * 255)+', 40%, 50%)';
+// document.getElementsByTagName('header')[0].style.background = 'hsl('+Math.floor(Math.random() * 255)+', 50%, 40%)';
+// document.getElementsByTagName('footer')[0].style.background = 'hsl('+Math.floor(Math.random() * 255)+', 50%, 40%)';
+// document.getElementById('vibeButton').addEventListener('click', vibe);
 
 function enableQuotes() {
   if (!("speechSynthesis" in window)) {
@@ -43,3 +44,4 @@ function readQuote(theQuote) {
   msg.pitch = 0.1;
   window.speechSynthesis.speak(msg);
 }
+
