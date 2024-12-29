@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let gameStarted = false;
 
     const elonImage = new Image();
-    elonImage.src = 'static/images/elon_head.jpeg';
+    elonImage.src = 'static/images/elon_head.png';
 
     const bird = {
         x: 50,
