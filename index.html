@@ -75,6 +75,7 @@
         padding: 0;
         color: #ebdbb2;
       }
+
       .skipnav {
         text-decoration: none;
         padding: 4px 8px;
@@ -83,6 +84,7 @@
         top: 0;
         font-weight: bold;
       }
+      
       .skipnav:focus,
       .skipnav:active {
         z-index: 99;
@@ -94,6 +96,7 @@
         width: fit-content;
         outline-offset: 2px;
       }
+
       header {
         color: #ebdbb2;
         padding: 20px 0;
@@ -103,25 +106,30 @@
         align-items: center;
         justify-content: center;
       }
+
       header h1 {
         margin: 0;
         font-size: 2.5rem;
       }
+
       main {
         padding: 20px;
         max-width: 800px;
         margin: 0 auto;
       }
+
       footer {
         text-align: center;
         padding: 10px 0;
         color: #ebdbb2;
         margin-top: 20px;
       }
+
       a {
         color: #b8bb26;
         text-decoration: underline;
       }
+
       a:hover {
         color: #83a598;
       }
@@ -173,6 +181,7 @@
         width: 400px;
         margin: 10px;
       }
+
       @keyframes frogPulse {
         0% {
           transform: scale(1);
@@ -192,6 +201,8 @@
         margin: 10px;
         animation: frogPulse 5s infinite;
       }
+
+
       #stock_img {
         width: 400px;
         height: 400px;
@@ -202,12 +213,15 @@
         width: 400px;
         height: 400px;
       }
+
       #d {
         font-size: 0.75em;
       }
+       
       .fourier-container {
         text-align: center;
       }
+
       #l8rgt{
         display: block;
         margin: 10px 0;
@@ -216,6 +230,16 @@
         font-family: var(--font);
         background: radial-gradient(circle, #b00b69, rgb(145, 69, 221));
         color: white;
+      #foxy {
+        height: 600px;
+        width: auto;
+        background: url('static/images/cute.jpg');
+        background-repeat: no-repeat;
+      }
+
+      #foxy:hover {
+        background: url('static/images/snarl.jpg');
+        background-repeat: no-repeat;
       }
     </style>
     <audio id="vibeAudio" loop>
@@ -229,6 +253,11 @@
       <source src="/static/audio/rick.m4a" type="audio/mp3" />
       Your browser does not support the audio element.
     </audio>
+    <script type="module">
+          import { rainbowCursor } from "https://unpkg.com/cursor-effects@latest/dist/esm.js";
+
+          new rainbowCursor();
+    </script>
     <script type="module" src="static/js/index.js"></script>
     <script>
       !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="init capture register register_once register_for_session unregister unregister_for_session getFeatureFlag getFeatureFlagPayload isFeatureEnabled reloadFeatureFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSessionId getSurveys getActiveMatchingSurveys renderSurvey canRenderSurvey getNextSurveyStep identify setPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException loadToolbar get_property getSessionProperty createPersonProfile opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing clear_opt_in_out_capturing debug".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
@@ -398,6 +427,7 @@
       <image id="frog" src="static/images/frog.webp"></image>
       <button id="vibeButton">Improve the Mood</button>
       <button id="wisdomButton">ENABLE FROG WISDOM</button>
+      <p>Vist SlopChat™ to chat with other slop enthusiasts. <a href="chat.html">Click here!/a></p>
       <a href="https://www.hitwebcounter.com" target="_blank">
         <img
           src="https://hitwebcounter.com/counter/counter.php?page=18132009&style=0010&nbdigits=9&type=page&initCount=0"
@@ -459,7 +489,7 @@
                     in vec4 color;
                     out vec4 vColor;
                     uniform mat4 mvp;
-        
+
                     void main() {
                         vColor = color;
                         gl_Position = mvp * position;
@@ -474,7 +504,7 @@
                     precision mediump float;
                     in vec4 vColor;
                     out vec4 fragColor;
-        
+
                     void main() {
                         fragColor = vColor;
                     }`
@@ -651,6 +681,10 @@
           src="https://www.shadertoy.com/embed/ld3Gz2?gui=false&paused=false&muted=false"
           allowfullscreen
         ></iframe>
+      </section>
+      <section>
+        <h1>The Fennec Fox in dis bish</h1>
+        <div id="foxy"></div>
       </section>
       <section>
         <h2>Things people should know</h2>
