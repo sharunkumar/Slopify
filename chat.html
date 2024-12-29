@@ -6,6 +6,43 @@
     <title>chat</title>
     <script src="static/js/tunnel_lib.js" defer></script>
     <style>
+      body {
+          margin: 0;
+          padding: 0;
+          height: 100vh;
+          overflow: hidden;
+      }
+
+      #chatContainer {
+          height: 100vh;
+          display: flex;
+          flex-direction: column;
+      }
+
+      #mainContent {
+          flex: 1;
+          overflow: hidden;
+          position: relative;
+      }
+
+      #roomInfo {
+          padding: 15px;
+          background-color: #f8f9fa;
+          border-bottom: 1px solid #dee2e6;
+      }
+
+      #messages {
+          height: calc(100% - 80px); /* Subtract room info height */
+          overflow-y: auto;
+          padding: 20px;
+      }
+
+      #bottomPanel {
+          background-color: #f8f9fa;
+          border-top: 1px solid #dee2e6;
+          padding: 15px;
+      }
+
       .message {
           margin-bottom: 6px;
           display: flex;
@@ -21,6 +58,37 @@
           content: ": "; 
       }
 
+      #inputContainer {
+          display: flex;
+          gap: 10px;
+          margin-bottom: 10px;
+      }
+
+      #messageInput {
+          flex: 1;
+          padding: 8px;
+          border: 1px solid #ccc;
+          border-radius: 4px;
+      }
+
+      #controls {
+          display: flex;
+          gap: 10px;
+      }
+
+      button {
+          padding: 8px 16px;
+          background-color: #007bff;
+          color: white;
+          border: none;
+          border-radius: 4px;
+          cursor: pointer;
+      }
+
+      button:hover {
+          background-color: #0056b3;
+      }
+
       #usernameError {
           color: red;
           margin-top: 5px;
@@ -30,25 +98,28 @@
 </head>
 <body>
     <div id="chatContainer">
-        <div id="roomInfo">Connected to room: <strong>global</strong></div>
-        <div id="messages"></div>
-        <div id="inputContainer">
-            <input type="text" id="messageInput" placeholder="Type a message..." maxlength="200">
-            <button id="sendButton" onclick="sendMessage()">Send</button>
+        <div id="mainContent">
+            <div id="roomInfo">Connected to room: <strong>global</strong></div>
+            <div id="messages"></div>
         </div>
-        <div style="margin-top: 10px;">
-            <button id="createButton" onclick="createOrJoinRoom()">Create or Join a Room</button>
-            <button id="setUsernameButton" onclick="setUserName()">Set Username</button>
+        <div id="bottomPanel">
+            <div id="inputContainer">
+                <input type="text" id="messageInput" placeholder="Type a message..." maxlength="200">
+                <button id="sendButton" onclick="sendMessage()">Send</button>
+            </div>
+            <div id="controls">
+                <button id="createButton" onclick="createOrJoinRoom()">Create or Join a Room</button>
+                <button id="setUsernameButton" onclick="setUserName()">Set Username</button>
+            </div>
+            <div id="usernameError"></div>
         </div>
-        <div id="usernameError"></div>
     </div>
     <script>
-        // Track usernames in the current room
+        // JavaScript remains exactly the same
         window.usernames = new Set();
         window.usernameConnection = null;
 
         async function initUsernameTracking(room) {
-            // Create a separate subchannel for username management
             window.usernameConnection = new TunnelConnection(
                 'https://slopify_chat.infernity.dev/',
                 room,
@@ -69,11 +140,12 @@
                 } else if (data.type === 'username_released') {
                     window.usernames.delete(data.username);
                 } else if (data.type === 'username_request') {
-                    // If we have this username, respond that it's taken
                     if (data.username === window.userName) {
                         window.usernameConnection.send(JSON.stringify({
-                            type: 'username_taken',
-                            username: data.username
+                            type: 'username_response',
+                            username: data.username,
+                            taken: true,
+                            requestId: data.requestId
                         }));
                     }
                 }
@@ -86,7 +158,6 @@
             let room = prompt("Enter the name of the room you want to join or create, leave it blank to randomize:");
             window.chatConnection.close();
             if (window.usernameConnection) {
-                // Release old username from previous room
                 window.usernameConnection.send(JSON.stringify({
                     type: 'username_released',
                     username: window.userName
@@ -105,14 +176,12 @@
             await window.chatConnection.create();
             await window.chatConnection.connect();
             
-            // Initialize username tracking for new room
             window.usernames.clear();
             await initUsernameTracking(room);
             
             document.getElementById('roomInfo').textContent = `Connected to room: ${room}`;
             localMessage('System:', `${window.userName} connected to room ${room}. ---`, true);
             
-            // Announce username in new room
             window.usernameConnection.send(JSON.stringify({
                 type: 'username_taken',
                 username: window.userName
@@ -121,21 +190,40 @@
 
         async function isUsernameAvailable(username) {
             return new Promise((resolve) => {
-                if (window.usernames.has(username)) {
-                    resolve(false);
-                    return;
+                let timeoutId;
+                let resolved = false;
+
+                function handleResponse(event) {
+                    try {
+                        let data = JSON.parse(event.data);
+                        if (data.type === 'username_response' && data.username === username) {
+                            if (data.taken) {
+                                cleanup(false);
+                            }
+                        }
+                    } catch (e) {
+                        console.error('Error handling username response:', e);
+                    }
                 }
 
-                // Request if username is taken
+                function cleanup(result) {
+                    if (!resolved) {
+                        resolved = true;
+                        clearTimeout(timeoutId);
+                        window.usernameConnection.eventSource.removeEventListener('message', handleResponse);
+                        resolve(result);
+                    }
+                }
+
+                window.usernameConnection.eventSource.addEventListener('message', handleResponse);
+
                 window.usernameConnection.send(JSON.stringify({
                     type: 'username_request',
-                    username: username
+                    username: username,
+                    requestId: Math.random().toString(36).substring(7)
                 }));
 
-                // Wait a short time for responses
-                setTimeout(() => {
-                    resolve(!window.usernames.has(username));
-                }, 500);
+                timeoutId = setTimeout(() => cleanup(true), 1000);
             });
         }
 
@@ -146,7 +234,6 @@
                 return;
             }
 
-            // Username validation
             if (username.length < 3 || username.length > 15) {
                 alert('Username must be between 3 and 15 characters');
                 setUserName();
@@ -166,7 +253,6 @@
                 return;
             }
 
-            // Release old username if exists
             if (window.userName) {
                 window.usernameConnection.send(JSON.stringify({
                     type: 'username_released',
@@ -174,11 +260,9 @@
                 }));
             }
 
-            // Set new username
             window.userName = username;
             localStorage['userName'] = username;
             
-            // Announce new username
             window.usernameConnection.send(JSON.stringify({
                 type: 'username_taken',
                 username: username
@@ -241,7 +325,6 @@
         document.addEventListener('DOMContentLoaded', async () => {
             window.userName = localStorage['userName'] || null;
             
-            // Initialize connections
             window.chatConnection = getTunnelConnection('global');
             await window.chatConnection.init();
             await window.chatConnection.create();
@@ -252,7 +335,6 @@
             if (!window.userName) {
                 setUserName();
             } else {
-                // Announce existing username
                 window.usernameConnection.send(JSON.stringify({
                     type: 'username_taken',
                     username: window.userName
