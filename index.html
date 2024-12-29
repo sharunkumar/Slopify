@@ -1203,6 +1203,21 @@ window.addEventListener('resize', handleResponsiveLayout);
           <a href='/uwu.html'>wets seee~ >w<<a/>
         </button>
       </section>
+      <section>
+	      <h2>Want some Winamp with your Slopify?</h2>
+	      <div id="webamp"></div>
+              <script src="https://unpkg.com/webamp"></script>
+              <script>
+                 const app = document.getElementById("webamp")
+                 const webamp = new Webamp();
+                 webamp.renderWhenReady(app);
+
+                 if (!Webamp.browserIsSupported()) {
+                    alert("Oh no! Webamp does not work in this browser!");
+                    throw new Error("What's the point of anything?");
+                 }
+             </script>
+      </section>
     </main>
     <footer>
       <div style="text-align: center; margin-top: 20px">
