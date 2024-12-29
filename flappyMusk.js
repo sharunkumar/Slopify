@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', function () {
         bird.y = canvas.height / 2;
         bird.velocity = 0;
         gameOver = false;
-        gameStarted = false; // Reset the game state
+        gameStarted = false;
         createInitialPipes();
         gameLoop(); // Restart the game loop
     }
@@ -79,7 +79,6 @@ document.addEventListener('DOMContentLoaded', function () {
     function gameLoop() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-        // Draw elements
         drawPipes();
         drawBird();
 
@@ -88,10 +87,8 @@ document.addEventListener('DOMContentLoaded', function () {
             bird.y += bird.velocity;
         }
 
-        // Update pipes
         updatePipes();
 
-        // Check for collisions
         if (checkCollision()) {
             gameOver = true;
         }
@@ -99,7 +96,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // Show Game Over
         if (gameOver) {
             ctx.fillStyle = '#ff0000';
-            ctx.font = '24px Arial'; // Reduced font size
+            ctx.font = '24px Arial';
             ctx.textAlign = 'center';
             const middleY = canvas.height / 2;
 
@@ -111,7 +108,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // Show "Click or Space to Start" message if the game hasn't started
         if (!gameStarted) {
             ctx.fillStyle = '#ffffff';
-            ctx.font = '18px Arial'; // Smaller font size for instructions
+            ctx.font = '18px Arial';
             ctx.textAlign = 'center';
             ctx.fillText('Click or Press Space to Start', canvas.width / 2, canvas.height / 2 - 40);
         }
@@ -119,7 +116,6 @@ document.addEventListener('DOMContentLoaded', function () {
         requestAnimationFrame(gameLoop);
     }
 
-    // Jump on click or spacebar press
     function jumpAction() {
         if (gameOver) {
             resetGame();
@@ -127,7 +123,7 @@ document.addEventListener('DOMContentLoaded', function () {
             if (!gameStarted) {
                 gameStarted = true; // Start the game on the first action
             }
-            bird.velocity = jump; // Make the bird jump
+            bird.velocity = jump;
         }
     }
 
@@ -135,12 +131,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
     document.addEventListener('keydown', function (e) {
         if (e.code === 'Space') {
-            e.preventDefault(); // Prevent scrolling when pressing space
+            e.preventDefault();
             jumpAction();
         }
     });
 
-    // Initialize the game
     elonImage.onload = () => {
         createInitialPipes();
         gameLoop();
