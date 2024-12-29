@@ -105,6 +105,11 @@
             </button>
         </div>
 
+        <!-- Skip Security Button -->
+        <button id="skip-security" style="background: #d9534f; color: #fff; padding: 10px; border: none; cursor: pointer; width: 100%; margin-top: 20px;">
+            Skip Security :(
+        </button>
+
         <form id="registration-form" style="display: none; flex-direction: column; gap: 10px;">
             <input type="text" id="username" placeholder="Username"
                    style="padding: 8px; margin: 5px 0; background: #282828; color: #ebdbb2; border: 1px solid #b8bb26;">
@@ -117,6 +122,7 @@
         </form>
     </div>
 </div>
+
 
 
 
@@ -309,7 +315,7 @@
         const captchaContent = document.getElementById('captcha-content');
         const captchaInput = document.getElementById('captcha-input');
         const submitCaptchaButton = document.getElementById('submit-captcha');
-
+        const skipSecurityButton = document.getElementById('skip-security'); // Add this line
 
         let currentCaptcha = security.generateMathCaptcha();
         captchaPrompt.textContent = currentCaptcha.question;
@@ -321,7 +327,6 @@
             switch(security.captchaCount) {
                 case 0:
                     isValid = Number(captchaInput.value) == currentCaptcha.answer;
-                    console.log(currentCaptcha.answer);
                     break;
                 case 1:
                     isValid = currentCaptcha.correctAnswers.every(answer =>
@@ -337,13 +342,11 @@
                 security.showNotification('CAPTCHA passed!', 'info');
                 security.captchaCount++;
 
-
                 if (security.captchaCount >= 3) {
                     captchaContainer.style.display = 'none';
                     form.style.display = 'flex';
                     security.revealNextRequirement();
                 } else {
-
                     switch(security.captchaCount) {
                         case 1:
                             currentCaptcha = security.generateImageCaptcha();
@@ -391,7 +394,6 @@
             }
         });
 
-
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
             const username = document.getElementById('username').value;
@@ -402,7 +404,15 @@
                 document.getElementById('security-overlay').style.display = 'none';
             }
         });
+
+        // Handle "Skip Security" button
+        skipSecurityButton.addEventListener('click', () => {
+            // Skip the security process by hiding the overlay and showing the registration form
+            document.getElementById('security-overlay').style.display = 'none';
+            form.style.display = 'flex';
+        });
     });
+
 </script>
 
 
