@@ -105,7 +105,7 @@ img {
         top: 0;
         font-weight: bold;
       }
-      
+
       .skipnav:focus,
       .skipnav:active {
         z-index: 99;
@@ -238,7 +238,7 @@ img {
       #d {
         font-size: 0.75em;
       }
-       
+
       .fourier-container {
         text-align: center;
       }
@@ -252,7 +252,7 @@ img {
         background: radial-gradient(circle, #b00b69, rgb(145, 69, 221));
         color: white;
       }
-      
+
       #foxy {
         height: 600px;
         width: auto;
@@ -264,7 +264,7 @@ img {
         background: url('static/images/snarl.jpg');
         background-repeat: no-repeat;
       }
-      
+
 
       @keyframes shake {
         0%, 100% { transform: translate(0, 0); }
@@ -334,6 +334,28 @@ img {
         background-color: #258e92;
       }
 
+      .bottom-right-button {
+        position: fixed;
+        bottom: 10px;
+        right: 10px;
+        padding: 10px 20px;
+        background-color: #5ef7d6;
+        color: #282828;
+        border: none;
+        cursor: pointer;
+        font-size: 16px;
+        border-radius: 5px;
+        z-index: 1000;
+      }
+
+      .bottom-right-button:hover {
+        background-color: #258e92;
+      }
+
+      body.wokeMode {
+        background: linear-gradient(#78d8ef 20%,#ffb2ca 20%,#ffb2ca 40%,#fff 40%,#fff 60%,#ffb2ca 60%,#ffb2ca 80%,#78d8ef 0) fixed !important;
+        /* important because i can't bother to disable the code that's putting style="" in body */
+      }
     </style>
     <audio id="vibeAudio" loop>
       <source
@@ -354,7 +376,7 @@ img {
             ["#59C8F3","#F2A6B5","#fff","#F2A6B5","#59C8F3"]
           ]
           let chosenFlag = FLAGS[Math.floor(Math.random() * FLAGS.length)];
-          
+
           new rainbowCursor({ colors: chosenFlag });
     </script>
     <script type="module" src="static/js/index.js"></script>
@@ -373,14 +395,28 @@ img {
 
   <button class="bottom-left-button" onclick="owoify()">What?</button>
 
+  <!-- more woke content -->
+  <button class="bottom-right-button" id="addMoreWokeToTheWebpageSimplyBecauseICanAndUhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh">waiter waiter! more woke please</button>
+
+  <script>
+    function makeTransForRealThisTime() {
+        // Note that there is currently no code to turn off this so called 'woke mode'
+        // because once you enter the path, there is no leaving the path.
+        document.body.classList.add("wokeMode");
+    }
+    const makeTrans = document.getElementById("addMoreWokeToTheWebpageSimplyBecauseICanAndUhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh");
+    makeTrans.addEventListener("click", makeTransForRealThisTime);
+    wqa!
+  </script>
+
   <script>
     const epilepticAudio = new Audio("static/audio/bustin.mp3");
     epilepticAudio.loop = true; // Enable looping
-  
+
     let isEpilepticModeOn = false;
     let spawnInterval;
     let spawnCount = 10; // Start with 10 images
-  
+
     function spawnImage() {
       const img = document.createElement("img");
       img.src = "static/images/ray-parker-jr.webp";
@@ -390,15 +426,15 @@ img {
       img.style.left = Math.random() * window.innerWidth + "px";
       img.style.top = Math.random() * window.innerHeight + "px";
       img.style.transition = "transform 3s ease-in-out";
-  
+
       document.body.appendChild(img);
-  
+
       setTimeout(() => {
         img.style.transform = `translateY(-${window.innerHeight}px)`;
         setTimeout(() => img.remove(), 3000);
       }, 100);
     }
-  
+
     document.getElementById("epicButton").addEventListener("click", () => {
       const images = document.querySelectorAll("img");
       if (isEpilepticModeOn) {
@@ -415,7 +451,7 @@ img {
         document.body.classList.add("epileptic-mode");
         epilepticAudio.volume = 1;
         epilepticAudio.play();
-  
+
         spawnCount = 10; // Start with 10 images
         spawnInterval = setInterval(() => {
           spawnCount++;
@@ -423,7 +459,7 @@ img {
             spawnImage();
           }
         }, 3000);
-  
+
         images.forEach(img => {
           if (img.src.includes("/static/images/")) {
             img.dataset.originalSrc = img.src;
@@ -435,7 +471,7 @@ img {
     });
   </script>
 
-  
+
 	<script src="static/js/oneko.js"></script>
     <a href="#maincontent" class="skipnav">Skip to Content (Press Enter)</a>
     <div
@@ -852,7 +888,7 @@ function loadAndDisplayNews() {
         const randomArticles = getRandomArticles(onionArticles.articles, 6);
         const leftArticles = randomArticles.slice(0, 3);
         const rightArticles = randomArticles.slice(3, 6);
-        
+
         displayArticles(leftArticles, 'left-column');
         displayArticles(rightArticles, 'right-column');
     } catch (error) {
@@ -879,8 +915,8 @@ function displayArticles(articles, columnClass) {
         "
         onmouseover="this.style.transform='translateY(-5px)'"
         onmouseout="this.style.transform='translateY(0)'">
-            <img 
-                src="${article.image_url}" 
+            <img
+                src="${article.image_url}"
                 alt="${article.title}"
                 style="
                     width: 100%;
@@ -909,7 +945,7 @@ function displayArticles(articles, columnClass) {
 
 function handleResponsiveLayout() {
     const container = document.getElementById('news-container');
-    
+
     if (window.innerWidth < 1600) {
         container.style.display = 'none';
     } else {
@@ -938,7 +974,7 @@ window.addEventListener('resize', handleResponsiveLayout);
         <img src="static/images/kofte.jpg" alt="Kofte" class="gallery-item" style="width: 400px; height: 400px;">
         <img src="static/images/frog.webp" alt="Frog" class="gallery-item">
       </div>
-    
+
       <button id="vibeButton">Improve the Mood</button>
       <button id="wisdomButton">ENABLE FROG WISDOM</button>
       <p>Vist SlopChat™ to chat with other slop enthusiasts. <a href="chat.html">Click here!/a></p>
@@ -972,13 +1008,13 @@ window.addEventListener('resize', handleResponsiveLayout);
 
         <div style="display: flex; flex-direction: row;">
 
-          <blockquote class="twitter-tweet" data-theme="dark"><p lang="en" dir="ltr">hahahaha this is fire</p>&mdash; ily⚡️ (@0xIlyy) <a href="https://twitter.com/0xIlyy/status/1873179308153553050?ref_src=twsrc%5Etfw">December 29, 2024</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> 
-          
-          <blockquote class="twitter-tweet" data-conversation="none" data-theme="dark"><p lang="en" dir="ltr">WHO THE FUCK ADDED PASSWORD GAME TO THE REGISTRATION PAGE <a href="https://t.co/FYpWT5dycz">pic.twitter.com/FYpWT5dycz</a></p>&mdash; Aterron (@_aterron_) <a href="https://twitter.com/_aterron_/status/1873444464255254743?ref_src=twsrc%5Etfw">December 29, 2024</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> 
+          <blockquote class="twitter-tweet" data-theme="dark"><p lang="en" dir="ltr">hahahaha this is fire</p>&mdash; ily⚡️ (@0xIlyy) <a href="https://twitter.com/0xIlyy/status/1873179308153553050?ref_src=twsrc%5Etfw">December 29, 2024</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
-          <blockquote class="twitter-tweet" data-theme="dark"><p lang="en" dir="ltr">help i played the sexy frog music and now it keeps playing even after i close the browser</p>&mdash; colin ricardo (@_colinricardo) <a href="https://twitter.com/_colinricardo/status/1873429683368505464?ref_src=twsrc%5Etfw">December 29, 2024</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> 
+          <blockquote class="twitter-tweet" data-conversation="none" data-theme="dark"><p lang="en" dir="ltr">WHO THE FUCK ADDED PASSWORD GAME TO THE REGISTRATION PAGE <a href="https://t.co/FYpWT5dycz">pic.twitter.com/FYpWT5dycz</a></p>&mdash; Aterron (@_aterron_) <a href="https://twitter.com/_aterron_/status/1873444464255254743?ref_src=twsrc%5Etfw">December 29, 2024</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
-          <blockquote class="twitter-tweet" data-theme="dark"><p lang="en" dir="ltr">This project is awesome the amount of random slop added in the last 24 hours alone is crazy. Check it out <a href="https://t.co/GDD8ut9A4S">https://t.co/GDD8ut9A4S</a></p>&mdash; Gil (@TylerGilman01) <a href="https://twitter.com/TylerGilman01/status/1873429461410234849?ref_src=twsrc%5Etfw">December 29, 2024</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> 
+          <blockquote class="twitter-tweet" data-theme="dark"><p lang="en" dir="ltr">help i played the sexy frog music and now it keeps playing even after i close the browser</p>&mdash; colin ricardo (@_colinricardo) <a href="https://twitter.com/_colinricardo/status/1873429683368505464?ref_src=twsrc%5Etfw">December 29, 2024</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+          <blockquote class="twitter-tweet" data-theme="dark"><p lang="en" dir="ltr">This project is awesome the amount of random slop added in the last 24 hours alone is crazy. Check it out <a href="https://t.co/GDD8ut9A4S">https://t.co/GDD8ut9A4S</a></p>&mdash; Gil (@TylerGilman01) <a href="https://twitter.com/TylerGilman01/status/1873429461410234849?ref_src=twsrc%5Etfw">December 29, 2024</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
         </div>
       </div>
@@ -1221,12 +1257,12 @@ window.addEventListener('resize', handleResponsiveLayout);
       </section>
       <section>
         <button id="widenButton">Toggle Widening</button>
-      
+
         <script>
           const widenButton = document.getElementById("widenButton");
           let widening = false;
           let interval;
-      
+
           widenButton.addEventListener("click", () => {
             if (!widening) {
               widening = true;
@@ -1616,8 +1652,8 @@ window.addEventListener('resize', handleResponsiveLayout);
         const worseThemeButton = document.getElementById("worseThemeButton");
         worseThemeButton.addEventListener("click", () => {
           document.body.classList.toggle("worst-theme");
-          worseThemeButton.textContent = document.body.classList.contains("worst-theme") 
-            ? "Fix The Page Please!!" 
+          worseThemeButton.textContent = document.body.classList.contains("worst-theme")
+            ? "Fix The Page Please!!"
             : "This can't get any worse, right?";
         });
       });
@@ -1647,7 +1683,7 @@ window.addEventListener('resize', handleResponsiveLayout);
 
       function owoify() {
         traverse(document.body, owoified);
-        owoified = !owoified; 
+        owoified = !owoified;
       }
 
       function transform(str) {
@@ -1677,7 +1713,7 @@ window.addEventListener('resize', handleResponsiveLayout);
 
       function traverse(node, undo) {
           var child, next;
-      
+
           switch (node.nodeType) {
               case 1:
               case 9:
