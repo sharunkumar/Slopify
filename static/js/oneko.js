@@ -108,10 +108,10 @@ MODIFIED BY KOSAN https://github.com/MegaKosan
     usedKeys = new Set();
 
   function create() {
-    variant = parseLocalStorage("variant", "tora");
+    variant = parseLocalStorage("variant", "marisa_a");
 
     if (!variants.some((v) => v[0] === variant)) {
-      variant = "classic";
+      variant = "marisa_a";
     }
 
     nekoEl.id = "oneko";
