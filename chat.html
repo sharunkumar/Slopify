@@ -98,6 +98,18 @@
             margin-bottom: 10px;
         }
 
+        .ceo {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            font-size: 5pt;
+        }
+
+        .ceo img {
+            max-width: 115px;
+            max-height: 115px;
+        }
+
         #messageInput {
             flex: 1;
             padding: 8px;
@@ -159,6 +171,10 @@
 
     <div id="chatContainer">
         <div id="mainContent">
+            <div class="ceo">
+                <img src="static/images/CEO.jpeg" alt="CEO of the chat">
+                <p>The CEO is watching you</p>
+            </div>
             <div id="roomInfo">
                 <p>Connected to room: <strong>global</strong></p>
             </div>
