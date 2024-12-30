@@ -8,15 +8,16 @@ document.addEventListener('DOMContentLoaded', function () {
     const pipeGap = 150;
     let gameOver = false;
     let gameStarted = false;
+    let rainbowMode = false;
 
     const elonImage = new Image();
     elonImage.src = 'static/images/elon_head.png';
 
     const bird = {
-        x: 50,
+        x: 40,
         y: canvas.height / 2,
-        width: 40,
-        height: 40,
+        width: 30,
+        height: 30,
         velocity: 0
     };
 
@@ -36,8 +37,19 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function drawPipes() {
-        ctx.fillStyle = '#b8bb26';
         pipes.forEach(pipe => {
+            if (rainbowMode) {
+                const gradient = ctx.createLinearGradient(pipe.x, 0, pipe.x + pipeWidth, 0);
+                gradient.addColorStop(0, 'red');
+                gradient.addColorStop(0.2, 'orange');
+                gradient.addColorStop(0.4, 'yellow');
+                gradient.addColorStop(0.6, 'green');
+                gradient.addColorStop(0.8, 'blue');
+                gradient.addColorStop(1, 'purple');
+                ctx.fillStyle = gradient;
+            } else {
+                ctx.fillStyle = '#b8bb26';
+            }
             // Top pipe
             ctx.fillRect(pipe.x, 0, pipeWidth, pipe.top);
             // Bottom pipe
@@ -101,7 +113,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const middleY = canvas.height / 2;
 
             ctx.fillText('Game Over!', canvas.width / 2, middleY - 20);
-            ctx.fillText('Click or Press Space to Restart', canvas.width / 2, middleY + 20);
+            ctx.fillText('Click or Press Space to Retard', canvas.width / 2, middleY + 20);
             return;
         }
 
@@ -127,6 +139,10 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+    function toggleRainbowMode() {
+        rainbowMode = !rainbowMode;
+    }
+
     canvas.addEventListener('click', jumpAction);
 
     document.addEventListener('keydown', function (e) {
@@ -135,6 +151,8 @@ document.addEventListener('DOMContentLoaded', function () {
             jumpAction();
         }
     });
+
+    document.getElementById('flappyMuskButton').addEventListener('click', toggleRainbowMode);
 
     elonImage.onload = () => {
         createInitialPipes();
