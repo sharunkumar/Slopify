@@ -12,6 +12,14 @@
     font-style: normal;
     font-display: swap; }
     
+    * {
+      border: 0;
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      cursor: url(../images/win95_cursor_regular.png) 0 0, default;
+    }
+
   .window button, .window {
     color: #000000;
     font: 12px/18px "MS Sans Serif", Helvetica, sans-serif; }
