@@ -180,6 +180,7 @@
             max-width: 50vw;
             max-height: 50vh;
 
+
         }
 
         .message-text {
@@ -319,11 +320,15 @@
             document.getElementById('roomInfo').textContent = `Connected to room: ${room}`;
             localMessage('System:', `${window.userName} connected to room ${room}. ---`, true);
 
+            
+
             // Announce username in new room
             window.usernameConnection.send(JSON.stringify({
                 type: 'username_taken',
                 username: window.userName
             }));
+
+            localMessage(localStorage['userName'], 'i connected', false, false)
         }
 
         async function isUsernameAvailable(username) {
@@ -390,6 +395,8 @@
                 type: 'username_taken',
                 username: username
             }));
+
+            localMessage(localStorage['userName'], 'i connected', false, false)
         }
 
         function getTunnelConnection(id) {
@@ -472,34 +479,20 @@
                 botElement.classList.add('bot');
                 messageContainer.appendChild(botElement);
             }
+
+            if (message.includes(localStorage['userName'])) {
+                notificationSound.play();
+                messageTextElement.style.backgroundColor = "rgba(233, 211, 150, 0.5)";
+                usernameElement.style.backgroundColor = "rrgba(233, 211, 150, 0.5)";
+            }
+
             messageContainer.appendChild(usernameElement);
             messageContainer.appendChild(messageTextElement);
             messagesContainer.appendChild(messageContainer);
             messagesContainer.scrollTop = messagesContainer.scrollHeight;
 
-            if (message.includes(localStorage['userName'])) {
-                notificationSound.play();
-            }
 
-            if (username == localStorage['userName']) {
-                if (message[0] == '~') {
-                    let s = message.split(' ')
-                    let command = s[0];
 
-                    switch (command) {
-                        case '~mute':
-                            let userToMute = s[1]
-                            window.mutedUsernames.add(userToMute);
-                            alert("User " + userToMute + " muted succesfully.")
-                            break;
-                        case '~unmute':
-                            let userToUnmute = s[1]
-                            window.mutedUsernames.delete(userToUnmute);
-                            alert("User " + userToMute + " unmuted succesfully.")
-                            break;
-                    }
-                }
-            }
         }
 
         function processMessage(message) {
@@ -518,6 +511,8 @@
 
         function sendMessage() {
             let userMessage = document.getElementById('messageInput').value;
+            handleLocalCommands(userMessage)
+
             if (!userMessage.trim()) return;
 
             if (userMessage.includes("blink")) {
@@ -530,6 +525,30 @@
             };
             window.chatConnection.send(JSON.stringify(messageData));
             document.getElementById('messageInput').value = '';
+
+
+        }
+
+        function handleLocalCommands(message) {
+            if (message[0] == '~') {
+                let s = message.split(' ')
+                let command = s[0];
+
+                switch (command) {
+                    case '~mute':
+                        let userToMute = s[1]
+                        window.mutedUsernames.add(userToMute);
+                        alert("User " + userToMute + " muted succesfully.")
+                        break;
+                    case '~unmute':
+                        let userToUnmute = s[1]
+                        window.mutedUsernames.delete(userToUnmute);
+                        alert("User " + userToMute + " unmuted succesfully.")
+                        break;
+                }
+                return true
+            }
+            return false
         }
 
         document.addEventListener('DOMContentLoaded', async () => {
