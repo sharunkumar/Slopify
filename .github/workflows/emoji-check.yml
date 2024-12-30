@@ -1,4 +1,4 @@
-name: Emoji Check
+name: 🎨🎯 Emoji Check 💡💡
 
 on:
   pull_request:
@@ -19,7 +19,7 @@ jobs:
       - name: Install dependencies
         run: npm install emoji-regex
 
-      - name: Check PR title
+      - name: Check PR title for Emojis 🔍
         if: github.event_name == 'pull_request' || github.event_name == 'pull_request_target'
         uses: actions/github-script@v7
         with:
