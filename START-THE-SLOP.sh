@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Build the Docker image
-echo "🏗️ Building Docker image..."
+echo "🏗️ Building Docker image. Please wait..."
 docker build -t slopify .
 
 # Run the container
