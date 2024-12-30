@@ -198,8 +198,8 @@
         }
 
         .message-text img.emoji {
-            max-width: 2em;
-            max-height: 2em;
+            max-width: 1.5em;
+            max-height: 1.5em;
             margin-right: 5px;
         }
 
@@ -402,30 +402,58 @@
         }
 
         function textContainsEmoji(text) {
-            return text.match(/:[a-z_]+:/g);
+            return text.match(/:[a-z_]+:/g) && emojis[text.slice(1, -1)];
+        }
+
+        function createImageElement(src) {
+            let imageElement = document.createElement('img');
+            imageElement.classList.add('chat-image');
+            imageElement.src = src;
+            return imageElement;
+        }
+
+        function createEmojiElement(emoji) {
+            let emojiElement = document.createElement('img');
+            emojiElement.classList.add('emoji');
+            emojiElement.src = emojis[emoji.slice(1, -1)];
+            return emojiElement;
+        }
+
+        function createChatTextElement(text) {
+            let textElement = document.createElement('span');
+            textElement.textContent = text.trim();
+            return textElement;
         }
 
         function splitImageFromText(messageText) {
             let messageTextElement = document.createElement('div');
             messageTextElement.classList.add('message-text');
 
-            messageText.split(' ').map((word) => {
-                if (word.endsWith('.pic')) {
-                    let imageElement = document.createElement('img');
-                    imageElement.classList.add('chat-image');
-                    imageElement.src = word.slice(0, -4);
-                    messageTextElement.appendChild(imageElement);
-                } else if (textContainsEmoji(word) && emojis[word.slice(1, -1)]) {
-                    let emojiElement = document.createElement('img');
-                    emojiElement.classList.add('emoji');
-                    emojiElement.src = emojis[word.slice(1, -1)];
-                    messageTextElement.appendChild(emojiElement);
-                } else {
-                    let textElement = document.createElement('span');
-                    textElement.textContent = word;
-                    messageTextElement.appendChild(textElement);
+            const textSegments = messageText.split(' ');
+
+            let str = "";
+            for (let i = 0; i < textSegments.length; i++) {
+                const word = textSegments[i];
+                if (!word.endsWith('.pic') && !textContainsEmoji(word)) {
+                    str += " " + word
+                    continue;
                 }
-            });
+                console.log(str);
+                if (str.length > 0) {
+                    messageTextElement.appendChild(createChatTextElement(str));
+                    str = "";
+                }
+
+                if (word.endsWith('.pic')) {
+                    messageTextElement.appendChild(createImageElement(word.slice(0, -4)));
+                } else if (textContainsEmoji(word)) {
+                    messageTextElement.appendChild(createEmojiElement(word));
+                }
+            }
+
+            if (str.length > 0) {
+                messageTextElement.appendChild(createChatTextElement(str));
+            }
 
             return messageTextElement;
         }
