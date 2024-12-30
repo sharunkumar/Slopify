@@ -424,7 +424,7 @@
             messageTextElement.classList.add('message-text');
 
             messageText.split(' ').map((word) => {
-                if (word.endsWith('.pic')) {
+                if (word.endsWith('.pic') && window.chatState !== 1 /* Hide images */) {
                     let imageElement = document.createElement('img');
                     imageElement.classList.add('chat-image');
                     imageElement.src = word.slice(0, -4);
@@ -475,61 +475,61 @@
             localStorage.setItem('imageState', String(window.chatState));
         }
 
-        function localMessage(username, message, isBot, isSystem) {
-            if (!isSystem) isSystem = false;
-            if (window.mutedUsernames.has(username)) { return };
-            let messagesContainer = document.getElementById('messages');
-            let messageContainer = document.createElement('div');
-            messageContainer.classList.add('message');
-            let usernameElement = document.createElement('div');
-            usernameElement.textContent = username;
-            usernameElement.classList.add('username');
-            let messageTextElement = splitImageFromText(message);
-            if (isSystem) {
-                usernameElement.style.color = '#ff6b6b';
-                messageTextElement.style.color = '#ff6b6b';
-            } else {
-                if (!window.userColors) window.userColors = {};
-                if (!window.userColors[username]) {
-                    window.userColors[username] = getRandomSoftColor();
-                }
-                usernameElement.style.color = window.userColors[username];
-            }
-            if (isBot) {
-                let botElement = document.createElement('div')
-                botElement.textContent = "bot";
-                botElement.classList.add('bot');
-                messageContainer.appendChild(botElement);
-            }
-            messageContainer.appendChild(usernameElement);
-            messageContainer.appendChild(messageTextElement);
-            messagesContainer.appendChild(messageContainer);
-            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+function localMessage(username, message, isBot, isSystem, botLabel = "bot") {
+    if (!isSystem) isSystem = false;
+    if (window.mutedUsernames.has(username)) { return };
+    let messagesContainer = document.getElementById('messages');
+    let messageContainer = document.createElement('div');
+    messageContainer.classList.add('message');
+    let usernameElement = document.createElement('div');
+    usernameElement.textContent = username;
+    usernameElement.classList.add('username');
+    let messageTextElement = splitImageFromText(message);
+    if (isSystem) {
+        usernameElement.style.color = '#ff6b6b';
+        messageTextElement.style.color = '#ff6b6b';
+    } else {
+        if (!window.userColors) window.userColors = {};
+        if (!window.userColors[username]) {
+            window.userColors[username] = getRandomSoftColor();
+        }
+        usernameElement.style.color = window.userColors[username];
+    }
+    if (isBot) {
+        let botElement = document.createElement('div');
+        botElement.textContent = botLabel;
+        botElement.classList.add('bot');
+        messageContainer.appendChild(botElement);
+    }
+    messageContainer.appendChild(usernameElement);
+    messageContainer.appendChild(messageTextElement);
+    messagesContainer.appendChild(messageContainer);
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
 
-            if (message.includes(localStorage['userName'])) {
-                notificationSound.play();
-            }
+    if (message.includes(localStorage['userName'])) {
+        notificationSound.play();
+    }
 
-            if (username == localStorage['userName']) {
-                if (message[0] == '~') {
-                    let s = message.split(' ')
-                    let command = s[0];
+    if (username == localStorage['userName']) {
+        if (message[0] == '~') {
+            let s = message.split(' ')
+            let command = s[0];
 
-                    switch (command) {
-                        case '~mute':
-                            let userToMute = s[1]
-                            window.mutedUsernames.add(userToMute);
-                            alert("User " + userToMute + " muted succesfully.")
-                            break;
-                        case '~unmute':
-                            let userToUnmute = s[1]
-                            window.mutedUsernames.delete(userToUnmute);
-                            alert("User " + userToMute + " unmuted succesfully.")
-                            break;
-                    }
-                }
+            switch (command) {
+                case '~mute':
+                    let userToMute = s[1]
+                    window.mutedUsernames.add(userToMute);
+                    alert("User " + userToMute + " muted succesfully.")
+                    break;
+                case '~unmute':
+                    let userToUnmute = s[1]
+                    window.mutedUsernames.delete(userToUnmute);
+                    alert("User " + userToMute + " unmuted succesfully.")
+                    break;
             }
         }
+    }
+}
 
         function processMessage(message) {
             try {
@@ -589,10 +589,16 @@
                 }
             });
 
-            window.chatState = Number(localStorage.getItem("imageState"));
-
+            window.chatState =  localStorage.getItem('imageState');
+            if(null === window.chatState)
+            {
+                window.chatState = 1;
+            }
+    
+            
             if (localStorage.getItem('hideImages') === "true") {
                 window.chatState = 1;
+                localStorage.removeItem('hideImages');
             }
 
             toggleImages(window.chatState);
@@ -604,6 +610,22 @@
                 document.body.style.backgroundColor = '';
             }, 100);
         }
+    </script>
+		<script>
+        const ceo = document.querySelector('.ceo');
+        const ceoRect = ceo.getBoundingClientRect();
+
+        document.addEventListener('mousemove', (event) => {
+            const mouseX = event.clientX;
+            const mouseY = event.clientY;
+            const boxCenterX = ceoRect.left + ceoRect.width / 2;
+            const boxCenterY = ceoRect.top + ceoRect.height / 2;
+            const deltaX = mouseX - boxCenterX;
+            const deltaY = mouseY - boxCenterY;
+            const angleZ = -(deltaY / ceoRect.height) * 1.2;
+            const angleY = (deltaX / ceoRect.width) * 2;
+            ceo.style.transform = `rotateZ(${angleZ}deg) rotateY(${angleY}deg)`;
+        });
     </script>
 </body>
 
