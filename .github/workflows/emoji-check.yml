@@ -1,26 +1,20 @@
 name: Emoji Check
 
 on:
-  workflow_dispatch:  # Manual trigger for testing
+  pull_request:
+    types: [opened, edited, synchronize, reopened]
+  pull_request_target:
+    types: [opened, edited, synchronize, reopened]
   push:
-    branches: [ main, master ]  # Check commits pushed to main branches
-  pull_request_target:  # Safely handle PRs from forks
-    types: [opened, edited, synchronize, reopened]
-  pull_request:  # Handle PRs from this repo
-    types: [opened, edited, synchronize, reopened]
+    branches: ['**']
+  workflow_dispatch:
 
 jobs:
   check-emoji:
     runs-on: ubuntu-latest
-    permissions:
-      pull-requests: write  # Needed to block PRs
-      contents: write      # Needed to check/update commits
-      statuses: write     # Needed to update commit statuses
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0  # Get all commits
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -30,119 +24,52 @@ jobs:
       - name: Install dependencies
         run: npm install emoji-regex
 
-      - name: Check PR title for emoji
-        if: github.event_name == 'pull_request' || github.event_name == 'pull_request_target'
+      - name: Check PR title and commits
         uses: actions/github-script@v7
         with:
           script: |
             const emojiRegex = require('emoji-regex');
             const regex = emojiRegex();
             
-            const title = context.payload.pull_request.title;
-            if (!regex.test(title)) {
-              // Create check run for better visibility
-              await github.rest.checks.create({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                name: 'PR Title Emoji Check',
-                head_sha: context.payload.pull_request.head.sha,
-                status: 'completed',
-                conclusion: 'failure',
-                output: {
-                  title: 'Missing Emoji in PR Title',
-                  summary: `PR title must include an emoji! Current title: "${title}"`,
-                  text: `Examples of good PR titles:
-                  ✨ Add new feature
-                  🐛 Fix login bug
-                  🎨 Update styles
-                  
-                  Suggested emojis:
-                  ✨ New feature    🐛 Bug fix      🎨 UI/Style
-                  🚀 Performance   🧱 Infrastructure
-                  ♻️ Refactor      🔧 Configuration
-                  📝 Documentation 🔒 Security
-                  🧪 Testing       ⚡️ Improvement`
+            try {
+              // Check PR title if it's a PR event
+              if (context.payload.pull_request) {
+                const title = context.payload.pull_request.title;
+                if (!regex.test(title)) {
+                  core.setFailed('PR title must include an emoji! Examples: "✨ New feature", "🐛 Fix bug", "🎨 Update styles"');
+                  return;
                 }
-              });
-              
-              // Block PR from being merged
-              await github.rest.pulls.createReview({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                pull_number: context.payload.pull_request.number,
-                event: 'REQUEST_CHANGES',
-                body: '❌ PR title must include an emoji!'
-              });
-              
-              core.setFailed('PR title must include an emoji!');
-            } else {
-              console.log(`✅ PR title "${title}" contains an emoji`);
-              // Approve if emoji is present
-              await github.rest.pulls.createReview({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                pull_number: context.payload.pull_request.number,
-                event: 'APPROVE',
-                body: '✅ PR title contains an emoji!'
-              });
-            }
+              }
 
-      - name: Check commit messages
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const emojiRegex = require('emoji-regex');
-            const regex = emojiRegex();
-            
-            let commits;
-            if (context.eventName === 'push') {
-              commits = context.payload.commits.map(commit => ({
-                commit: { message: commit.message },
-                sha: commit.id
-              }));
-            } else {
-              const prCommits = await github.rest.pulls.listCommits({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                pull_number: context.payload.pull_request.number
-              });
-              commits = prCommits.data;
-            }
-            
-            let hasInvalidCommit = false;
-            for (const commit of commits) {
-              const message = commit.commit.message.split('\n')[0];
-              if (!regex.test(message)) {
-                hasInvalidCommit = true;
+              // Check commits
+              let commits = [];
+              if (context.eventName === 'push') {
+                commits = context.payload.commits;
+              } else if (context.payload.pull_request) {
+                const { data: prCommits } = await github.rest.pulls.listCommits({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  pull_number: context.payload.pull_request.number
+                });
+                commits = prCommits.map(c => ({ message: c.commit.message }));
+              }
+
+              let invalidCommits = [];
+              for (const commit of commits) {
+                const message = commit.message.split('\n')[0];
+                // Skip merge commits
+                if (message.startsWith('Merge')) continue;
                 
-                // Create detailed check for each invalid commit
-                await github.rest.checks.create({
-                  owner: context.repo.owner,
-                  repo: context.repo.repo,
-                  name: 'Commit Message Emoji Check',
-                  head_sha: commit.sha,
-                  status: 'completed',
-                  conclusion: 'failure',
-                  output: {
-                    title: 'Missing Emoji in Commit Message',
-                    summary: `Commit ${commit.sha.substring(0, 7)} is missing an emoji`,
-                    text: `Current message: "${message}"\n\nPlease add an emoji to the commit message.`
-                  }
-                });
+                if (!regex.test(message)) {
+                  invalidCommits.push(message);
+                }
               }
-            }
-            
-            if (hasInvalidCommit) {
-              if (context.eventName === 'pull_request' || context.eventName === 'pull_request_target') {
-                // Block PR from being merged
-                await github.rest.pulls.createReview({
-                  owner: context.repo.owner,
-                  repo: context.repo.repo,
-                  pull_number: context.payload.pull_request.number,
-                  event: 'REQUEST_CHANGES',
-                  body: '❌ Some commit messages are missing emojis!'
-                });
+
+              if (invalidCommits.length > 0) {
+                const examples = '✨ New feature, 🐛 Fix bug, 🎨 Update styles';
+                core.setFailed(`Found commits missing emojis:\n${invalidCommits.join('\n')}\n\nExamples: ${examples}`);
               }
-              
-              core.setFailed('❌ Some commit messages are missing emojis! Please add an emoji to the beginning of each commit message. For example: "✨ Add new feature" or "🐛 Fix bug"');
+
+            } catch (error) {
+              core.setFailed(`Error checking emojis: ${error.message}`);
             } 
