@@ -1530,6 +1530,27 @@ window.addEventListener('resize', handleResponsiveLayout);
         </ul>
       </section>
       <section>
+        <div id = "huzzbutton">
+          <p2>
+            Press To Huzz
+          </p2>
+          <section>
+            <button id = "huzzButton">Huzz</button>
+          </section>
+          <script>
+            const huzzification = document.getElementById("huzzButton");
+            
+            huzzification.addEventListener("click", () => {
+              const newHuzz = document.createElement("button");
+              newHuzz.textContent = "Huzz";
+              newHuzz.addEventListener("click", () =>{
+                huzzification.parentNode.appendChild(newHuzz.cloneNode(true));
+              });
+              huzzification.parentNode.appendChild(newHuzz);
+            });
+          </script>
+      </section>
+      <section>
         <button id="widenButton">Toggle Widening</button>
       
         <script>
