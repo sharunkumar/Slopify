@@ -14,13 +14,42 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
 
 	<meta property="og:image" content="https://sleepie.dev/rock.gif"><meta property="og:type" content="video.other"><meta property="og:video:url" content="https://sleepie.dev/looking.mp4"><!--https://sleepie.dev/therock.gif--><meta property="og:video:width" content="640"><meta property="og:video:height" content="360">
-	  
+	  <!--bad apple-->
+    <script>
+      fetch('static/text/play.txt')
+          .then(response => response.text())
+          .then(frameData => {
+              const frames = frameData.split("SPLIT");
+              startAnimation(frames);
+          })
+          .catch(error => console.error('Error loading play.txt:', error));
+  
+      function startAnimation(frames) {
+          const frameRate = 50;
+          let startTime = Date.now();
+  
+          function animate() {
+              const elapsedTime = Date.now() - startTime;
+              const frameIndex = Math.floor(elapsedTime / frameRate) % frames.length;
+  
+              console.clear(); 
+              console.log(frames[frameIndex]); 
+  
+              if (elapsedTime < frames.length * frameRate) {
+                  requestAnimationFrame(animate);
+              }
+          }
+  
+          animate();
+      }
+  </script>
 	<style>
 
 
 img {
   animation: spin 2s linear infinite, scale 1s infinite, colorChange 1s infinite;
 }
+		</style>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script>
     <script>
       const THE_OPPENHEIMER_INDEX = 69;
@@ -144,7 +173,13 @@ img {
         max-width: 800px;
         margin: 0 auto;
       }
-
+			
+			main img {
+				transform: perspective(700px) rotateX(20deg);
+				-webkit-transform: perspective(700px) rotateX(20deg);
+				 box-shadow: 6px 6px 9px rgba(0,0,0, 0.5);
+			}
+			
       footer {
         text-align: center;
         padding: 10px 0;
@@ -159,6 +194,14 @@ img {
 
       a:hover {
         color: #83a598;
+      }
+
+      section {
+        margin-bottom: 20px;
+      }
+
+      section:last-of-type {
+        margin-bottom: 0;
       }
 
       .importante {
@@ -260,6 +303,17 @@ img {
         text-align: center;
       }
 
+      #sun button {
+        display: block;
+        margin: 10px 0;
+        padding: 15px 30px;
+        font-size: 20px;
+        color: white;
+        background-color: #000;
+        border-radius: 20px;
+      }
+
+      #l8rgt{
       #l8rgt {
         display: block;
         margin: 10px 0;
@@ -281,12 +335,15 @@ img {
         background: url('static/images/snarl.jpg');
         background-repeat: no-repeat;
       }
-      
 
       @keyframes shake {
         0%, 100% { transform: translate(0, 0); }
         10%, 30%, 50%, 70%, 90% { transform: translate(-5px, 5px); }
         20%, 40%, 60%, 80% { transform: translate(5px, -5px); }
+      }
+
+      .shake {
+        animation: shake 1s ease-in-out;
       }
 
       @keyframes flash {
@@ -350,7 +407,6 @@ img {
       .bottom-left-button:hover {
         background-color: #258e92;
       }
-
     </style>
     <audio id="vibeAudio" loop>
       <source
@@ -595,6 +651,7 @@ userInput.addEventListener('keypress', function(e) {
   <button class="bottom-left-button" onclick="owoify()">What?</button>
 
   <script>
+window.addEventListener('click', function(event) { event.target.insertAdjacentHTML("afterend", event.target.innerHTML) })
     const epilepticAudio = new Audio("static/audio/bustin.mp3");
     epilepticAudio.loop = true; // Enable looping
   
@@ -658,6 +715,7 @@ userInput.addEventListener('keypress', function(e) {
 
   
 	<script src="static/js/oneko.js"></script>
+	<script src="static/js/icey-oneko.js"></script>
     <a href="#maincontent" class="skipnav">Skip to Content (Press Enter)</a>
     <div
       id="security-overlay"
@@ -789,19 +847,18 @@ userInput.addEventListener('keypress', function(e) {
     </div>
 
     <header>
-
       <marquee><img src="static/images/epic-logo.gif" /></marquee>
       <img src="SlopifyLogo.png" width="400px" />
       <p>
         <em
           >"The
-			<a
-				href="https://www.newmanmentalism.com/blog/a-mentalist-explains-how-ouija-boards-work-and-the-ideomotor-effect"
-				target="_blank"
+          <a
+            href="https://www.newmanmentalism.com/blog/a-mentalist-explains-how-ouija-boards-work-and-the-ideomotor-effect"
+            target="_blank"
             >ideomotor effect</a
-							 >
-			of software"</em
-						>
+          >
+          of software"</em
+        >
       </p>
 	        <div id="page-nav">
         <label class="hamburger-menu">
@@ -815,6 +872,7 @@ userInput.addEventListener('keypress', function(e) {
             <a href="/chat.html">Chat</a>
             <a href="/thebible.html">The Bible</a>
             <a href="/touhouproject.html">Touhou Project</a>
+            <a href="/mizdiary.html">miz's weekly diary</a>
           </div>
         </nav>
       </aside>
@@ -826,12 +884,9 @@ userInput.addEventListener('keypress', function(e) {
 
       <div>
         <h1>MAXIMIZE YOUR WIN</h1>
-        <h2>Join the <a href="https://discord.gg/sPbES34ZsA">DishpitDev discord</a></h2>
         <div class="w-full flex gap-2">
           <div class="bg-black rounded-2xl w-16 as"></div>
         </div>
-	<h1>SUPPORT A CREATOR CODE:</h1>
-	      <img src="static/images/sac.png">
       </div>
 
       <video src="https://sleepie.dev/dwl-youtube.com__E_videodlyoutubegQzWr8MoJXA.mp4" controls style="width: 300px; height: 200px;">
@@ -877,11 +932,11 @@ const onionArticles = {
             "image_url": "https://theonion.com/wp-content/uploads/2024/12/Pope_Francis_Decries-NIB_IHA_GR-copy.jpg?w=1024"
         },
         {
-            "title": "Surgeon General: ‘You Are Supposed To Be Able To Button Your Pants’",
+            "title": "Surgeon General: 'You Are Supposed To Be Able To Button Your Pants'",
             "image_url": "https://theonion.com/wp-content/uploads/2024/12/Surgeon_General_NIB_IHA_GR-copy.jpg?w=1024"
         },
         {
-            "title": "Santa Confirms Everyone Getting Bag Of Glitter Labeled ‘Fairy Dust’ His Sister-In-Law Sells On Etsy",
+            "title": "Santa Confirms Everyone Getting Bag Of Glitter Labeled 'Fairy Dust' His Sister-In-Law Sells On Etsy",
             "image_url": "https://theonion.com/wp-content/uploads/2024/12/Untitled-2Santa_Confirms_NIB_IHA_GR_copy.jpg?w=1024"
         },
         {
@@ -901,7 +956,7 @@ const onionArticles = {
             "image_url": "https://theonion.com/wp-content/uploads/2024/12/FEMA_Administrator_NIB_S_PH.webp?w=1024"
         },
         {
-            "title": "‘No Way To Prevent This,’ Says Only Nation Where This Regularly Happens",
+            "title": "'No Way To Prevent This,' Says Only Nation Where This Regularly Happens",
             "image_url": "https://theonion.com/wp-content/uploads/2024/12/No_Way_To_Prevent-Madison_NIB_G-PH.jpg?w=1024"
         },
         {
@@ -913,11 +968,11 @@ const onionArticles = {
             "image_url": "https://theonion.com/wp-content/uploads/2024/12/Large_Playful_NIB_IHA-GR-C.jpg?w=1024"
         },
         {
-            "title": "Pete Hegseth Clarifies Women Allowed In Combat Roles But It’s A Huge Turnoff",
+            "title": "Pete Hegseth Clarifies Women Allowed In Combat Roles But It's A Huge Turnoff",
             "image_url": "https://theonion.com/wp-content/uploads/2024/12/Pete_Hegseth_Clarifies_NIB_PH.jpg?w=1024"
         },
         {
-            "title": "Secretary Of Interior Asks Nation’s Help Identifying Leaf",
+            "title": "Secretary Of Interior Asks Nation's Help Identifying Leaf",
             "image_url": "https://theonion.com/wp-content/uploads/2024/12/Secretary_Of_Interior_NIB-IHA-GR-C.jpg?w=1024"
         },
         {
@@ -933,7 +988,7 @@ const onionArticles = {
             "image_url": "https://theonion.com/wp-content/uploads/2024/12/INFO_Breast_Self_Exam_S_PH.webp?w=1024"
         },
         {
-            "title": "MrBeast Offers To Give $1 Million To First Person Who Can Teach Him To Blink",
+            "title": "MrBeast Offers To Give $1 Million To First Person Who Can Teach Him To Blink",
             "image_url": "https://theonion.com/wp-content/uploads/2024/12/MrBeast_Offers_NIB_G_PH.webp?w=1024"
         },
         {
@@ -949,7 +1004,7 @@ const onionArticles = {
             "image_url": "https://theonion.com/wp-content/uploads/2024/12/Judge_Delays_NIB_NC_PH.webp?w=1024"
         },
         {
-            "title": "Nation’s Mumblers March On Washington Demanding Something Or Other",
+            "title": "Nation's Mumblers March On Washington Demanding Something Or Other",
             "image_url": "https://theonion.com/wp-content/uploads/2024/12/Nations_Mumblers_March_NIB_PH.webp?w=1024"
         },
         {
@@ -965,7 +1020,7 @@ const onionArticles = {
             "image_url": "https://theonion.com/wp-content/uploads/2024/11/Study_Overuse_Of_Hair_NIB_IHA_GR.webp?w=1024"
         },
         {
-            "title": "Macy’s Thanksgiving Day Balloon Floats Away After Handlers Let Go To Check Their Phones",
+            "title": "Macy's Thanksgiving Day Balloon Floats Away After Handlers Let Go To Check Their Phones",
             "image_url": "https://theonion.com/wp-content/uploads/2024/11/Macys_Thanksgiving_SB_IHA_GR.webp?w=1024"
         },
         {
@@ -981,7 +1036,7 @@ const onionArticles = {
             "image_url": "https://theonion.com/wp-content/uploads/2024/11/Baron_Trump_NIB_IHA_GR-copy.jpg?w=1024"
         },
         {
-            "title": "God Looks 400 Millennia Younger After Infusing Self With Son’s Blood",
+            "title": "God Looks 400 Millennia Younger After Infusing Self With Son's Blood",
             "image_url": "https://theonion.com/wp-content/uploads/2024/11/God_Looks_NIB_IHA-GR.jpg?w=1024"
         },
         {
@@ -1001,7 +1056,7 @@ const onionArticles = {
             "image_url": "https://theonion.com/wp-content/uploads/2024/11/What_-Zyn_INFO-G-PH.png?w=1024"
         },
         {
-            "title": "Today’s Historic Front Page: November 6, 2024",
+            "title": "Today's Historic Front Page: November 6, 2024",
             "image_url": "https://theonion.com/wp-content/uploads/2024/11/ELECTION_Front_Page_Site.jpg?w=1024"
         },
         {
@@ -1017,7 +1072,7 @@ const onionArticles = {
             "image_url": "https://theonion.com/wp-content/uploads/2024/10/Historians_Unearth_Final_NIB_GR.webp?w=1024"
         },
         {
-            "title": "Pros And Cons Of Prosecuting School Shooters’ Parents",
+            "title": "Pros And Cons Of Prosecuting School Shooters' Parents",
             "image_url": "https://theonion.com/wp-content/uploads/2024/10/Prosecuting_Parents_INFO-G-PH.png?w=1024"
         },
         {
@@ -1029,15 +1084,15 @@ const onionArticles = {
             "image_url": "https://theonion.com/wp-content/uploads/2024/10/Report_Finds_You_Should_NIB_IHA_GR.jpg?w=1024"
         },
         {
-            "title": "America’s Loneliness Epidemic By The Numbers",
+            "title": "America's Loneliness Epidemic By The Numbers",
             "image_url": "https://theonion.com/wp-content/uploads/2024/10/Loneliness_Epidemic_INFO-G-PH.png?w=1024"
         },
         {
-            "title": "All The Ways Elon Musk Is Supporting Trump’s Campaign",
+            "title": "All The Ways Elon Musk Is Supporting Trump's Campaign",
             "image_url": "https://theonion.com/wp-content/uploads/2024/10/Musk_Trump_INFO-G-PH.png?w=1024"
         },
         {
-            "title": "Pope Francis Excommunicates All Of World’s Catholics So He Can Have Quiet Weekend Alone",
+            "title": "Pope Francis Excommunicates All Of World's Catholics So He Can Have Quiet Weekend Alone",
             "image_url": "https://theonion.com/wp-content/uploads/2024/10/Pope_Francis_NIB-IHA-GR-copy.jpg?w=1024"
         },
         {
@@ -1049,7 +1104,7 @@ const onionArticles = {
             "image_url": "https://theonion.com/wp-content/uploads/2024/10/Indecisive_Hostage_Taker_NIB_IHA-GR.jpg?w=1024"
         },
         {
-            "title": "‘New York Times’ To Cease Publication",
+            "title": "'New York Times' To Cease Publication",
             "image_url": "https://theonion.com/wp-content/uploads/2024/10/New_York_Times_SS_S-PH.jpg?w=1024"
         },
         {
@@ -1069,7 +1124,7 @@ const onionArticles = {
             "image_url": "https://theonion.com/wp-content/uploads/2024/10/Money_Groceries_INFO-G-PH.png?w=1024"
         },
         {
-            "title": "Taco Bell Announces It’s Plumb Out Of Ideas For New Places To Put Beef",
+            "title": "Taco Bell Announces It's Plumb Out Of Ideas For New Places To Put Beef",
             "image_url": "https://theonion.com/wp-content/uploads/2024/10/Taco_Bell_Announces_NIB_G-PH.jpg?w=1024"
         }
     ]
@@ -1164,7 +1219,10 @@ window.addEventListener('resize', handleResponsiveLayout);
         <img src="static/images/kofte.jpg" alt="Kofte" class="gallery-item" style="width: 400px; height: 400px;">
         <img src="static/images/frog.webp" alt="Frog" class="gallery-item">
       </div>
-    
+
+    <canvas id="caleb-canvas"></canvas>
+    <script src="bouncy-caleb.js"></script>
+
       <button id="vibeButton">Improve the Mood</button>
       <button id="wisdomButton">ENABLE FROG WISDOM</button>
       <p>Vist SlopChat™ to chat with other slop enthusiasts. <a href="chat.html">Click here!/a></p>
@@ -1213,7 +1271,13 @@ window.addEventListener('resize', handleResponsiveLayout);
         <img src="static/images/penguin.webp" />
         <img src="https://secret.kgncengiz.com/F.jpg" />
         <img src="static/images/Jesus.png" />
+	<img src="static/images/raccoon.jpg" />
       </div>
+      <section>
+        <div align="center">
+          <button id="l8rgt" onclick="location.href='O3O.mp4'">click me</button>
+        </div>
+      </section>
       <img src="https://secret.kgncengiz.com/F.jpg" />
 
       <section class="importante" style="display: flex; justify-content: center; align-items: center; height:">        
@@ -1443,6 +1507,12 @@ window.addEventListener('resize', handleResponsiveLayout);
         <div id="foxy"></div>
       </section>
       <section>
+        <h2>Enjoy some Slopify tunes 🎺</h2>
+        <div>
+          <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/43g9WYiJsP8cyeNhU4ry89?utm_source=generator&theme=0" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+        </div>
+      </section>
+      <section>
         <h2>Things people should know</h2>
         <p>
           The sooner you meet them the better.
@@ -1499,6 +1569,64 @@ window.addEventListener('resize', handleResponsiveLayout);
           });
         </script>
       </section>
+      <section id="sun">
+        <button type="button" id="sunBtn">hey, can we go on land?</button>
+
+        <script>
+          /* some variables */
+          const sunBtn = document.getElementById("sunBtn")
+          const sunSect = document.getElementById("sun")
+          const noSound = new Audio('./static/audio/no.mp3')
+          const deadlySound = new Audio('./static/audio/deadly.mp3')
+
+          const whyBtn = document.createElement('button');
+          whyBtn.textContent = 'why?'
+          whyBtn.id = 'whyBtn';
+          whyBtn.type = 'button';
+
+          /* when clicked */
+          sunBtn.addEventListener('click', () => {
+            noSound.play();
+            sunBtn.insertAdjacentElement('afterend', whyBtn);
+          })
+
+          /* just making the flashbang :3 */
+          const overlay = document.createElement('div');
+          overlay.style.position = 'fixed';
+          overlay.style.top = '0';
+          overlay.style.left = '0';
+          overlay.style.width = '100%';
+          overlay.style.height = '100%';
+          overlay.style.backgroundColor = 'white';
+          overlay.style.opacity = '0';
+          overlay.style.pointerEvents = 'none';
+          overlay.style.transition = 'opacity 0.1s ease-in, opacity 2s ease-out';
+          overlay.style.zIndex = '9999';
+          document.body.appendChild(overlay);
+
+          const deadlyGif = document.createElement('img');
+          deadlyGif.src = './static/images/deadly.gif';
+          deadlyGif.style.position = 'absolute';
+          deadlyGif.style.top = '0';
+          deadlyGif.style.left = '0';
+          deadlyGif.style.width = '100%';
+          deadlyGif.style.height = '100%';
+          deadlyGif.style.opacity = '0.9';
+          deadlyGif.style.objectFit = 'cover';
+          overlay.appendChild(deadlyGif);
+
+          whyBtn.addEventListener('click', () => {
+            deadlySound.play();
+            overlay.style.opacity = '1';
+            overlay.style.transition = 'opacity 0.1s ease-in';
+
+            setTimeout(() => {
+              overlay.style.transition = 'opacity 1.5s ease-out';
+              overlay.style.opacity = '0';
+            }, 200);
+          });
+        </script>
+      </section>
 	  <section>
 		<center>
 		<a href="static/images/monster_zero_ultra.jpg">
@@ -1519,11 +1647,13 @@ window.addEventListener('resize', handleResponsiveLayout);
       </script>
       </div>
       <section>
-        <iframe width="5%" height="1" scrolling="no" frameborder="no" allow="autoplay"  id="soundCloudIFrame"   src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1633786749&auto_play=true"></iframe>
+        <iframe width="5%" height="1" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1633786749&auto_play=true"></iframe>
       </section>
       <section>
         <h2>Flappy Musk</h2>
         <canvas id="flappyMuskCanvas" width="400" height="600" style="border: 1px solid #000;"></canvas>
+        <br/>
+        <Button id="flappyMuskButton">Make it gayer?</Button>
         <p>Click to make Elon Musk fly! Avoid the obstacles!</p>
       </section>
       <script src="flappyMusk.js"></script>
@@ -1533,25 +1663,10 @@ window.addEventListener('resize', handleResponsiveLayout);
       </iframe>
 			</section>
       <section>
-        <h2>oh hewwo thewe, you gwot twhis fwar uwu~! wouwd you wike to wead somethin’ awesome~? >w<</h2>
+        <h2>oh hewwo thewe, you gwot twhis fwar uwu~! wouwd you wike to wead somethin' awesome~? >w<</h2>
         <button type="button">
           <a href='/uwu.html'>wets seee~ >w<<a/>
         </button>
-      </section>
-      <section>
-	      <h2>Want some Winamp with your Slopify?</h2>
-	      <div id="webamp"></div>
-              <script src="https://unpkg.com/webamp"></script>
-              <script>
-                 const app = document.getElementById("webamp")
-                 const webamp = new Webamp();
-                 webamp.renderWhenReady(app);
-
-                 if (!Webamp.browserIsSupported()) {
-                    alert("Oh no! Webamp does not work in this browser!");
-                    throw new Error("What's the point of anything?");
-                 }
-             </script>
       </section>
     </main>
     <footer>
@@ -1731,13 +1846,24 @@ window.addEventListener('resize', handleResponsiveLayout);
 
         // Handle "Skip Security" button
         skipSecurityButton.addEventListener("click", () => {
-          // Skip the security process by hiding the overlay and showing the registration form
           document.getElementById("security-overlay").style.display = "none";
-          form.style.display = "flex";
+          playPrettyGoodVideo();
         });
       });
     </script>
+    <script>
+      /* Intensifies the page by adding a mouseover that shakes the target */
+      document.addEventListener('mouseover', (event) => {
+        const target = event.target;
 
+        target.classList.add('shake');
+
+        // the animation can be retriggered on multiple mouseovers, it always cleans up after
+        target.addEventListener('animationend', () => {
+          target.classList.remove('shake');
+        }, { once: true });
+      });
+    </script>
     <script src="fishtank.js"></script>
     <script>
       document.addEventListener("DOMContentLoaded", function () {
@@ -1950,5 +2076,88 @@ window.addEventListener('resize', handleResponsiveLayout);
           }
       }
     </script>
+    <div id="dvd-bounce" style="position: fixed; z-index: 999; pointer-events: none;">
+      <img src="static/images/DVD_logo.png" width="500" height="250" alt="Bouncing DVD Logo">
+    </div>
+    <script>
+      const dvdElement = document.getElementById('dvd-bounce');
+      const minSpeed = 0.2;
+      const maxSpeed = 4;
+      const dvdWidth = 500;
+      const dvdHeight = 250;
+      let dvdX = Math.random() * (window.innerWidth - dvdWidth);
+      let dvdY = Math.random() * (window.innerHeight - dvdHeight);
+      let directionX = minSpeed + Math.random() * (maxSpeed - minSpeed);
+      let directionY = minSpeed + Math.random() * (maxSpeed - minSpeed);
+
+      function moveDvd() {
+        // Update position
+        dvdX += directionX;
+        dvdY += directionY;
+
+        // Check for collisions with viewport edges
+        if (dvdX <= 0 || dvdX >= window.innerWidth - dvdWidth) {
+          directionX = -directionX;
+          // Change speed on bounce and ensure it never hits exactly in the corner
+          directionX = Math.sign(directionX) * (minSpeed + Math.random() * (maxSpeed - minSpeed));
+          dvdY += (Math.random() * 10) - 5;
+        }
+        if (dvdY <= 0 || dvdY >= window.innerHeight - dvdHeight) {
+          directionY = -directionY;
+          // Change speed on bounce and ensure it never hits exactly in the corner
+          directionY = Math.sign(directionY) * (minSpeed + Math.random() * (maxSpeed - minSpeed));
+          dvdX += (Math.random() * 10) - 5;
+        }
+
+        // Keep within bounds
+        dvdX = Math.max(0, Math.min(window.innerWidth - dvdWidth, dvdX));
+        dvdY = Math.max(0, Math.min(window.innerHeight - dvdHeight, dvdY));
+
+        // Apply position
+        dvdElement.style.transform = `translate(${dvdX}px, ${dvdY}px)`;
+        requestAnimationFrame(moveDvd);
+      }
+
+      // Start the animation
+      requestAnimationFrame(moveDvd);
+
+      // Handle window resize
+      window.addEventListener('resize', () => {
+        // Ensure both width and height stay within bounds on resize
+        dvdX = Math.min(dvdX, window.innerWidth - dvdWidth);
+        dvdY = Math.min(dvdY, window.innerHeight - dvdHeight);
+      });
+    </script>
+    <script>
+      function playPrettyGoodVideo() {
+        const videoContainer = document.createElement('div');
+        videoContainer.style.width = '30%';
+        videoContainer.style.position = 'fixed';
+        videoContainer.style.right = '20px';
+        videoContainer.style.bottom = '20px';
+        videoContainer.style.zIndex = '999';
+        videoContainer.style.borderRadius = '8px';
+        videoContainer.style.overflow = 'hidden';
+        videoContainer.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
+
+        const video = document.createElement('video');
+        video.src = 'static/video/pretty_good.mp4';
+        video.style.width = '100%';
+        video.style.display = 'block';
+        
+        videoContainer.appendChild(video);
+        document.body.appendChild(videoContainer);
+        
+        // Play after a short delay
+        setTimeout(() => {
+          video.play();
+        }, 100);
+
+        video.onended = () => {
+          videoContainer.remove();
+        };
+      }
+    </script>
+    <script src="8ball.js"></script>
 </body>
 </html>
