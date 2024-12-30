@@ -1,17 +1,58 @@
 #!/usr/bin/env node
 
-import { readFileSync } from "fs";
+import { readFileSync } from "node:fs";
+import emojiRegex from "emoji-regex";
+
+// Curated list of developer-friendly emojis
+const devEmojis = [
+  "✨", // sparkles - new feature
+  "🚀", // rocket - deployment/performance
+  "🧱", // brick - infrastructure
+  "🌱", // seedling - initial commit
+  "🐛", // bug - bug fix
+  "🔧", // wrench - configuration
+  "🎨", // art - styling/UI
+  "♻️", // recycle - refactor
+  "🔥", // fire - remove code/files
+  "📦", // package - dependencies
+  "🔒", // lock - security
+  "📝", // memo - docs
+  "🧪", // test tube - testing
+  "⚡️", // zap - improvement
+  "🔍", // magnifying glass - search
+  "💡", // bulb - idea/solution
+  "🏗️", // construction - WIP
+  "🎯", // target - goals/focus
+  "🛠️", // tools - development tools
+  "🧹", // broom - cleanup
+];
+
+// Function to generate emoji square
+function generateEmojiSquare(size = 5) {
+  const selectedEmojis = [];
+  for (let i = 0; i < size * size; i++) {
+    const randomIndex = Math.floor(Math.random() * devEmojis.length);
+    selectedEmojis.push(devEmojis[randomIndex]);
+  }
+
+  let square = "\nPick an emoji for your commit:\n\n";
+  for (let i = 0; i < size; i++) {
+    const row = selectedEmojis.slice(i * size, (i + 1) * size).join(" ");
+    square += row + "\n";
+  }
+  return square;
+}
 
 // Read the commit message from the file
 const commitMsgFile = process.argv[2];
 const commitMsg = readFileSync(commitMsgFile, "utf8");
 
-// Regex to match emoji characters
-const emojiRegex =
-  /[\u{1F300}-\u{1F9FF}]|[\u{2600}-\u{26FF}]|[\u{2700}-\u{27BF}]|[\u{1F000}-\u{1F02F}]|[\u{1F0A0}-\u{1F0FF}]|[\u{1F100}-\u{1F64F}]|[\u{1F680}-\u{1F6FF}]|[\u{1F910}-\u{1F96B}]|[\u{1F980}-\u{1F9E0}]/u;
+// Use the emoji-regex package for more accurate emoji detection
+const regex = emojiRegex();
 
-if (!emojiRegex.test(commitMsg)) {
+if (!regex.test(commitMsg)) {
   console.error("\x1b[31mError: Commit message must include at least one emoji! 🚫\x1b[0m");
+  console.error(generateEmojiSquare());
   console.error("Example commit messages:");
   console.error("✨ Add new feature");
   console.error("🐛 Fix bug in login");
