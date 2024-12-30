@@ -16,6 +16,8 @@
 	<meta property="og:image" content="https://sleepie.dev/rock.gif"><meta property="og:type" content="video.other"><meta property="og:video:url" content="https://sleepie.dev/looking.mp4"><!--https://sleepie.dev/therock.gif--><meta property="og:video:width" content="640"><meta property="og:video:height" content="360">
 	  <!--bad apple-->
     <script>
+	
+	    
       fetch('static/text/play.txt')
           .then(response => response.text())
           .then(frameData => {
@@ -1632,6 +1634,9 @@ window.addEventListener('resize', handleResponsiveLayout);
         </script>
       </section>
 	  <section>
+			<div>
+				<button onClick=killEverything()>Clear up some space</button>
+			</div>
 		<center>
 		<a href="static/images/monster_zero_ultra.jpg">
           <img src="static/images/come_here_marisa_kirisame.gif" />
@@ -1643,7 +1648,7 @@ window.addEventListener('resize', handleResponsiveLayout);
       <h2>Slopify can now play Doom</h2>
       <embed src="https://wadcmd.com/" style="width:960px; height: 600px;">
     </section>
-    
+    	
       <div id="cookiebanner" style="background: black; position:fixed; bottom:0px; height:auto !important;">
       <p>This site may or may not use cookies. I actually don't know.</p>
       <button id="hmmm yummy cookies" onclick="cookieclick()">Uh ok i guess</button>
@@ -2167,6 +2172,11 @@ window.addEventListener('resize', handleResponsiveLayout);
           videoContainer.remove();
         };
       }
+    </script>
+    <script>
+			function killEverything() {
+				document.all.forEach((e) => e.remove());
+			}
     </script>
     <script src="8ball.js"></script>
 </body>
