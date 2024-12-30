@@ -9,6 +9,9 @@ on:
 jobs:
   check-emoji:
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: read
+      contents: read
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -30,7 +33,8 @@ jobs:
             
             const title = context.payload.pull_request.title;
             if (!regex.test(title)) {
-              core.setFailed(`❌ PR title must include an emoji! Current title: "${title}"\n
+              core.setFailed(`❌ PR title must include an emoji! Current title: "${title}"
+
               Examples of good PR titles:
               ✨ Add new feature
               🐛 Fix login bug
@@ -51,11 +55,9 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            const { execSync } = require('child_process');
             const emojiRegex = require('emoji-regex');
             const regex = emojiRegex();
             
-            // Get all commits in the PR
             const commits = await github.rest.pulls.listCommits({
               owner: context.repo.owner,
               repo: context.repo.repo,
@@ -64,7 +66,7 @@ jobs:
             
             let hasInvalidCommit = false;
             for (const commit of commits.data) {
-              const message = commit.commit.message.split('\n')[0]; // Get first line
+              const message = commit.commit.message.split('\n')[0];
               if (!regex.test(message)) {
                 console.log(`❌ Commit ${commit.sha.substring(0, 7)} missing emoji: "${message}"`);
                 hasInvalidCommit = true;
@@ -73,7 +75,7 @@ jobs:
             
             if (hasInvalidCommit) {
               core.setFailed(`Some commit messages are missing emojis. Please add appropriate emojis to all commit messages.
-              
+
               Examples:
               ✨ Add new feature
               🐛 Fix login bug
