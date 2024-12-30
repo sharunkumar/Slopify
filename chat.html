@@ -14,8 +14,6 @@
             --text-primary: #e0e0e0;
             --text-secondary: #b0b0b0;
         }
-
-        <!best comment here>
         
         body {
             margin: 0;
@@ -129,6 +127,7 @@
             background-color: var(--bg-primary);
             color: var(--text-primary);
             font-family: monospace;
+            appearance: none;
             -moz-appearance: none;
         }
 
@@ -141,6 +140,7 @@
             background-color: var(--border-color);
             border: 2px outset var(--border-color);
             font-family: monospace;
+            appearance: none;
             -moz-appearance: none;
         }
 
@@ -526,9 +526,7 @@
 
 
         }
-    }
-}
-
+        
         function processMessage(message) {
             try {
                 let messageData = JSON.parse(message);
