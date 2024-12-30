@@ -14,7 +14,35 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
 
 	<meta property="og:image" content="https://sleepie.dev/rock.gif"><meta property="og:type" content="video.other"><meta property="og:video:url" content="https://sleepie.dev/looking.mp4"><!--https://sleepie.dev/therock.gif--><meta property="og:video:width" content="640"><meta property="og:video:height" content="360">
-	  
+	  <!--bad apple-->
+    <script>
+      fetch('static/text/play.txt')
+          .then(response => response.text())
+          .then(frameData => {
+              const frames = frameData.split("SPLIT");
+              startAnimation(frames);
+          })
+          .catch(error => console.error('Error loading play.txt:', error));
+  
+      function startAnimation(frames) {
+          const frameRate = 50;
+          let startTime = Date.now();
+  
+          function animate() {
+              const elapsedTime = Date.now() - startTime;
+              const frameIndex = Math.floor(elapsedTime / frameRate) % frames.length;
+  
+              console.clear(); 
+              console.log(frames[frameIndex]); 
+  
+              if (elapsedTime < frames.length * frameRate) {
+                  requestAnimationFrame(animate);
+              }
+          }
+  
+          animate();
+      }
+  </script>
 	<style>
 
 
