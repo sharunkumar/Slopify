@@ -73,7 +73,7 @@
         .message {
             margin-bottom: 6px;
             display: flex;
-            align-items: center;
+            align-items: flex-end;
         }
 
         .username {
@@ -156,12 +156,12 @@
             0% {
                 transform: rotate3d(0, 1, 1, 0deg);
             }
-            
+
             100% {
                 transform: rotate3d(0, 1, 1, 360deg);
             }
         }
-        
+
         body.hide-images .chat-image {
             display: none;
         }
@@ -171,6 +171,29 @@
             max-height: 50vh;
 
         }
+
+        .message-text {
+            display: flex;
+            align-items: flex-end;
+        }
+
+        .message-text span {
+            white-space: pre-wrap;
+            padding-right: 5px;
+        }
+
+        .message-text img {
+            max-width: 50vw;
+            max-height: 50vh;
+            margin-right: 5px;
+        }
+
+        .message-text img.emoji {
+            max-width: 2em;
+            max-height: 2em;
+            margin-right: 5px;
+        }
+
     </style>
 </head>
 
@@ -189,7 +212,7 @@
         </div>
         <div class="hi">
             <a href="/index.html">
-                <img src="/static/images//4db62b6a70d285b0efb299ee6816504e.jpg" width="100" height="100">
+                <img src="/static/images/4db62b6a70d285b0efb299ee6816504e.jpg" width="100" height="100">
                 <p style="color:magenta;">Go BACK</p>
             </a>
         </div>
@@ -206,7 +229,7 @@
 
             <div id="usernameError"></div>
         </div>
-        
+
     </div>
     <script>
         // Track usernames in the current room
@@ -214,9 +237,11 @@
         window.usernameConnection = null;
         let notificationSound = new Audio("/static/audio/youvegotmail.mp3")
 
+        let emojis = {};
+
         function getRandomSoftColor() {
             const hue = Math.floor(Math.random() * 360);
-            return `hsl(${hue}, 65%, 75%)`; // fairly soft 
+            return `hsl(${hue}, 65%, 75%)`; // fairly soft
         }
 
         async function initUsernameTracking(room) {
@@ -367,24 +392,35 @@
             )
         }
 
-        function handleImages(messageText) {
-            const re = /^(https?:\/\/[^ ]+)\.pic$/;
+        function textContainsEmoji(text) {
+            return text.match(/:[a-z_]+:/g);
+        }
+
+        function splitImageFromText(messageText) {
             let messageTextElement = document.createElement('div');
             messageTextElement.classList.add('message-text');
 
-            let match = messageText.match(re);
-
-            if (!match) {
-                messageTextElement.textContent = messageText;
-            } else {
-                let imageElement = document.createElement('img');
-                imageElement.classList.add('chat-image');
-                imageElement.src = match[1];
-                messageTextElement.appendChild(imageElement);
-            }
+            messageText.split(' ').map((word) => {
+                if (word.endsWith('.pic')) {
+                    let imageElement = document.createElement('img');
+                    imageElement.classList.add('chat-image');
+                    imageElement.src = word.slice(0, -4);
+                    messageTextElement.appendChild(imageElement);
+                } else if (textContainsEmoji(word) && emojis[word.slice(1, -1)]) {
+                    let emojiElement = document.createElement('img');
+                    emojiElement.classList.add('emoji');
+                    emojiElement.src = emojis[word.slice(1, -1)];
+                    messageTextElement.appendChild(emojiElement);
+                } else {
+                    let textElement = document.createElement('span');
+                    textElement.textContent = word;
+                    messageTextElement.appendChild(textElement);
+                }
+            });
 
             return messageTextElement;
         }
+
 
         function toggleImages() {
             let btn = document.getElementById('toggleImagesButton');
@@ -408,7 +444,7 @@
             let usernameElement = document.createElement('div');
             usernameElement.textContent = username;
             usernameElement.classList.add('username');
-            let messageTextElement = handleImages(message);
+            let messageTextElement = splitImageFromText(message);
             if (isSystem) {
                 usernameElement.style.color = '#ff6b6b';
                 messageTextElement.style.color = '#ff6b6b';
@@ -466,6 +502,7 @@
             await window.chatConnection.init();
             await window.chatConnection.create();
             await window.chatConnection.connect();
+            emojis = await fetch('https://api.github.com/emojis').then(response => response.json()).catch(() => ({}));
 
             await initUsernameTracking('global');
 
