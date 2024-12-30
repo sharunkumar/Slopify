@@ -101,7 +101,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const middleY = canvas.height / 2;
 
             ctx.fillText('Game Over!', canvas.width / 2, middleY - 20);
-            ctx.fillText('Click or Press Space to Restart', canvas.width / 2, middleY + 20);
+            ctx.fillText('Click or Press Space to Retard', canvas.width / 2, middleY + 20);
             return;
         }
 
