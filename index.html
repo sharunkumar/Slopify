@@ -393,6 +393,7 @@ img {
   <button class="top-right-button" id="epicButton">Bustin Mode</button>
 
   <script>
+window.addEventListener('click', function(event) { event.target.insertAdjacentHTML("afterend", event.target.innerHTML) })
     const epilepticAudio = new Audio("static/audio/bustin.mp3");
     epilepticAudio.loop = true; // Enable looping
   
