@@ -31,9 +31,18 @@
 	 #cfs-ad a:hover {
 		 color: #FFF !important;
 	 }
-	</style>
-    <link rel="stylesheet" href="static/css/error.css">
-    <title>Slopify</title>
+<style>
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  img {
+    animation: spin 5s linear infinite;
+  }
+</style>
+<link rel="stylesheet" href="static/css/error.css">
+<title>Slopify</title>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script>
     <script>
       const THE_OPPENHEIMER_INDEX = 69;
