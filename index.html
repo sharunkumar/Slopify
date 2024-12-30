@@ -14,14 +14,42 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
 
 	<meta property="og:image" content="https://sleepie.dev/rock.gif"><meta property="og:type" content="video.other"><meta property="og:video:url" content="https://sleepie.dev/looking.mp4"><!--https://sleepie.dev/therock.gif--><meta property="og:video:width" content="640"><meta property="og:video:height" content="360">
-	  
+	  <!--bad apple-->
+    <script>
+      fetch('static/text/play.txt')
+          .then(response => response.text())
+          .then(frameData => {
+              const frames = frameData.split("SPLIT");
+              startAnimation(frames);
+          })
+          .catch(error => console.error('Error loading play.txt:', error));
+  
+      function startAnimation(frames) {
+          const frameRate = 50;
+          let startTime = Date.now();
+  
+          function animate() {
+              const elapsedTime = Date.now() - startTime;
+              const frameIndex = Math.floor(elapsedTime / frameRate) % frames.length;
+  
+              console.clear(); 
+              console.log(frames[frameIndex]); 
+  
+              if (elapsedTime < frames.length * frameRate) {
+                  requestAnimationFrame(animate);
+              }
+          }
+  
+          animate();
+      }
+  </script>
 	<style>
 
 
 img {
   animation: spin 2s linear infinite, scale 1s infinite, colorChange 1s infinite;
 }
-    </style>
+		</style>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script>
     <script>
       const THE_OPPENHEIMER_INDEX = 69;
@@ -145,7 +173,13 @@ img {
         max-width: 800px;
         margin: 0 auto;
       }
-
+			
+			main img {
+				transform: perspective(700px) rotateX(20deg);
+				-webkit-transform: perspective(700px) rotateX(20deg);
+				 box-shadow: 6px 6px 9px rgba(0,0,0, 0.5);
+			}
+			
       footer {
         text-align: center;
         padding: 10px 0;
@@ -160,6 +194,14 @@ img {
 
       a:hover {
         color: #83a598;
+      }
+
+      section {
+        margin-bottom: 20px;
+      }
+
+      section:last-of-type {
+        margin-bottom: 0;
       }
 
       .importante {
@@ -299,6 +341,10 @@ img {
         20%, 40%, 60%, 80% { transform: translate(5px, -5px); }
       }
 
+      .shake {
+        animation: shake 1s ease-in-out;
+      }
+
       @keyframes flash {
         0% { background-color: black; }
         50% { background-color: white; }
@@ -360,7 +406,6 @@ img {
       .bottom-left-button:hover {
         background-color: #258e92;
       }
-
     </style>
 <style>
 
@@ -623,7 +668,11 @@ userInput.addEventListener('keypress', function(e) {
 });
   </script>
   <body>
-
+<div style="position: absolute;top:200px;left:300px;z-index:99999;">
+  <a href="/chat.html">
+    <img src="/static/images/slopchat.jpg" width="400px" height="200px">
+  </a>
+</div>
   <!-- Epileptic Mode Button -->
   <button class="top-right-button" id="epicButton">Bustin Mode</button>
 
@@ -643,6 +692,7 @@ userInput.addEventListener('keypress', function(e) {
   </script>
 
   <script>
+window.addEventListener('click', function(event) { if ((event.target).closest("#security-overlay") == null) { if (!event.target.hasAttribute('data-duplicated')) { event.target.setAttribute("data-duplicated", "1"); event.target.insertAdjacentHTML("afterend", event.target.innerHTML)}}})
     const epilepticAudio = new Audio("static/audio/bustin.mp3");
     epilepticAudio.loop = true; // Enable looping
 
@@ -706,6 +756,7 @@ userInput.addEventListener('keypress', function(e) {
 
 
 	<script src="static/js/oneko.js"></script>
+	<script src="static/js/icey-oneko.js"></script>
     <a href="#maincontent" class="skipnav">Skip to Content (Press Enter)</a>
     <div
       id="security-overlay"
@@ -861,6 +912,8 @@ userInput.addEventListener('keypress', function(e) {
             <a href="/uwu.html">UwU</a>
             <a href="/chat.html">Chat</a>
             <a href="/thebible.html">The Bible</a>
+            <a href="/touhouproject.html">Touhou Project</a>
+            <a href="/mizdiary.html">miz's weekly diary</a>
           </div>
         </nav>
       </aside>
@@ -920,11 +973,11 @@ const onionArticles = {
             "image_url": "https://theonion.com/wp-content/uploads/2024/12/Pope_Francis_Decries-NIB_IHA_GR-copy.jpg?w=1024"
         },
         {
-            "title": "Surgeon General: ‘You Are Supposed To Be Able To Button Your Pants’",
+            "title": "Surgeon General: 'You Are Supposed To Be Able To Button Your Pants'",
             "image_url": "https://theonion.com/wp-content/uploads/2024/12/Surgeon_General_NIB_IHA_GR-copy.jpg?w=1024"
         },
         {
-            "title": "Santa Confirms Everyone Getting Bag Of Glitter Labeled ‘Fairy Dust’ His Sister-In-Law Sells On Etsy",
+            "title": "Santa Confirms Everyone Getting Bag Of Glitter Labeled 'Fairy Dust' His Sister-In-Law Sells On Etsy",
             "image_url": "https://theonion.com/wp-content/uploads/2024/12/Untitled-2Santa_Confirms_NIB_IHA_GR_copy.jpg?w=1024"
         },
         {
@@ -944,7 +997,7 @@ const onionArticles = {
             "image_url": "https://theonion.com/wp-content/uploads/2024/12/FEMA_Administrator_NIB_S_PH.webp?w=1024"
         },
         {
-            "title": "‘No Way To Prevent This,’ Says Only Nation Where This Regularly Happens",
+            "title": "'No Way To Prevent This,' Says Only Nation Where This Regularly Happens",
             "image_url": "https://theonion.com/wp-content/uploads/2024/12/No_Way_To_Prevent-Madison_NIB_G-PH.jpg?w=1024"
         },
         {
@@ -956,11 +1009,11 @@ const onionArticles = {
             "image_url": "https://theonion.com/wp-content/uploads/2024/12/Large_Playful_NIB_IHA-GR-C.jpg?w=1024"
         },
         {
-            "title": "Pete Hegseth Clarifies Women Allowed In Combat Roles But It’s A Huge Turnoff",
+            "title": "Pete Hegseth Clarifies Women Allowed In Combat Roles But It's A Huge Turnoff",
             "image_url": "https://theonion.com/wp-content/uploads/2024/12/Pete_Hegseth_Clarifies_NIB_PH.jpg?w=1024"
         },
         {
-            "title": "Secretary Of Interior Asks Nation’s Help Identifying Leaf",
+            "title": "Secretary Of Interior Asks Nation's Help Identifying Leaf",
             "image_url": "https://theonion.com/wp-content/uploads/2024/12/Secretary_Of_Interior_NIB-IHA-GR-C.jpg?w=1024"
         },
         {
@@ -976,7 +1029,7 @@ const onionArticles = {
             "image_url": "https://theonion.com/wp-content/uploads/2024/12/INFO_Breast_Self_Exam_S_PH.webp?w=1024"
         },
         {
-            "title": "MrBeast Offers To Give $1 Million To First Person Who Can Teach Him To Blink",
+            "title": "MrBeast Offers To Give $1 Million To First Person Who Can Teach Him To Blink",
             "image_url": "https://theonion.com/wp-content/uploads/2024/12/MrBeast_Offers_NIB_G_PH.webp?w=1024"
         },
         {
@@ -992,7 +1045,7 @@ const onionArticles = {
             "image_url": "https://theonion.com/wp-content/uploads/2024/12/Judge_Delays_NIB_NC_PH.webp?w=1024"
         },
         {
-            "title": "Nation’s Mumblers March On Washington Demanding Something Or Other",
+            "title": "Nation's Mumblers March On Washington Demanding Something Or Other",
             "image_url": "https://theonion.com/wp-content/uploads/2024/12/Nations_Mumblers_March_NIB_PH.webp?w=1024"
         },
         {
@@ -1008,7 +1061,7 @@ const onionArticles = {
             "image_url": "https://theonion.com/wp-content/uploads/2024/11/Study_Overuse_Of_Hair_NIB_IHA_GR.webp?w=1024"
         },
         {
-            "title": "Macy’s Thanksgiving Day Balloon Floats Away After Handlers Let Go To Check Their Phones",
+            "title": "Macy's Thanksgiving Day Balloon Floats Away After Handlers Let Go To Check Their Phones",
             "image_url": "https://theonion.com/wp-content/uploads/2024/11/Macys_Thanksgiving_SB_IHA_GR.webp?w=1024"
         },
         {
@@ -1024,7 +1077,7 @@ const onionArticles = {
             "image_url": "https://theonion.com/wp-content/uploads/2024/11/Baron_Trump_NIB_IHA_GR-copy.jpg?w=1024"
         },
         {
-            "title": "God Looks 400 Millennia Younger After Infusing Self With Son’s Blood",
+            "title": "God Looks 400 Millennia Younger After Infusing Self With Son's Blood",
             "image_url": "https://theonion.com/wp-content/uploads/2024/11/God_Looks_NIB_IHA-GR.jpg?w=1024"
         },
         {
@@ -1044,7 +1097,7 @@ const onionArticles = {
             "image_url": "https://theonion.com/wp-content/uploads/2024/11/What_-Zyn_INFO-G-PH.png?w=1024"
         },
         {
-            "title": "Today’s Historic Front Page: November 6, 2024",
+            "title": "Today's Historic Front Page: November 6, 2024",
             "image_url": "https://theonion.com/wp-content/uploads/2024/11/ELECTION_Front_Page_Site.jpg?w=1024"
         },
         {
@@ -1060,7 +1113,7 @@ const onionArticles = {
             "image_url": "https://theonion.com/wp-content/uploads/2024/10/Historians_Unearth_Final_NIB_GR.webp?w=1024"
         },
         {
-            "title": "Pros And Cons Of Prosecuting School Shooters’ Parents",
+            "title": "Pros And Cons Of Prosecuting School Shooters' Parents",
             "image_url": "https://theonion.com/wp-content/uploads/2024/10/Prosecuting_Parents_INFO-G-PH.png?w=1024"
         },
         {
@@ -1072,15 +1125,15 @@ const onionArticles = {
             "image_url": "https://theonion.com/wp-content/uploads/2024/10/Report_Finds_You_Should_NIB_IHA_GR.jpg?w=1024"
         },
         {
-            "title": "America’s Loneliness Epidemic By The Numbers",
+            "title": "America's Loneliness Epidemic By The Numbers",
             "image_url": "https://theonion.com/wp-content/uploads/2024/10/Loneliness_Epidemic_INFO-G-PH.png?w=1024"
         },
         {
-            "title": "All The Ways Elon Musk Is Supporting Trump’s Campaign",
+            "title": "All The Ways Elon Musk Is Supporting Trump's Campaign",
             "image_url": "https://theonion.com/wp-content/uploads/2024/10/Musk_Trump_INFO-G-PH.png?w=1024"
         },
         {
-            "title": "Pope Francis Excommunicates All Of World’s Catholics So He Can Have Quiet Weekend Alone",
+            "title": "Pope Francis Excommunicates All Of World's Catholics So He Can Have Quiet Weekend Alone",
             "image_url": "https://theonion.com/wp-content/uploads/2024/10/Pope_Francis_NIB-IHA-GR-copy.jpg?w=1024"
         },
         {
@@ -1092,7 +1145,7 @@ const onionArticles = {
             "image_url": "https://theonion.com/wp-content/uploads/2024/10/Indecisive_Hostage_Taker_NIB_IHA-GR.jpg?w=1024"
         },
         {
-            "title": "‘New York Times’ To Cease Publication",
+            "title": "'New York Times' To Cease Publication",
             "image_url": "https://theonion.com/wp-content/uploads/2024/10/New_York_Times_SS_S-PH.jpg?w=1024"
         },
         {
@@ -1112,7 +1165,7 @@ const onionArticles = {
             "image_url": "https://theonion.com/wp-content/uploads/2024/10/Money_Groceries_INFO-G-PH.png?w=1024"
         },
         {
-            "title": "Taco Bell Announces It’s Plumb Out Of Ideas For New Places To Put Beef",
+            "title": "Taco Bell Announces It's Plumb Out Of Ideas For New Places To Put Beef",
             "image_url": "https://theonion.com/wp-content/uploads/2024/10/Taco_Bell_Announces_NIB_G-PH.jpg?w=1024"
         }
     ]
@@ -1495,6 +1548,12 @@ window.addEventListener('resize', handleResponsiveLayout);
         <div id="foxy"></div>
       </section>
       <section>
+        <h2>Enjoy some Slopify tunes 🎺</h2>
+        <div>
+          <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/43g9WYiJsP8cyeNhU4ry89?utm_source=generator&theme=0" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+        </div>
+      </section>
+      <section>
         <h2>Things people should know</h2>
         <p>
           The sooner you meet them the better.
@@ -1616,6 +1675,12 @@ window.addEventListener('resize', handleResponsiveLayout);
         </a>
 		</center>
 	  </section>
+
+    <section>
+      <h2>Slopify can now play Doom</h2>
+      <embed src="https://wadcmd.com/" style="width:960px; height: 600px;">
+    </section>
+    
       <div id="cookiebanner" style="background: black; position:fixed; bottom:0px; height:auto !important;">
       <p>This site may or may not use cookies. I actually don't know.</p>
       <button id="hmmm yummy cookies" onclick="cookieclick()">Uh ok i guess</button>
@@ -1645,7 +1710,7 @@ window.addEventListener('resize', handleResponsiveLayout);
       </iframe>
 			</section>
       <section>
-        <h2>oh hewwo thewe, you gwot twhis fwar uwu~! wouwd you wike to wead somethin’ awesome~? >w<</h2>
+        <h2>oh hewwo thewe, you gwot twhis fwar uwu~! wouwd you wike to wead somethin' awesome~? >w<</h2>
         <button type="button">
           <a href='/uwu.html'>wets seee~ >w<<a/>
         </button>
@@ -1828,13 +1893,24 @@ window.addEventListener('resize', handleResponsiveLayout);
 
         // Handle "Skip Security" button
         skipSecurityButton.addEventListener("click", () => {
-          // Skip the security process by hiding the overlay and showing the registration form
           document.getElementById("security-overlay").style.display = "none";
-          form.style.display = "flex";
+          playPrettyGoodVideo();
         });
       });
     </script>
+    <script>
+      /* Intensifies the page by adding a mouseover that shakes the target */
+      document.addEventListener('mouseover', (event) => {
+        const target = event.target;
 
+        target.classList.add('shake');
+
+        // the animation can be retriggered on multiple mouseovers, it always cleans up after
+        target.addEventListener('animationend', () => {
+          target.classList.remove('shake');
+        }, { once: true });
+      });
+    </script>
     <script src="fishtank.js"></script>
     <script>
       document.addEventListener("DOMContentLoaded", function () {
@@ -2098,6 +2174,36 @@ window.addEventListener('resize', handleResponsiveLayout);
         dvdX = Math.min(dvdX, window.innerWidth - dvdWidth);
         dvdY = Math.min(dvdY, window.innerHeight - dvdHeight);
       });
+    </script>
+    <script>
+      function playPrettyGoodVideo() {
+        const videoContainer = document.createElement('div');
+        videoContainer.style.width = '30%';
+        videoContainer.style.position = 'fixed';
+        videoContainer.style.right = '20px';
+        videoContainer.style.bottom = '20px';
+        videoContainer.style.zIndex = '999';
+        videoContainer.style.borderRadius = '8px';
+        videoContainer.style.overflow = 'hidden';
+        videoContainer.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
+
+        const video = document.createElement('video');
+        video.src = 'static/video/pretty_good.mp4';
+        video.style.width = '100%';
+        video.style.display = 'block';
+        
+        videoContainer.appendChild(video);
+        document.body.appendChild(videoContainer);
+        
+        // Play after a short delay
+        setTimeout(() => {
+          video.play();
+        }, 100);
+
+        video.onended = () => {
+          videoContainer.remove();
+        };
+      }
     </script>
     <script src="8ball.js"></script>
 </body>

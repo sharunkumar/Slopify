@@ -15,6 +15,8 @@
             --text-secondary: #b0b0b0;
         }
 
+        <!best comment here>
+        
         body {
             margin: 0;
             padding: 0;
@@ -44,7 +46,7 @@
 
         #roomInfo>p {
             display: inline-block;
-            transform: translateX(100px)scale(2, 1);
+            transform: translateX(100px)scale(0.5, 1);
             background-color: var(--bg-secondary);
             border-bottom: 1px solid var(--border-color);
             font-size: large;
@@ -332,11 +334,15 @@
             document.getElementById('roomInfo').textContent = `Connected to room: ${room}`;
             localMessage('System:', `${window.userName} connected to room ${room}. ---`, true);
 
+            
+
             // Announce username in new room
             window.usernameConnection.send(JSON.stringify({
                 type: 'username_taken',
                 username: window.userName
             }));
+
+            localMessage(localStorage['userName'], 'i connected', false, false)
         }
 
         async function isUsernameAvailable(username) {
@@ -403,6 +409,8 @@
                 type: 'username_taken',
                 username: username
             }));
+
+            localMessage(localStorage['userName'], 'i connected', false, false)
         }
 
         function getTunnelConnection(id) {
@@ -475,58 +483,48 @@
             localStorage.setItem('imageState', String(window.chatState));
         }
 
-function localMessage(username, message, isBot, isSystem, botLabel = "bot") {
-    if (!isSystem) isSystem = false;
-    if (window.mutedUsernames.has(username)) { return };
-    let messagesContainer = document.getElementById('messages');
-    let messageContainer = document.createElement('div');
-    messageContainer.classList.add('message');
-    let usernameElement = document.createElement('div');
-    usernameElement.textContent = username;
-    usernameElement.classList.add('username');
-    let messageTextElement = splitImageFromText(message);
-    if (isSystem) {
-        usernameElement.style.color = '#ff6b6b';
-        messageTextElement.style.color = '#ff6b6b';
-    } else {
-        if (!window.userColors) window.userColors = {};
-        if (!window.userColors[username]) {
-            window.userColors[username] = getRandomSoftColor();
-        }
-        usernameElement.style.color = window.userColors[username];
-    }
-    if (isBot) {
-        let botElement = document.createElement('div');
-        botElement.textContent = botLabel;
-        botElement.classList.add('bot');
-        messageContainer.appendChild(botElement);
-    }
-    messageContainer.appendChild(usernameElement);
-    messageContainer.appendChild(messageTextElement);
-    messagesContainer.appendChild(messageContainer);
-    messagesContainer.scrollTop = messagesContainer.scrollHeight;
 
-    if (message.includes(localStorage['userName'])) {
-        notificationSound.play();
-    }
-
-    if (username == localStorage['userName']) {
-        if (message[0] == '~') {
-            let s = message.split(' ')
-            let command = s[0];
-
-            switch (command) {
-                case '~mute':
-                    let userToMute = s[1]
-                    window.mutedUsernames.add(userToMute);
-                    alert("User " + userToMute + " muted succesfully.")
-                    break;
-                case '~unmute':
-                    let userToUnmute = s[1]
-                    window.mutedUsernames.delete(userToUnmute);
-                    alert("User " + userToMute + " unmuted succesfully.")
-                    break;
+        function localMessage(username, message, isBot, isSystem) {
+            if (!isSystem) isSystem = false;
+            if (window.mutedUsernames.has(username)) { return };
+            let messagesContainer = document.getElementById('messages');
+            let messageContainer = document.createElement('div');
+            messageContainer.classList.add('message');
+            let usernameElement = document.createElement('div');
+            usernameElement.textContent = username;
+            usernameElement.classList.add('username');
+            let messageTextElement = splitImageFromText(message);
+            if (isSystem) {
+                usernameElement.style.color = '#ff6b6b';
+                messageTextElement.style.color = '#ff6b6b';
+            } else {
+                if (!window.userColors) window.userColors = {};
+                if (!window.userColors[username]) {
+                    window.userColors[username] = getRandomSoftColor();
+                }
+                usernameElement.style.color = window.userColors[username];
             }
+            if (isBot) {
+                let botElement = document.createElement('div')
+                botElement.textContent = "bot";
+                botElement.classList.add('bot');
+                messageContainer.appendChild(botElement);
+            }
+
+            if (message.includes(localStorage['userName'])) {
+                notificationSound.play();
+                messageTextElement.style.backgroundColor = "rgba(233, 211, 150, 0.5)";
+                usernameElement.style.backgroundColor = "rrgba(233, 211, 150, 0.5)";
+            }
+
+            messageContainer.appendChild(usernameElement);
+            messageContainer.appendChild(messageTextElement);
+            messagesContainer.appendChild(messageContainer);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+
+
+
         }
     }
 }
@@ -547,6 +545,8 @@ function localMessage(username, message, isBot, isSystem, botLabel = "bot") {
 
         function sendMessage() {
             let userMessage = document.getElementById('messageInput').value;
+            handleLocalCommands(userMessage)
+
             if (!userMessage.trim()) return;
 
             if (userMessage.includes("blink")) {
@@ -559,6 +559,30 @@ function localMessage(username, message, isBot, isSystem, botLabel = "bot") {
             };
             window.chatConnection.send(JSON.stringify(messageData));
             document.getElementById('messageInput').value = '';
+
+
+        }
+
+        function handleLocalCommands(message) {
+            if (message[0] == '~') {
+                let s = message.split(' ')
+                let command = s[0];
+
+                switch (command) {
+                    case '~mute':
+                        let userToMute = s[1]
+                        window.mutedUsernames.add(userToMute);
+                        alert("User " + userToMute + " muted succesfully.")
+                        break;
+                    case '~unmute':
+                        let userToUnmute = s[1]
+                        window.mutedUsernames.delete(userToUnmute);
+                        alert("User " + userToMute + " unmuted succesfully.")
+                        break;
+                }
+                return true
+            }
+            return false
         }
 
         document.addEventListener('DOMContentLoaded', async () => {
