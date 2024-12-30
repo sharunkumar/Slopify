@@ -424,7 +424,7 @@
             messageTextElement.classList.add('message-text');
 
             messageText.split(' ').map((word) => {
-                if (word.endsWith('.pic')) {
+                if (word.endsWith('.pic') && window.chatState !== 1 /* Hide images */) {
                     let imageElement = document.createElement('img');
                     imageElement.classList.add('chat-image');
                     imageElement.src = word.slice(0, -4);
@@ -593,6 +593,7 @@
 
             if (localStorage.getItem('hideImages') === "true") {
                 window.chatState = 1;
+                localStorage.removeItem('hideImages');
             }
 
             toggleImages(window.chatState);
