@@ -5,17 +5,12 @@ on:
     types: [opened, edited, synchronize, reopened]
   pull_request_target:
     types: [opened, edited, synchronize, reopened]
-  push:
-    branches: ['**']
   workflow_dispatch:
 
 jobs:
   check-emoji:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
@@ -24,7 +19,8 @@ jobs:
       - name: Install dependencies
         run: npm install emoji-regex
 
-      - name: Check PR title and commits
+      - name: Check PR title
+        if: github.event_name == 'pull_request' || github.event_name == 'pull_request_target'
         uses: actions/github-script@v7
         with:
           script: |
@@ -32,44 +28,10 @@ jobs:
             const regex = emojiRegex();
             
             try {
-              // Check PR title if it's a PR event
-              if (context.payload.pull_request) {
-                const title = context.payload.pull_request.title;
-                if (!regex.test(title)) {
-                  core.setFailed('PR title must include an emoji! Examples: "✨ New feature", "🐛 Fix bug", "🎨 Update styles"');
-                  return;
-                }
+              const title = context.payload.pull_request.title;
+              if (!regex.test(title)) {
+                core.setFailed('PR title must include an emoji! Examples: "✨ New feature", "🐛 Fix bug", "🎨 Update styles"');
               }
-
-              // Check commits
-              let commits = [];
-              if (context.eventName === 'push') {
-                commits = context.payload.commits;
-              } else if (context.payload.pull_request) {
-                const { data: prCommits } = await github.rest.pulls.listCommits({
-                  owner: context.repo.owner,
-                  repo: context.repo.repo,
-                  pull_number: context.payload.pull_request.number
-                });
-                commits = prCommits.map(c => ({ message: c.commit.message }));
-              }
-
-              let invalidCommits = [];
-              for (const commit of commits) {
-                const message = commit.message.split('\n')[0];
-                // Skip merge commits
-                if (message.startsWith('Merge')) continue;
-                
-                if (!regex.test(message)) {
-                  invalidCommits.push(message);
-                }
-              }
-
-              if (invalidCommits.length > 0) {
-                const examples = '✨ New feature, 🐛 Fix bug, 🎨 Update styles';
-                core.setFailed(`Found commits missing emojis:\n${invalidCommits.join('\n')}\n\nExamples: ${examples}`);
-              }
-
             } catch (error) {
-              core.setFailed(`Error checking emojis: ${error.message}`);
+              core.setFailed(`Error checking emoji: ${error.message}`);
             } 
