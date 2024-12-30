@@ -1,8 +1,10 @@
 const frog = document.getElementById('frog');
 const moreVibeAudio = document.getElementById('moreVibeAudio');
 const vibeAudio = document.getElementById('vibeAudio');
+let allQuotes = [];
 
 function vibe() {
+    document.getElementById("soundCloudIFrame").src = "";
     moreVibeAudio.pause(); moreVibeAudio.currentTime = 0;
     vibeAudio.pause(); vibeAudio.currentTime = 0;
     const asd = Math.round(Math.random() * 690);
@@ -10,10 +12,27 @@ function vibe() {
     if (String(asd).includes("69") || String(asd).includes("42")) {
         frog.src = 'static/images/rick.gif';
         moreVibeAudio.play();
+        navigator.mediaSession.metadata = new MediaMetadata({
+          title: 'Never Gonna Give You Up',
+          artist: 'Rick Astley',
+          album: 'Whenever You Need Somebody',
+          artwork: [
+            { src: '../images/rick.gif',  sizes: '256x256', type: 'image/png' },
+          ],
+        });
     } else {
         vibeAudio.play();
+        if ('mediaSession' in navigator) {
+          navigator.mediaSession.metadata = new MediaMetadata({
+            title: 'Froggy Jazz',
+            artist: 'THE FROG',
+            album: 'Hoppin\' Tunes',
+            artwork: [
+              { src: '../images/frog.webp', sizes: '256x256', type: 'image/png' },
+            ],
+          });
+        }
     }
-
     frog.id = 'dancing-frog';
 }
 
@@ -39,29 +58,39 @@ if (window.location.search.includes("slopcursion=true")) {
 document.getElementById('vibeButton').addEventListener('click', vibe);
 
 function enableQuotes() {
+  document.getElementById("soundCloudIFrame").src = "";
   if (!("speechSynthesis" in window)) {
     alert("Your browser does not support the wisdom of the frog.");
     return;
   }
-
   fetch("static/js/quotes.json")
     .then((response) => response.json())
     .then((data) => {
-      function readRandomQuote() {
-        const randomQuote = data[Math.floor(Math.random() * data.length)];
-        readQuote(randomQuote);
-        const randomTime = Math.floor(Math.random() * 25000) + 10000; // 10-35 seconds
-        setTimeout(readRandomQuote, randomTime);
+      allQuotes = data || [];
+      if (allQuotes.length > 0) {
+        readQuote();
+      } else {
+        alert("The frog has no wisdom to share.");
       }
-      readRandomQuote();
+    })
+    .catch((error) => {
+      console.error("Error fetching quotes:", error);
+      alert("Failed to load quotes.");
     });
 }
 
-function readQuote(theQuote) {
+function readQuote() {
+  if (allQuotes.length === 0) return;
+  let currentQuote = allQuotes[Math.floor(Math.random() * allQuotes.length)];
   var msg = new SpeechSynthesisUtterance();
-  msg.text = theQuote;
+  msg.text = currentQuote;
   msg.rate = 0.3;
   msg.pitch = 0.1;
+  vibeAudio.volume = 0.3;
+  msg.onend = function() {
+    vibeAudio.volume = 1;
+    setTimeout(readQuote, 10000);
+  };
   window.speechSynthesis.speak(msg);
 }
 
