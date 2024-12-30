@@ -6,20 +6,7 @@
 		<link rel="apple-touch-icon" sizes="128x128" href="/static/images/apple-touch-icon.png">
     <link rel="icon" type="image/x-icon" href="/static/images/favicon.ico">
 	<style>
-@keyframes spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
 
-@keyframes scale {
-  0%, 100% { transform: scale(1) rotate(0deg); }
-  50% { transform: scale(2) rotate(360deg); }
-}
-
-@keyframes colorChange {
-  0% { filter: hue-rotate(0deg); }
-  100% { filter: hue-rotate(720deg); }
-}
 
 img {
   animation: spin 2s linear infinite, scale 1s infinite, colorChange 1s infinite;
@@ -274,10 +261,6 @@ img {
         background-repeat: no-repeat;
       }
       
-      @keyframes spin {
-        from { transform: rotate(0deg); }
-        to { transform: rotate(360deg); }
-      }
 
       @keyframes shake {
         0%, 100% { transform: translate(0, 0); }
