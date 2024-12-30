@@ -7,7 +7,6 @@
     <title>chat</title>
     <script src="static/js/tunnel_lib.js" defer></script>
     <style>
-
         :root {
             --bg-primary: #1a1a1a;
             --bg-secondary: #252525;
@@ -71,12 +70,12 @@
         }
 
         .bot {
-          font-weight: 600;
-          font-size: smaller;
-          background-color: #555;
-          padding: 2px 3px 2px 4px;
-          margin-right: 5px;
-          border-radius: 3px;
+            font-weight: 600;
+            font-size: smaller;
+            background-color: #555;
+            padding: 2px 3px 2px 4px;
+            margin-right: 5px;
+            border-radius: 3px;
         }
 
         .message {
@@ -154,7 +153,9 @@
         }
 
         .hi {
-            position:absolute;top: 35px;left:700px;
+            position: absolute;
+            top: 35px;
+            left: 700px;
             transform: rotate3d(0, 1, 1, 0deg);
             animation-name: gay;
             animation-duration: 4s;
@@ -214,7 +215,6 @@
             max-height: 2em;
             margin-right: 5px;
         }
-
     </style>
 </head>
 
@@ -255,6 +255,7 @@
     <script>
         // Track usernames in the current room
         window.usernames = new Set();
+        window.mutedUsernames = new Set();
         window.usernameConnection = null;
         window.chatState = 0; // 0 show 1 hide 2 blur
         let notificationSound = new Audio("/static/audio/youvegotmail.mp3")
@@ -476,6 +477,7 @@
 
         function localMessage(username, message, isBot, isSystem) {
             if (!isSystem) isSystem = false;
+            if (window.mutedUsernames.has(username)) { return };
             let messagesContainer = document.getElementById('messages');
             let messageContainer = document.createElement('div');
             messageContainer.classList.add('message');
@@ -507,12 +509,32 @@
             if (message.includes(localStorage['userName'])) {
                 notificationSound.play();
             }
+
+            if (username == localStorage['userName']) {
+                if (message[0] == '~') {
+                    let s = message.split(' ')
+                    let command = s[0];
+
+                    switch (command) {
+                        case '~mute':
+                            let userToMute = s[1]
+                            window.mutedUsernames.add(userToMute);
+                            alert("User " + userToMute + " muted succesfully.")
+                            break;
+                        case '~unmute':
+                            let userToUnmute = s[1]
+                            window.mutedUsernames.delete(userToUnmute);
+                            alert("User " + userToMute + " unmuted succesfully.")
+                            break;
+                    }
+                }
+            }
         }
 
         function processMessage(message) {
             try {
                 let messageData = JSON.parse(message);
-                if (!messageData.bot) {messageData.bot = false} else {messageData.bot = true;}
+                if (!messageData.bot) { messageData.bot = false } else { messageData.bot = true; }
                 if (!messageData.username || !messageData.message) throw new Error('Invalid message data: ' + message);
                 localMessage(messageData.username, messageData.message, messageData.bot);
                 if (messageData.flash) {
