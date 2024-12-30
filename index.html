@@ -380,6 +380,219 @@ img {
       })
   </script>
   </head>
+  <script>
+    let hasInteracted = false;
+    const initialSound = document.getElementById('initialnotification');
+    
+    function handleFirstInteraction() {
+      console.log('User has interacted with the page');
+      if (!hasInteracted) {
+        // const messageSound = new Audio('static/audio/droid.mp3');
+        // messageSound.play(); DO NOT PLAY - OTHERWISE WE CANCEL THE AWESOME MUSIC
+        hasInteracted = true;
+      }
+    }
+    
+    // Add interaction listeners
+    document.addEventListener('click', handleFirstInteraction, { once: true });
+    // document.addEventListener('keypress', handleFirstInteraction, { once: true });
+  </script>
+  <div id="chatbot">
+    <div class="chat-header">
+      <span>Chat Support</span>
+      <button onclick="toggleChat()" style="background: #ff4444; color: white; border: none; padding: 5px 10px; border-radius: 3px; cursor: pointer; hover: { background: #ff6666; }">×</button>
+    </div>
+    <div id="chatMessages">
+      <div class="bot-message">
+        <div class="clippy-container">
+          <img src="https://static.wikia.nocookie.net/the-scrappy/images/c/cb/Clippy.png/revision/latest?cb=20231027172058" class="clippy-image" alt="Clippy">
+          <span>how can i help you today?</span>
+        </div>
+      </div>
+    </div>
+    <div class="chat-input">
+      <input type="text" id="userInput" placeholder="Type a message...">
+      <button onclick="sendMessage()">Send</button>
+    </div>
+  </div>
+  
+  <style>
+    #chatbot {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 300px;
+      background: #1e1e1e;
+      border: 1px solid #333;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+      color: #fff;
+    }
+    
+    .chat-header {
+      padding: 10px;
+      background: #2d2d2d;
+      border-bottom: 1px solid #333;
+      display: flex;
+      justify-content: space-between;
+      color: #fff;
+    }
+    
+    .chat-messages {
+      height: 300px;
+      overflow-y: auto;
+      padding: 10px;
+      background: #1e1e1e;
+    }
+    
+    .chat-input {
+      padding: 10px;
+      border-top: 1px solid #333;
+      display: flex;
+      background: #2d2d2d;
+    }
+    
+    .chat-input input {
+      flex: 1;
+      margin-right: 10px;
+      background: #3d3d3d;
+      border: 1px solid #444;
+      color: #fff;
+      padding: 5px;
+      border-radius: 3px;
+    }
+    
+    .chat-input button {
+      background: #0078d4;
+      color: white;
+      border: none;
+      padding: 5px 15px;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+    
+    .bot-message {
+      background: #2d2d2d;
+      padding: 10px;
+      border-radius: 5px;
+      margin: 10px;
+      color: #fff;
+    }
+    
+    .user-message {
+      background: #0078d4;
+      padding: 10px;
+      border-radius: 5px;
+      margin: 10px;
+      text-align: right;
+      color: #fff;
+    }
+    
+    .clippy-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .clippy-image {
+      width: 40px;
+      height: 40px;
+    }
+    </style>
+    
+    <div id="chatMessages">
+      <div class="bot-message">
+        <div class="clippy-container">
+          <img src="https://upload.wikimedia.org/wikipedia/en/d/db/Clippy-letter.PNG" class="clippy-image" alt="Clippy">
+          <span>how can i help you today?</span>
+        </div>
+      </div>
+    </div>
+  
+  <script>
+  function toggleChat() {
+    const chatbot = document.getElementById('chatbot');
+    chatbot.style.display = chatbot.style.display === 'none' ? 'block' : 'none';
+  }
+  
+  // Add preset responses array
+  const botResponses = [
+    "Nice opinion, too bad it's wrong.",
+    "Cry harder, it's music to my ears.",
+    "Do you even hear yourself right now?",
+    "Imagine thinking this was a good idea to type.",
+    "Keep going, you're almost at peak cringe.",
+    "You're one message away from being ignored forever.",
+    "Tell me you're insecure without telling me you're insecure.",
+    "This feels like a skill issue, not my problem.",
+    "Get a grip, or better yet, a life.",
+    "I'm impressed, you somehow made it worse.",
+    "Your existence is an unskippable cutscene.",
+    "Say that again, but this time try being clever.",
+    "You're the reason they added 'block' buttons.",
+    "Send one more emoji, I dare you.",
+    "The clown emoji isn’t enough for this conversation.",
+    "Bold of you to assume I care.",
+    "Your profile pic says everything I need to know.",
+    "Thanks for the laugh, unintentional comedy is the best.",
+    "You're like a captcha—annoying and unnecessary.",
+    "Wow, this is like watching a train wreck in slow motion.",
+    "I can’t believe you thought this would land.",
+    "Go touch grass and leave me alone.",
+    "You must really enjoy embarrassing yourself.",
+    "This level of delusion is almost impressive.",
+    "Friendly reminder: Nobody asked.",
+    "Try harder, you’re not even worth my good insults.",
+    "No need to project your insecurities onto me.",
+    "Why are you like this? Genuinely curious.",
+    "Your takes are so bad they're almost performance art.",
+    "If stupidity was a sport, you'd be a gold medalist.",
+    "Keep talking, I'm logging all this for my cringe compilation.",
+    "Imagine thinking you're the main character right now.",
+    "This feels like a waste of pixels."
+  ];
+
+  // Add notification sound element
+  const messageSound = new Audio('static/audio/droid.mp3');
+
+  function sendMessage() {
+  const input = document.getElementById('userInput');
+  const messages = document.getElementById('chatMessages');
+  
+  if (input.value.trim() === '') return;
+  
+  // Add user message
+  messages.innerHTML += `<div class="user-message">${input.value}</div>`;
+  
+  // Get random response with Clippy container
+  const randomResponse = botResponses[Math.floor(Math.random() * botResponses.length)];
+  messages.innerHTML += `
+    <div class="bot-message">
+      <div class="clippy-container">
+        <img src="https://static.wikia.nocookie.net/the-scrappy/images/c/cb/Clippy.png/revision/latest?cb=20231027172058" class="clippy-image" alt="Clippy">
+        <span>${randomResponse}</span>
+      </div>
+    </div>`;
+  
+  messageSound.play();
+  input.value = '';
+  messages.scrollTop = messages.scrollHeight;
+}
+
+// Update event listeners
+const userInput = document.getElementById('userInput');
+
+userInput.addEventListener('keydown', function(e) {
+  e.stopPropagation();
+});
+
+userInput.addEventListener('keypress', function(e) {
+  if (e.key === 'Enter') {
+    e.preventDefault();
+    sendMessage();
+  }
+});
+  </script>
   <body>
 
   <!-- Epileptic Mode Button -->
