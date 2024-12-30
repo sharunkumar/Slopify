@@ -886,6 +886,11 @@ window.addEventListener('click', function(event) { if ((event.target).closest("#
         <button style="position: fixed;left:1%;top:2%;"><p>alan becker</p> <img src="static/images/alanbecker/alan.png" width="50" height="50"/></button>
       </a>
 
+      <!-- Randyifier button -->
+      <button id="randyifier" style="position: fixed; left: 1%; bottom: 1%; z-index: 500; background: black; color: red; border: 1px solid red;">
+        Call in Randy Pitchford
+      </button>
+
       <div>
         <h1>MAXIMIZE YOUR WIN</h1>
         <div class="w-full flex gap-2">
@@ -2169,5 +2174,26 @@ window.addEventListener('resize', handleResponsiveLayout);
       }
     </script>
     <script src="8ball.js"></script>
+    <!-- Randyifier script -->
+    <script>
+      var randyButton = document.getElementById("randyifier");
+      randyButton.addEventListener("click", function() {
+        var allImages = document.querySelectorAll("img");
+
+        allImages.forEach(element => {
+          var imageNames = [
+            "badass",
+            "dukenukem",
+            "genderbent",
+            "outside",
+            "selfie"
+          ];
+
+          var randomImageName = imageNames[Math.floor(Math.random() * imageNames.length)];
+
+          element.src = `static/images/randypitchford/${randomImageName}.jpg`
+        });
+      });
+    </script>
 </body>
 </html>
