@@ -1,10 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <!-- Oneko -->
+    <script async src="https://sleepie.uk/oneko.js"></script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="apple-touch-icon" sizes="128x128" href="/static/images/apple-touch-icon.png">
     <link rel="icon" type="image/x-icon" href="/static/images/favicon.ico">
-    <title>Slopify</title>
+    <link rel="stylesheet" href="static/css/page-nav.css">
+    <link rel="stylesheet" href="static/css/error.css">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
+
+	<style>
+
+
+img {
+  animation: spin 2s linear infinite, scale 1s infinite, colorChange 1s infinite;
+}
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script>
     <script>
       const THE_OPPENHEIMER_INDEX = 69;
       function getRandomInt(max) {
@@ -68,12 +82,22 @@
       });
     </script>
     <style>
+      * {
+        border: 0;
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        cursor: url(static/images/win95_cursor_regular.png) 0 0, default;
+      }
+
       body {
         font-family: Arial, sans-serif;
         line-height: 1.6;
         margin: 0;
         padding: 0;
         color: #ebdbb2;
+        display: grid;
+        height: 100vh;
       }
 
       .skipnav {
@@ -218,6 +242,17 @@
         font-size: 0.75em;
       }
        
+      #mandelbrot-section {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+      }
+
+      canvas {
+          border: 2px solid black; /* Borde visible para el canvas */
+      }
+
+
       .fourier-container {
         text-align: center;
       }
@@ -233,6 +268,7 @@
       }
 
       #l8rgt{
+      #l8rgt {
         display: block;
         margin: 10px 0;
         padding: 15px 30px;
@@ -240,6 +276,8 @@
         font-family: var(--font);
         background: radial-gradient(circle, #b00b69, rgb(145, 69, 221));
         color: white;
+      }
+      
       #foxy {
         height: 600px;
         width: auto;
@@ -252,6 +290,73 @@
         background-repeat: no-repeat;
       }
 
+      @keyframes shake {
+        0%, 100% { transform: translate(0, 0); }
+        10%, 30%, 50%, 70%, 90% { transform: translate(-5px, 5px); }
+        20%, 40%, 60%, 80% { transform: translate(5px, -5px); }
+      }
+
+      @keyframes flash {
+        0% { background-color: black; }
+        50% { background-color: white; }
+        100% { background-color: black; }
+      }
+
+      .worst-theme {
+        font-family: 'Comic Sans MS', cursive, sans-serif;
+        animation: spin 10s linear infinite, flash 1s step-start infinite;
+      }
+
+      .worst-theme * {
+        animation: rainbow 1s linear infinite, shake 0.5s ease-in-out infinite;
+        text-shadow: 2px 2px 0px #FF00FF;
+        background-color: yellow;
+      }
+
+      .top-right-button {
+        position: fixed;
+        top: 10px;
+        right: 10px;
+        padding: 10px 20px;
+        background-color: #b8bb26;
+        color: #282828;
+        border: none;
+        cursor: pointer;
+        font-size: 16px;
+        border-radius: 5px;
+        z-index: 1000;
+      }
+
+      .top-right-button:hover {
+        background-color: #a1b024;
+      }
+
+      @keyframes epilepticFlash {
+        0%, 100% { background-color: white; }
+        50% { background-color: black; }
+      }
+
+      .epileptic-mode {
+        animation: epilepticFlash 0.1s infinite;
+      }
+
+      .bottom-left-button {
+        position: fixed;
+        bottom: 10px;
+        left: 10px;
+        padding: 10px 20px;
+        background-color: #5ef7d6;
+        color: #282828;
+        border: none;
+        cursor: pointer;
+        font-size: 16px;
+        border-radius: 5px;
+        z-index: 1000;
+      }
+
+      .bottom-left-button:hover {
+        background-color: #258e92;
+      }
 
     </style>
     <audio id="vibeAudio" loop>
@@ -268,7 +373,13 @@
     <script type="module">
           import { rainbowCursor } from "https://unpkg.com/cursor-effects@latest/dist/esm.js";
 
-          new rainbowCursor();
+          const FLAGS = [
+            ["#FE0000", "#FD8C00", "#FFE500", "#119F0B", "#0644B3", "#C22EDC"],
+            ["#59C8F3","#F2A6B5","#fff","#F2A6B5","#59C8F3"]
+          ]
+          let chosenFlag = FLAGS[Math.floor(Math.random() * FLAGS.length)];
+          
+          new rainbowCursor({ colors: chosenFlag });
     </script>
     <script type="module" src="static/js/index.js"></script>
     <script>
@@ -280,6 +391,76 @@
   </script>
   </head>
   <body>
+
+  <!-- Epileptic Mode Button -->
+  <button class="top-right-button" id="epicButton">Bustin Mode</button>
+
+  <button class="bottom-left-button" onclick="owoify()">What?</button>
+
+  <script>
+    const epilepticAudio = new Audio("static/audio/bustin.mp3");
+    epilepticAudio.loop = true; // Enable looping
+  
+    let isEpilepticModeOn = false;
+    let spawnInterval;
+    let spawnCount = 10; // Start with 10 images
+  
+    function spawnImage() {
+      const img = document.createElement("img");
+      img.src = "static/images/ray-parker-jr.webp";
+      img.style.position = "absolute";
+      img.style.width = "100px";
+      img.style.height = "auto";
+      img.style.left = Math.random() * window.innerWidth + "px";
+      img.style.top = Math.random() * window.innerHeight + "px";
+      img.style.transition = "transform 3s ease-in-out";
+  
+      document.body.appendChild(img);
+  
+      setTimeout(() => {
+        img.style.transform = `translateY(-${window.innerHeight}px)`;
+        setTimeout(() => img.remove(), 3000);
+      }, 100);
+    }
+  
+    document.getElementById("epicButton").addEventListener("click", () => {
+      const images = document.querySelectorAll("img");
+      if (isEpilepticModeOn) {
+        document.body.classList.remove("epileptic-mode");
+        epilepticAudio.pause();
+        epilepticAudio.currentTime = 0;
+        clearInterval(spawnInterval);
+        images.forEach(img => {
+          if (img.src.includes("/static/images/")) {
+            img.src = img.dataset.originalSrc || img.src;
+          }
+        });
+      } else {
+        document.body.classList.add("epileptic-mode");
+        epilepticAudio.volume = 1;
+        epilepticAudio.play();
+  
+        spawnCount = 10; // Start with 10 images
+        spawnInterval = setInterval(() => {
+          spawnCount++;
+          for (let i = 0; i < spawnCount; i++) {
+            spawnImage();
+          }
+        }, 3000);
+  
+        images.forEach(img => {
+          if (img.src.includes("/static/images/")) {
+            img.dataset.originalSrc = img.src;
+            img.src = "static/images/ray-parker-jr.webp";
+          }
+        });
+      }
+      isEpilepticModeOn = !isEpilepticModeOn;
+    });
+  </script>
+
+  
+	<script src="static/js/oneko.js"></script>
     <a href="#maincontent" class="skipnav">Skip to Content (Press Enter)</a>
     <div
       id="security-overlay"
@@ -411,33 +592,375 @@
     </div>
 
     <header>
+
       <marquee><img src="static/images/epic-logo.gif" /></marquee>
       <img src="SlopifyLogo.png" width="400px" />
       <p>
         <em
           >"The
-          <a
-            href="https://www.newmanmentalism.com/blog/a-mentalist-explains-how-ouija-boards-work-and-the-ideomotor-effect"
-            target="_blank"
+			<a
+				href="https://www.newmanmentalism.com/blog/a-mentalist-explains-how-ouija-boards-work-and-the-ideomotor-effect"
+				target="_blank"
             >ideomotor effect</a
-          >
-          of software"</em
-        >
+							 >
+			of software"</em
+						>
       </p>
+	        <div id="page-nav">
+        <label class="hamburger-menu">
+          <input type="checkbox">
+        </label>
+        <aside class="sidebar">
+        <nav>
+            <a href="/index.html">Home</a>
+            <a href="/second.html">Second</a>
+            <a href="/uwu.html">UwU</a>
+            <a href="/chat.html">Chat</a>
+          </div>
+        </nav>
+      </aside>
+      </div>
+
+      <a href="/second.html">
+        <button style="position: fixed;left:1%;top:2%;"><p>alan becker</p> <img src="static/images/alanbecker/alan.png" width="50" height="50"/></button>
+      </a>
+
       <div>
         <h1>MAXIMIZE YOUR WIN</h1>
+        <h2>Join the <a href="https://discord.gg/sPbES34ZsA">DishpitDev discord</a></h2>
         <div class="w-full flex gap-2">
           <div class="bg-black rounded-2xl w-16 as"></div>
         </div>
+	<h1>SUPPORT A CREATOR CODE:</h1>
+	      <img src="static/images/sac.png">
       </div>
+<div id="news-container" style="
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    transform: translateY(-50%);
+    pointer-events: none;
+    z-index: 1;
+">
+    <div id="news-grid" style="
+        display: flex;
+        justify-content: space-between;
+        padding: 0 20px;
+        max-width: 100%;
+        margin: 0 auto;
+    ">
+        <div class="left-column" style="
+            width: 300px;
+            position: fixed;
+            left: 20px;
+            pointer-events: auto;
+        "></div>
+        <div class="right-column" style="
+            width: 300px;
+            position: fixed;
+            right: 20px;
+            pointer-events: auto;
+        "></div>
+    </div>
+</div>
+
+<script>
+const onionArticles = {
+    "articles": [
+        {
+            "title": "Pope Francis Decries Legal Head Shops Overrunning Vatican City",
+            "image_url": "https://theonion.com/wp-content/uploads/2024/12/Pope_Francis_Decries-NIB_IHA_GR-copy.jpg?w=1024"
+        },
+        {
+            "title": "Surgeon General: ‘You Are Supposed To Be Able To Button Your Pants’",
+            "image_url": "https://theonion.com/wp-content/uploads/2024/12/Surgeon_General_NIB_IHA_GR-copy.jpg?w=1024"
+        },
+        {
+            "title": "Santa Confirms Everyone Getting Bag Of Glitter Labeled ‘Fairy Dust’ His Sister-In-Law Sells On Etsy",
+            "image_url": "https://theonion.com/wp-content/uploads/2024/12/Untitled-2Santa_Confirms_NIB_IHA_GR_copy.jpg?w=1024"
+        },
+        {
+            "title": "Timeline Of Trendy Christmas Toys",
+            "image_url": "https://theonion.com/wp-content/uploads/2024/12/Trendy_Toys_INFO-G-PH.jpg?w=1024"
+        },
+        {
+            "title": "Experts Recommend Putting Injured Person In Some Sort Of Cylindrical Tank Filled With Fluid",
+            "image_url": "https://theonion.com/wp-content/uploads/2024/12/Experts_Recommend_NIB_IHA_GR.jpg?w=1024"
+        },
+        {
+            "title": "God Locks Heavenly Gates After Spotting Mormon Missionaries Milling Around Outside",
+            "image_url": "https://theonion.com/wp-content/uploads/2024/12/God_Locks_NIB_IHA-GR-copy.jpg?w=1024"
+        },
+        {
+            "title": "FEMA Administrator Resigns After Accidentally Playing Porn On Emergency Alert System",
+            "image_url": "https://theonion.com/wp-content/uploads/2024/12/FEMA_Administrator_NIB_S_PH.webp?w=1024"
+        },
+        {
+            "title": "‘No Way To Prevent This,’ Says Only Nation Where This Regularly Happens",
+            "image_url": "https://theonion.com/wp-content/uploads/2024/12/No_Way_To_Prevent-Madison_NIB_G-PH.jpg?w=1024"
+        },
+        {
+            "title": "KitchenAid Unveils New Culinary Mech Suit",
+            "image_url": "https://theonion.com/wp-content/uploads/2024/12/KitchenAid_Unveils_NIB_IHA-GR_23524d.webp?w=1024"
+        },
+        {
+            "title": "Large, Playful Sheepdog Knocks Over Houston Skyline",
+            "image_url": "https://theonion.com/wp-content/uploads/2024/12/Large_Playful_NIB_IHA-GR-C.jpg?w=1024"
+        },
+        {
+            "title": "Pete Hegseth Clarifies Women Allowed In Combat Roles But It’s A Huge Turnoff",
+            "image_url": "https://theonion.com/wp-content/uploads/2024/12/Pete_Hegseth_Clarifies_NIB_PH.jpg?w=1024"
+        },
+        {
+            "title": "Secretary Of Interior Asks Nation’s Help Identifying Leaf",
+            "image_url": "https://theonion.com/wp-content/uploads/2024/12/Secretary_Of_Interior_NIB-IHA-GR-C.jpg?w=1024"
+        },
+        {
+            "title": "Emotional Nation Gathers Outside Main Street TV Store To Watch Monster Truck Land On Smaller Truck",
+            "image_url": "https://theonion.com/wp-content/uploads/2024/12/Emotional_NAtion_NIB-IHA-GR.jpg?w=1024"
+        },
+        {
+            "title": "Canine Breeding-Activists Firebomb Spay-And-Neuter Clinic",
+            "image_url": "https://theonion.com/wp-content/uploads/2024/12/Canine_Breeding_Activists_SB_IHA-GR.webp?w=1024"
+        },
+        {
+            "title": "How To Perform A Breast Self-Exam",
+            "image_url": "https://theonion.com/wp-content/uploads/2024/12/INFO_Breast_Self_Exam_S_PH.webp?w=1024"
+        },
+        {
+            "title": "MrBeast Offers To Give $1 Million To First Person Who Can Teach Him To Blink",
+            "image_url": "https://theonion.com/wp-content/uploads/2024/12/MrBeast_Offers_NIB_G_PH.webp?w=1024"
+        },
+        {
+            "title": "Assad Returns To Ophthalmology At Moscow LensCrafters",
+            "image_url": "https://theonion.com/wp-content/uploads/2024/12/Assad_Returns_NIB_IHA_GR-copy.jpg?w=1024"
+        },
+        {
+            "title": "Nation Tires Of Deals, Bargains",
+            "image_url": "https://theonion.com/wp-content/uploads/2024/12/Nation_Tires_Of_Deals_NIB_PH.webp?w=1024"
+        },
+        {
+            "title": "Judge Delays Decision After Learning One Menendez Brother Always Lies, One Always Tells The Truth",
+            "image_url": "https://theonion.com/wp-content/uploads/2024/12/Judge_Delays_NIB_NC_PH.webp?w=1024"
+        },
+        {
+            "title": "Nation’s Mumblers March On Washington Demanding Something Or Other",
+            "image_url": "https://theonion.com/wp-content/uploads/2024/12/Nations_Mumblers_March_NIB_PH.webp?w=1024"
+        },
+        {
+            "title": "Pros And Cons Of Eliminating The Department Of Education",
+            "image_url": "https://theonion.com/wp-content/uploads/2024/12/Eliminating_Education_INFO-G-PH.jpg?w=1024"
+        },
+        {
+            "title": "American Express Launches Small Sweatshop Saturday",
+            "image_url": "https://theonion.com/wp-content/uploads/2024/11/American_Express_Launches_NIB_IHA_GR.webp?w=1024"
+        },
+        {
+            "title": "Study: Overuse Of Hair Detangler Giving Rise To Product-Resistant Supertangles",
+            "image_url": "https://theonion.com/wp-content/uploads/2024/11/Study_Overuse_Of_Hair_NIB_IHA_GR.webp?w=1024"
+        },
+        {
+            "title": "Macy’s Thanksgiving Day Balloon Floats Away After Handlers Let Go To Check Their Phones",
+            "image_url": "https://theonion.com/wp-content/uploads/2024/11/Macys_Thanksgiving_SB_IHA_GR.webp?w=1024"
+        },
+        {
+            "title": "FDA Bans Captain Morgan Rum After Having Way Too Much Of That Shit In College",
+            "image_url": "https://theonion.com/wp-content/uploads/2024/11/FDA_Bans_NIB_IHA_GR.webp?w=1024"
+        },
+        {
+            "title": "Report: Most Americans Have Enough Saved For Absolutely Incredible Single Day Of Retirement",
+            "image_url": "https://theonion.com/wp-content/uploads/2024/11/Report_Most_Americans_NIB_PH.webp?w=1024"
+        },
+        {
+            "title": "Barron Trump Returns Home To Find Melania Converted Room To Unending Labyrinth Of Darkness",
+            "image_url": "https://theonion.com/wp-content/uploads/2024/11/Baron_Trump_NIB_IHA_GR-copy.jpg?w=1024"
+        },
+        {
+            "title": "God Looks 400 Millennia Younger After Infusing Self With Son’s Blood",
+            "image_url": "https://theonion.com/wp-content/uploads/2024/11/God_Looks_NIB_IHA-GR.jpg?w=1024"
+        },
+        {
+            "title": "NASA: Potential Link Between Extraterrestrials, Giant Metal Claw Picking Up Earth",
+            "image_url": "https://theonion.com/wp-content/uploads/2024/11/NASA_Potential_NIB_IHA-GR-copy.jpg?w=1024"
+        },
+        {
+            "title": "Study: Anxiety Natural Response To Suited Men Wearing Shades Closing In From All Angles",
+            "image_url": "https://theonion.com/wp-content/uploads/2024/11/Anxiety_Natural_Response_NIB_IHA_GR.jpg?w=1024"
+        },
+        {
+            "title": "Kenji López-Alt Returns From Beef Dimension With New Sear Method Beyond Human Comprehension",
+            "image_url": "https://theonion.com/wp-content/uploads/2024/11/Kenji_Lopez_Alt_NIB-IHA_GR-copy.jpg?w=1024"
+        },
+        {
+            "title": "What To Know About Zyn",
+            "image_url": "https://theonion.com/wp-content/uploads/2024/11/What_-Zyn_INFO-G-PH.png?w=1024"
+        },
+        {
+            "title": "Today’s Historic Front Page: November 6, 2024",
+            "image_url": "https://theonion.com/wp-content/uploads/2024/11/ELECTION_Front_Page_Site.jpg?w=1024"
+        },
+        {
+            "title": "Mentally Broken Nation Starts Dressing, Speaking Like Frank Sinatra",
+            "image_url": "https://theonion.com/wp-content/uploads/2024/11/Mentally_Broken_NIB_IHA_GR.jpg?w=1024"
+        },
+        {
+            "title": "Piss-Soaked Tucker Carlson Claims Demon Urinated On Him While He Slept",
+            "image_url": "https://theonion.com/wp-content/uploads/2024/11/Piss-Soaked_Tucker_NIB_PH.jpg?w=1024"
+        },
+        {
+            "title": "Historians Unearth Final Fundraising Telegraph Hitler Sent From Bunker",
+            "image_url": "https://theonion.com/wp-content/uploads/2024/10/Historians_Unearth_Final_NIB_GR.webp?w=1024"
+        },
+        {
+            "title": "Pros And Cons Of Prosecuting School Shooters’ Parents",
+            "image_url": "https://theonion.com/wp-content/uploads/2024/10/Prosecuting_Parents_INFO-G-PH.png?w=1024"
+        },
+        {
+            "title": "Revised Citizenship Test Requires Immigrants To Name Every U.S. State Where They Not Welcome",
+            "image_url": "https://theonion.com/wp-content/uploads/2024/10/Revised_Citizenship_Test_NIB_G_PH.jpg?w=1024"
+        },
+        {
+            "title": "Report Finds You Should Get To Retire After, Like, 6 Years Working Full-Time Job",
+            "image_url": "https://theonion.com/wp-content/uploads/2024/10/Report_Finds_You_Should_NIB_IHA_GR.jpg?w=1024"
+        },
+        {
+            "title": "America’s Loneliness Epidemic By The Numbers",
+            "image_url": "https://theonion.com/wp-content/uploads/2024/10/Loneliness_Epidemic_INFO-G-PH.png?w=1024"
+        },
+        {
+            "title": "All The Ways Elon Musk Is Supporting Trump’s Campaign",
+            "image_url": "https://theonion.com/wp-content/uploads/2024/10/Musk_Trump_INFO-G-PH.png?w=1024"
+        },
+        {
+            "title": "Pope Francis Excommunicates All Of World’s Catholics So He Can Have Quiet Weekend Alone",
+            "image_url": "https://theonion.com/wp-content/uploads/2024/10/Pope_Francis_NIB-IHA-GR-copy.jpg?w=1024"
+        },
+        {
+            "title": "Tips For Organizing A Trunk-Or-Treat",
+            "image_url": "https://theonion.com/wp-content/uploads/2024/10/Trunk_Treat_INFO-G-PH.png?w=1024"
+        },
+        {
+            "title": "Indecisive Hostage-Taker Asks What People Usually Demand",
+            "image_url": "https://theonion.com/wp-content/uploads/2024/10/Indecisive_Hostage_Taker_NIB_IHA-GR.jpg?w=1024"
+        },
+        {
+            "title": "‘New York Times’ To Cease Publication",
+            "image_url": "https://theonion.com/wp-content/uploads/2024/10/New_York_Times_SS_S-PH.jpg?w=1024"
+        },
+        {
+            "title": "Supreme Court Rules 6-3 To Open Evil Tomb Of Batibat",
+            "image_url": "https://theonion.com/wp-content/uploads/2024/10/Supreme_Court_Rules_SS_IHA-GR.jpg?w=1024"
+        },
+        {
+            "title": "Neither Ex Keeps Friends After Breakup",
+            "image_url": "https://theonion.com/wp-content/uploads/2024/08/Niether_Ex_NIB-PH-S.jpg?w=1024"
+        },
+        {
+            "title": "Tourist Impressed By Size Of Chicago Residents",
+            "image_url": "https://theonion.com/wp-content/uploads/2024/10/Tourist_Impressed_NIB-IHA-GR.jpg?w=1024"
+        },
+        {
+            "title": "Tips For Saving Money On Groceries",
+            "image_url": "https://theonion.com/wp-content/uploads/2024/10/Money_Groceries_INFO-G-PH.png?w=1024"
+        },
+        {
+            "title": "Taco Bell Announces It’s Plumb Out Of Ideas For New Places To Put Beef",
+            "image_url": "https://theonion.com/wp-content/uploads/2024/10/Taco_Bell_Announces_NIB_G-PH.jpg?w=1024"
+        }
+    ]
+};
+
+function loadAndDisplayNews() {
+    try {
+        const randomArticles = getRandomArticles(onionArticles.articles, 6);
+        const leftArticles = randomArticles.slice(0, 3);
+        const rightArticles = randomArticles.slice(3, 6);
+        
+        displayArticles(leftArticles, 'left-column');
+        displayArticles(rightArticles, 'right-column');
+    } catch (error) {
+        console.error('Error:', error);
+    }
+}
+
+function getRandomArticles(articles, count) {
+    const shuffled = [...articles].sort(() => 0.5 - Math.random());
+    return shuffled.slice(0, count);
+}
+
+function displayArticles(articles, columnClass) {
+    const column = document.querySelector(`.${columnClass}`);
+    column.innerHTML = articles.map(article => `
+        <div style="
+            background: rgba(40, 40, 40, 0.8);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            cursor: pointer;
+            margin-bottom: 20px;
+        "
+        onmouseover="this.style.transform='translateY(-5px)'"
+        onmouseout="this.style.transform='translateY(0)'">
+            <img 
+                src="${article.image_url}" 
+                alt="${article.title}"
+                style="
+                    width: 100%;
+                    height: 200px;
+                    object-fit: cover;
+                "
+                onerror="this.src='https://via.placeholder.com/300x200?text=Image+Not+Available'"
+            >
+            <div style="padding: 20px;">
+                <h3 style="
+                    font-size: 1.1rem;
+                    color: #ebdbb2;
+                    margin: 0;
+                    line-height: 1.4;
+                    font-family: Arial, sans-serif;
+                ">${article.title}</h3>
+                <div style="
+                    font-size: 0.8rem;
+                    color: #b8bb26;
+                    margin-top: 10px;
+                ">${new Date().toLocaleDateString()}</div>
+            </div>
+        </div>
+    `).join('');
+}
+
+function handleResponsiveLayout() {
+    const container = document.getElementById('news-container');
+    
+    if (window.innerWidth < 1600) {
+        container.style.display = 'none';
+    } else {
+        container.style.display = 'block';
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    loadAndDisplayNews();
+    handleResponsiveLayout();
+});
+
+window.addEventListener('resize', handleResponsiveLayout);
+</script>
+
       <div>
         <p>
           Try out the new coding language that is 100% better than anything:
           <a href="/embr" style="color: #b8bb26">Embr</a>
         </p>
       </div>
-      <img src="static/images/kofte.jpg" id="kofte" style="width: 400px; height: 400px;">
-      <image id="frog" src="static/images/frog.webp"></image>
+      <div id="gallery">
+        <img src="static/images/bobi.jpg" alt="Bobi" class="gallery-item" style="width: 480px; height: 640px;">
+        <img src="static/images/kofte.jpg" alt="Kofte" class="gallery-item" style="width: 400px; height: 400px;">
+        <img src="static/images/frog.webp" alt="Frog" class="gallery-item">
+      </div>
+    
       <button id="vibeButton">Improve the Mood</button>
       <button id="wisdomButton">ENABLE FROG WISDOM</button>
       <p>Vist SlopChat™ to chat with other slop enthusiasts. <a href="chat.html">Click here!/a></p>
@@ -449,6 +972,7 @@
           alt="Visit counter For Websites"
           border="0"
       /></a>
+      <button id="worseThemeButton">This can't get any worse, right?</button>
     </header>
     <main id="maincontent">
       <section>
@@ -480,12 +1004,23 @@
 
         </div>
       </div>
+      <div class="center" style="display:flex; flex-direction: column; justify-content: center;">
+        <h2 style="font-family: Comic Sans MS, Comic Sans, cursive; color:snow; font-size: 50px; text-align: center;">do you like penguins?</h2>
+        <img src="static/images/penguin.webp" />
+        <img src="https://secret.kgncengiz.com/F.jpg" />
+        <img src="static/images/Jesus.png" />
+      </div>
       <img src="https://secret.kgncengiz.com/F.jpg" />
-      <section>
-        <div align="center">
-          <button id="l8rgt" onclick="location.href='O3O.mp4'">click me</button>
-        </div>
+
+      <section class="importante" style="display: flex; justify-content: center; align-items: center; height:">        
+        <section id="mandelbrot-section">
+            <canvas id="fractalCanvas" width="400" height="400"></canvas>
+        </section>
+        <section class="mandelbrot-script">
+            <script src="mandelbrot_uwu.js"></script> 
+        </section>
       </section>
+      
       <section class="importante">
         <section>
           <canvas id="glCanvas" width="400" height="400"></canvas>
@@ -818,15 +1353,59 @@
           });
         </script>
       </section>
+	  <section>
+		<center>
+		<a href="static/images/monster_zero_ultra.jpg">
+          <img src="static/images/come_here_marisa_kirisame.gif" />
+        </a>
+		</center>
+	  </section>
+      <div id="cookiebanner" style="background: black; position:fixed; bottom:0px; height:auto !important;">
+      <p>This site may or may not use cookies. I actually don't know.</p>
+      <button id="hmmm yummy cookies" onclick="cookieclick()">Uh ok i guess</button>
+      <button id="ewww cookies no yummy" onclick="cookieclick()">Get out of my face</button>
+      <script type="text/javascript">
+        function cookieclick() {
+            let gfg_down =
+                document.getElementById("cookiebanner");
+            gfg_down.parentNode.removeChild(cookiebanner);
+        }
+      </script>
+      </div>
+      <section>
+        <iframe width="5%" height="1" scrolling="no" frameborder="no" allow="autoplay"  id="soundCloudIFrame"   src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1633786749&auto_play=true"></iframe>
+      </section>
+      <section>
+        <h2>Flappy Musk</h2>
+        <canvas id="flappyMuskCanvas" width="400" height="600" style="border: 1px solid #000;"></canvas>
+        <p>Click to make Elon Musk fly! Avoid the obstacles!</p>
+      </section>
+      <script src="flappyMusk.js"></script>
 			<section id="slopcursion">
 			<h2>So you can Slopify while you Slopify</h2>
 			<iframe src="index.html?slopcursion=true" width="100%" height="500px" frameborder="0">
+      </iframe>
 			</section>
       <section>
         <h2>oh hewwo thewe, you gwot twhis fwar uwu~! wouwd you wike to wead somethin’ awesome~? >w<</h2>
         <button type="button">
           <a href='/uwu.html'>wets seee~ >w<<a/>
         </button>
+      </section>
+      <section>
+	      <h2>Want some Winamp with your Slopify?</h2>
+	      <div id="webamp"></div>
+              <script src="https://unpkg.com/webamp"></script>
+              <script>
+                 const app = document.getElementById("webamp")
+                 const webamp = new Webamp();
+                 webamp.renderWhenReady(app);
+
+                 if (!Webamp.browserIsSupported()) {
+                    alert("Oh no! Webamp does not work in this browser!");
+                    throw new Error("What's the point of anything?");
+                 }
+             </script>
       </section>
     </main>
     <footer>
@@ -862,17 +1441,31 @@
           height="31"
         />
       </div>
+      <div id="error-0" class="window window--active" role="alertdialog" aria-modal="true" aria-labelledby="error-label-0" aria-describedby="error-desc-0" data-window hidden>
+        <div class="window__header" data-header>
+          <div id="error-label-0" class="window__title" data-label>Error</div>
+          <button class="window__button" type="button" disabled>
+            <span class="window__sprite window__sprite--close-disabled"></span>
+            <span class="window__sr">Close</span>
+          </button>
+        </div>
+        <div class="window__body">
+          <img class="window__body-icon" alt="White X on a red circle with dark red outline and drop shadow" src="https://assets.codepen.io/416221/win95_error_icon.png" width="32" height="32">
+          <p id="error-desc-0" class="window__body-text" data-desc></p>
+        </div>
+        <div class="window__footer">
+          <button class="window__button window__button--lg" type="button" data-ok>OK</button>
+        </div>
+      </div>
       <div>
         <iframe src="https://poeskatprinter.zepje.space/" width="600" height="400" style="border:none;"></iframe>
       </div>
       <p>
         &copy; 2024 DishpitDev.
-        <a href="https://github.com/dishpitdev/slopify"
-          >Built by the community</a
-        >, for the community.
+        <a href="https://github.com/dishpitdev/slopify">Built by the community</a>, against the community.
       </p>
     </footer>
-
+    <script src="static/js/error.js"></script>
     <script src="security.js"></script>
     <script>
       document.addEventListener("DOMContentLoaded", () => {
@@ -1056,8 +1649,9 @@
     </script>
     <script>
         function rainbowPulse() {
-            const hue = (Date.now() /10) % 360;
-            document.body.style.backgroundColor = `hsl(${hue}, 70%, 20%)`;
+            const hue0 = (Date.now() /10) % 360;
+            const hue2 = (hue0+ 250) % 360;
+            document.body.style.background = `linear-gradient(90deg, hsl(${hue0}, 70%, 20%), hsl(${hue2}, 70%, 30%))`;
             requestAnimationFrame(rainbowPulse);
         }
         rainbowPulse();
@@ -1105,6 +1699,100 @@
         window.addEventListener("scroll", function() {
           clickMeBtn.style.position = "static";
         });
+    </script>
+    <script>
+      const worseThemeButton = document.getElementById("worseThemeButton");
+      document.addEventListener("DOMContentLoaded", () => {
+        const worseThemeButton = document.getElementById("worseThemeButton");
+        worseThemeButton.addEventListener("click", () => {
+          document.body.classList.toggle("worst-theme");
+          worseThemeButton.textContent = document.body.classList.contains("worst-theme") 
+            ? "Fix The Page Please!!" 
+            : "This can't get any worse, right?";
+        });
+      });
+    </script>
+    <script>
+      let owoified = false, clicked = 0;
+      const faces = [
+          '(o´∀`o)',
+          '(#｀ε´)',
+          '(๑•̀ㅁ•́๑)✧',
+          '(*≧m≦*)',
+          '(・`ω´・)',
+          'UwU',
+          'OwO',
+          '>w<',
+          '｡ﾟ( ﾟ^∀^ﾟ)ﾟ｡',
+          'ヾ(｀ε´)ﾉ',
+          '(´• ω •`)',
+          'o(>ω<)o',
+          '(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧',
+          '(⁀ᗢ⁀)',
+          '(￣ε￣＠)',
+          '( 〃▽〃)',
+          '(o^ ^o)',
+          "ヾ(*'▽'*)"
+      ];
+
+      function owoify() {
+        traverse(document.body, owoified);
+        owoified = !owoified; 
+      }
+
+      function transform(str) {
+          let out = '';
+          let level = 0;
+          const chars = str.split('');
+          for (let i = 0; i < chars.length; i++) {
+              switch (chars[i]) {
+                  default: {
+                      if (level == 0) {
+                          out += chars[i].replace(/[rl]/g, 'w').replace(/[RL]/g, 'W');
+                      } else {
+                          out += chars[i];
+                      }
+                      break;
+                  }
+              }
+              if (i === chars.length - 1) {
+                  if (Math.floor(Math.random() * 100) < 50) {
+                      const face = faces[Math.floor(Math.random() * faces.length)];
+                      out += ' ' + face;
+                  }
+              }
+          }
+          return out;
+      }
+
+      function traverse(node, undo) {
+          var child, next;
+      
+          switch (node.nodeType) {
+              case 1:
+              case 9:
+              case 11:
+                  child = node.firstChild;
+                  while (child) {
+                      next = child.nextSibling;
+                      traverse(child, undo);
+                      child = next;
+                  }
+                  break;
+              case 3:
+                  if (undo) {
+                      if (node.originalValue !== undefined) {
+                          node.nodeValue = node.originalValue;
+                      }
+                  } else {
+                      node.originalValue = node.nodeValue;
+                      if (typeof node.nodeValue === 'string' && node.nodeValue.trim() != "" && node.nodeValue.trim().length != 1 && !parseInt(node.nodeValue.trim())) {
+                          node.nodeValue = transform(clicked >= 69 ? node.nodeValue.toUpperCase() : node.nodeValue);
+                      }
+                  }
+                  break;
+          }
+      }
     </script>
 </body>
 </html>
