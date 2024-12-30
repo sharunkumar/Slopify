@@ -176,11 +176,22 @@
             display: none;
         }
 
+        body.blur-images .chat-image {
+            filter: blur(1rem);
+        }
+
+        body.blur-images .chat-image:hover {
+            filter: none;
+            transition: 0.25s filter linear;
+            -webkit-transition: 0.25s -webkit-filter linear;
+            -moz-transition: 0.25s -moz-filter linear;
+            -ms-transition: 0.25s -ms-filter linear;
+            -o-transition: 0.25s -o-filter linear;
+        }
+
         .chat-image {
             max-width: 50vw;
             max-height: 50vh;
-
-
         }
 
         .message-text {
@@ -246,6 +257,7 @@
         window.usernames = new Set();
         window.mutedUsernames = new Set();
         window.usernameConnection = null;
+        window.chatState = 0; // 0 show 1 hide 2 blur
         let notificationSound = new Audio("/static/audio/youvegotmail.mp3")
 
         let emojis = {};
@@ -418,7 +430,7 @@
             messageTextElement.classList.add('message-text');
 
             messageText.split(' ').map((word) => {
-                if (word.endsWith('.pic')) {
+                if (word.endsWith('.pic') && window.chatState !== 1 /* Hide images */) {
                     let imageElement = document.createElement('img');
                     imageElement.classList.add('chat-image');
                     imageElement.src = word.slice(0, -4);
@@ -438,19 +450,35 @@
             return messageTextElement;
         }
 
-
-        function toggleImages() {
-            let btn = document.getElementById('toggleImagesButton');
-
-            if (document.body.classList.contains('hide-images')) {
-                document.body.classList.remove('hide-images');
-                btn.innerText = 'Hide Images';
-                localStorage.setItem('hideImages', "false");
+        function toggleImages(state) {
+            if (typeof(state) !== 'undefined') {
+                window.chatState = state;
             } else {
-                document.body.classList.add('hide-images');
-                btn.innerText = 'Show Images';
-                localStorage.setItem('hideImages', "true");
+                window.chatState++;
+                if (window.chatState > 2) {
+                    window.chatState = 0;
+                }
             }
+            console.log(window.chatState);
+            let btn = document.getElementById('toggleImagesButton');
+            document.body.classList.remove('hide-images');
+            document.body.classList.remove('blur-images');
+
+            switch (window.chatState) {
+                case 0:
+                    btn.innerText = 'Hide Images';
+                    break; 
+                case 1:
+                    btn.innerText = 'Blur Images';
+                    document.body.classList.add('hide-images');
+                    break;
+                case 2:
+                    btn.innerText = 'Show Images';
+                    document.body.classList.add('blur-images');
+                    break;
+            }
+
+            localStorage.setItem('imageState', String(window.chatState));
         }
 
         function localMessage(username, message, isBot, isSystem) {
@@ -579,9 +607,19 @@
                 }
             });
 
-            if (localStorage.getItem('hideImages') === "true") {
-                toggleImages();
+            window.chatState =  localStorage.getItem('imageState');
+            if(null === window.chatState)
+            {
+                window.chatState = 1;
             }
+    
+            
+            if (localStorage.getItem('hideImages') === "true") {
+                window.chatState = 1;
+                localStorage.removeItem('hideImages');
+            }
+
+            toggleImages(window.chatState);
         });
 
         function flashGreen() {
