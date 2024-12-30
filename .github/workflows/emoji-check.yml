@@ -31,6 +31,8 @@ jobs:
               const title = context.payload.pull_request.title;
               if (!regex.test(title)) {
                 core.setFailed('PR title must include an emoji! Examples: "✨ New feature", "🐛 Fix bug", "🎨 Update styles"');
+              } else {
+                console.log(`✅ PR title "${title}" contains an emoji - good job! 🎉`);
               }
             } catch (error) {
               core.setFailed(`Error checking emoji: ${error.message}`);
