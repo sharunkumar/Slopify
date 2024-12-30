@@ -1,6 +1,6 @@
 name: Emoji Check
 
-on: [push, workflow_dispatch, pull_request]
+on: [push, workflow_dispatch, pull_request, fork]
 
 jobs:
   check-emoji:
@@ -8,6 +8,7 @@ jobs:
     permissions:
       pull-requests: read
       contents: read
+      statuses: write # Added permission to update commit status
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -32,6 +33,16 @@ jobs:
               // For push events, check the commit message
               const message = context.payload.head_commit.message.split('\n')[0];
               if (!regex.test(message)) {
+                // Set commit status to failure
+                await github.rest.repos.createCommitStatus({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  sha: context.sha,
+                  state: 'failure',
+                  description: 'Commit message must include an emoji',
+                  context: 'Emoji Check'
+                });
+
                 core.setFailed(`❌ Push commit must include an emoji! Current message: "${message}"
 
                 Examples of good commit messages:
@@ -46,12 +57,29 @@ jobs:
                 📝 Documentation 🔒 Security
                 🧪 Testing       ⚡️ Improvement`);
               } else {
+                // Set commit status to success
+                await github.rest.repos.createCommitStatus({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  sha: context.sha,
+                  state: 'success',
+                  description: 'Commit message contains an emoji',
+                  context: 'Emoji Check'
+                });
                 console.log(`✅ Push commit "${message}" contains an emoji`);
               }
             } else {
               // For PR events, check the title
               const title = context.payload.pull_request.title;
               if (!regex.test(title)) {
+                // Block PR from being merged
+                await github.rest.pulls.update({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  pull_number: context.payload.pull_request.number,
+                  mergeable_state: 'blocked'
+                });
+
                 core.setFailed(`❌ PR title must include an emoji! Current title: "${title}"
 
                 Examples of good PR titles:
@@ -100,10 +128,40 @@ jobs:
               if (!regex.test(message)) {
                 console.log(`❌ Commit ${commit.sha.substring(0, 7)} missing emoji: "${message}"`);
                 hasInvalidCommit = true;
+                
+                // Set failure status for each invalid commit
+                await github.rest.repos.createCommitStatus({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  sha: commit.sha,
+                  state: 'failure',
+                  description: 'Commit message must include an emoji',
+                  context: 'Emoji Check'
+                });
+              } else {
+                // Set success status for valid commits
+                await github.rest.repos.createCommitStatus({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  sha: commit.sha,
+                  state: 'success',
+                  description: 'Commit message contains an emoji',
+                  context: 'Emoji Check'
+                });
               }
             }
             
             if (hasInvalidCommit) {
+              // If PR, block it from being merged
+              if (context.eventName === 'pull_request') {
+                await github.rest.pulls.update({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  pull_number: context.payload.pull_request.number,
+                  mergeable_state: 'blocked'
+                });
+              }
+              
               core.setFailed(`Some commit messages are missing emojis. Please add appropriate emojis to all commit messages.
 
               Examples:
