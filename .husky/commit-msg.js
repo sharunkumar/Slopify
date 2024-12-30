@@ -50,13 +50,18 @@ const commitMsg = readFileSync(commitMsgFile, "utf8");
 // Use the emoji-regex package for more accurate emoji detection
 const regex = emojiRegex();
 
+const failExample = "Add new feature";
+const passExample = "✨ Add new feature";
+
 if (!regex.test(commitMsg)) {
   console.error("\x1b[31mError: Commit message must include at least one emoji! 🚫\x1b[0m");
   console.error(generateEmojiSquare());
   console.error("Example commit messages:");
-  console.error("✨ Add new feature");
-  console.error("🐛 Fix bug in login");
-  console.error("🎨 Update styles");
+  console.error(`❌ Fail: '${failExample}' (${regex.test(failExample)})`);
+  console.error(`✅ Pass: '${passExample}' (${regex.test(passExample)})`);
+  console.error("More examples:");
+  console.error("✅ Pass: '🐛 Fix bug in login'");
+  console.error("✅ Pass: '🎨 Update styles'");
   process.exit(1);
 }
 
