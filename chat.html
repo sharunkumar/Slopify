@@ -368,21 +368,24 @@
         }
 
         function handleImages(messageText) {
-            const re = /^(https?:\/\/[^ ]+)\.pic$/;
+            const re = /(https?:\/\/[^ ]+\.pic)/;
             let messageTextElement = document.createElement('div');
             messageTextElement.classList.add('message-text');
 
-            let match = messageText.match(re);
+            let match = messageText.split(re);
 
-            if (!match) {
-                messageTextElement.textContent = messageText;
-            } else {
-                let imageElement = document.createElement('img');
-                imageElement.classList.add('chat-image');
-                imageElement.src = match[1];
-                messageTextElement.appendChild(imageElement);
+            for (const txt of match) {
+                if (txt.indexOf('http') !== -1 && txt.indexOf('.pic') === txt.length - 4) {
+                    let imageElement = document.createElement('img');
+                    imageElement.classList.add('chat-image');
+                    imageElement.src = txt.substr(0, txt.length - 4);
+                    messageTextElement.appendChild(imageElement);
+                } else {
+                    let div = document.createElement('div');
+                    div.textContent = txt;
+                    messageTextElement.appendChild(div);
+                }
             }
-
             return messageTextElement;
         }
 
