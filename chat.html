@@ -589,8 +589,13 @@
                 }
             });
 
-            window.chatState = Number(localStorage.getItem("imageState"));
-
+            window.chatState =  localStorage.getItem('imageState');
+            if(null === window.chatState)
+            {
+                window.chatState = 1;
+            }
+    
+            
             if (localStorage.getItem('hideImages') === "true") {
                 window.chatState = 1;
                 localStorage.removeItem('hideImages');
