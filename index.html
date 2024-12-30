@@ -311,6 +311,35 @@
         text-shadow: 2px 2px 0px #FF00FF;
         background-color: yellow;
       }
+
+      .top-right-button {
+        position: fixed;
+        top: 10px;
+        right: 10px;
+        padding: 10px 20px;
+        background-color: #b8bb26;
+        color: #282828;
+        border: none;
+        cursor: pointer;
+        font-size: 16px;
+        border-radius: 5px;
+        z-index: 1000;
+      }
+
+      .top-right-button:hover {
+        background-color: #a1b024;
+      }
+
+      @keyframes epilepticFlash {
+        0%, 100% { background-color: white; }
+        50% { background-color: black; }
+      }
+
+      .epileptic-mode {
+        animation: epilepticFlash 0.1s infinite;
+      }
+
+
     </style>
     <audio id="vibeAudio" loop>
       <source
@@ -344,6 +373,73 @@
   </script>
   </head>
   <body>
+
+  <!-- Epileptic Mode Button -->
+  <button class="top-right-button" id="epicButton">Bustin Mode</button>
+
+  <script>
+    const epilepticAudio = new Audio("static/audio/bustin.mp3");
+    epilepticAudio.loop = true; // Enable looping
+  
+    let isEpilepticModeOn = false;
+    let spawnInterval;
+    let spawnCount = 10; // Start with 10 images
+  
+    function spawnImage() {
+      const img = document.createElement("img");
+      img.src = "static/images/ray-parker-jr.webp";
+      img.style.position = "absolute";
+      img.style.width = "100px";
+      img.style.height = "auto";
+      img.style.left = Math.random() * window.innerWidth + "px";
+      img.style.top = Math.random() * window.innerHeight + "px";
+      img.style.transition = "transform 3s ease-in-out";
+  
+      document.body.appendChild(img);
+  
+      setTimeout(() => {
+        img.style.transform = `translateY(-${window.innerHeight}px)`;
+        setTimeout(() => img.remove(), 3000);
+      }, 100);
+    }
+  
+    document.getElementById("epicButton").addEventListener("click", () => {
+      const images = document.querySelectorAll("img");
+      if (isEpilepticModeOn) {
+        document.body.classList.remove("epileptic-mode");
+        epilepticAudio.pause();
+        epilepticAudio.currentTime = 0;
+        clearInterval(spawnInterval);
+        images.forEach(img => {
+          if (img.src.includes("/static/images/")) {
+            img.src = img.dataset.originalSrc || img.src;
+          }
+        });
+      } else {
+        document.body.classList.add("epileptic-mode");
+        epilepticAudio.volume = 1;
+        epilepticAudio.play();
+  
+        spawnCount = 10; // Start with 10 images
+        spawnInterval = setInterval(() => {
+          spawnCount++;
+          for (let i = 0; i < spawnCount; i++) {
+            spawnImage();
+          }
+        }, 3000);
+  
+        images.forEach(img => {
+          if (img.src.includes("/static/images/")) {
+            img.dataset.originalSrc = img.src;
+            img.src = "static/images/ray-parker-jr.webp";
+          }
+        });
+      }
+      isEpilepticModeOn = !isEpilepticModeOn;
+    });
+  </script>
+
+  
 	<script src="static/js/oneko.js"></script>
     <a href="#maincontent" class="skipnav">Skip to Content (Press Enter)</a>
     <div
@@ -507,6 +603,7 @@
 
       <div>
         <h1>MAXIMIZE YOUR WIN</h1>
+        <h2>Join the <a href="https://discord.gg/sPbES34ZsA">DishpitDev discord</a></h2>
         <div class="w-full flex gap-2">
           <div class="bg-black rounded-2xl w-16 as"></div>
         </div>
@@ -1202,6 +1299,21 @@ window.addEventListener('resize', handleResponsiveLayout);
         <button type="button">
           <a href='/uwu.html'>wets seee~ >w<<a/>
         </button>
+      </section>
+      <section>
+	      <h2>Want some Winamp with your Slopify?</h2>
+	      <div id="webamp"></div>
+              <script src="https://unpkg.com/webamp"></script>
+              <script>
+                 const app = document.getElementById("webamp")
+                 const webamp = new Webamp();
+                 webamp.renderWhenReady(app);
+
+                 if (!Webamp.browserIsSupported()) {
+                    alert("Oh no! Webamp does not work in this browser!");
+                    throw new Error("What's the point of anything?");
+                 }
+             </script>
       </section>
     </main>
     <footer>
