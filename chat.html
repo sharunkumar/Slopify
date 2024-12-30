@@ -481,6 +481,7 @@
             localStorage.setItem('imageState', String(window.chatState));
         }
 
+
         function localMessage(username, message, isBot, isSystem) {
             if (!isSystem) isSystem = false;
             if (window.mutedUsernames.has(username)) { return };
@@ -521,7 +522,10 @@
 
 
 
+
         }
+    }
+}
 
         function processMessage(message) {
             try {
@@ -628,6 +632,22 @@
                 document.body.style.backgroundColor = '';
             }, 100);
         }
+    </script>
+		<script>
+        const ceo = document.querySelector('.ceo');
+        const ceoRect = ceo.getBoundingClientRect();
+
+        document.addEventListener('mousemove', (event) => {
+            const mouseX = event.clientX;
+            const mouseY = event.clientY;
+            const boxCenterX = ceoRect.left + ceoRect.width / 2;
+            const boxCenterY = ceoRect.top + ceoRect.height / 2;
+            const deltaX = mouseX - boxCenterX;
+            const deltaY = mouseY - boxCenterY;
+            const angleZ = -(deltaY / ceoRect.height) * 1.2;
+            const angleY = (deltaX / ceoRect.width) * 2;
+            ceo.style.transform = `rotateZ(${angleZ}deg) rotateY(${angleY}deg)`;
+        });
     </script>
 </body>
 
