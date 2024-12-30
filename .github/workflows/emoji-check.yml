@@ -9,7 +9,7 @@ on:
 
 jobs:
   check-emoji:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     permissions:
       pull-requests: read
       contents: read
