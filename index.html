@@ -1741,6 +1741,20 @@ window.addEventListener('resize', handleResponsiveLayout);
 	    <a href="https://sleepie.dev/femboy-not-gay" target="_blank">Why its not gay to like femboys</a>
 		    <iframe width="560" height="315" src="https://www.youtube.com/embed/mFfYORTqzog?si=i3uW4a8OnDXaAKEI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 	    </div>
+      <section>
+        <img src="./static/images/touhouproject/baka.png" alt="ᗜˬᗜ" class="cirno-img" width="200" height="200">
+        <audio id="baka-sound" src="./static/audio/baka.mp3" preload="auto"></audio>
+  
+        <script>
+          const cirno = document.querySelector('.cirno-img');
+          const bakaAudio = document.querySelector('#baka-sound');
+        
+          cirno.addEventListener('click', () => {
+            bakaAudio.currentTime = 0;
+            bakaAudio.play();
+          });
+        </script>
+      </section>
       <p>
         &copy; 2024 DishpitDev.
         <a href="https://github.com/dishpitdev/slopify">Built by the community</a>, against the community.
