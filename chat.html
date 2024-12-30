@@ -119,16 +119,23 @@
             background-color: var(--bg-primary);
             color: var(--text-primary);
             font-family: monospace;
+            -moz-appearance: none;
+        }
+
+        #messageInput:focus {
+            outline: 1px solid var(--border-color);
         }
 
         button {
             color: var(--text-primary);
             background-color: var(--border-color);
+            border: 2px outset var(--border-color);
             font-family: monospace;
+            -moz-appearance: none;
         }
 
         button:hover {
-            border-color: var(--border-color);
+            border: 2px outset var(--text-secondary);
         }
 
         #usernameError {
@@ -487,7 +494,7 @@
             document.body.style.backgroundColor = 'green';
             setTimeout(() => {
                 document.body.style.backgroundColor = '';
-                }, 100);
+            }, 100);
         }
     </script>
 </body>
