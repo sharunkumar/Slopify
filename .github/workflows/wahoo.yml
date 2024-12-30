@@ -10,5 +10,5 @@ jobs:
           for i in {1..1000}; do
             echo "wahoo fish"
             echo "-------------------------"
-            sleep 0.25
+            sleep 0.125
           done
