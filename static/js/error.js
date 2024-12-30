@@ -163,7 +163,7 @@ class Windows95Error {
             "Just give up",
             "Did you lock in yet?",
             "You made a mistake",
-            "",
+            "uhhhh",
             "whar 💀",
             "It comes tuah point",
             "SUCCess",
