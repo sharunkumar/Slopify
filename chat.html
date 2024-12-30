@@ -445,7 +445,7 @@
             }
         }
 
-        function localMessage(username, message, isSystem) {
+        function localMessage(username, message, isBot, isSystem) {
             if (!isSystem) isSystem = false;
             let messagesContainer = document.getElementById('messages');
             let messageContainer = document.createElement('div');
@@ -483,8 +483,9 @@
         function processMessage(message) {
             try {
                 let messageData = JSON.parse(message);
+                if (!messageData.bot) {messageData.bot = false} else {messageData.bot = true;}
                 if (!messageData.username || !messageData.message) throw new Error('Invalid message data: ' + message);
-                localMessage(messageData.username, messageData.message);
+                localMessage(messageData.username, messageData.message, messageData.bot);
                 if (messageData.flash) {
                     flashGreen();
                 }
