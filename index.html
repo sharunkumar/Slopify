@@ -397,7 +397,7 @@ img {
     document.addEventListener('click', handleFirstInteraction, { once: true });
     // document.addEventListener('keypress', handleFirstInteraction, { once: true });
   </script>
-  <div id="chatbot">
+    <div id="chatbot" style="position: fixed; bottom: 20px; right: 20px; z-index: 9999;">
     <div class="chat-header">
       <span>Chat Support</span>
       <button onclick="toggleChat()" style="background: #ff4444; color: white; border: none; padding: 5px 10px; border-radius: 3px; cursor: pointer; hover: { background: #ff6666; }">×</button>
@@ -414,7 +414,7 @@ img {
       <input type="text" id="userInput" placeholder="Type a message...">
       <button onclick="sendMessage()">Send</button>
     </div>
-  </div>
+</div>
   
   <style>
     #chatbot {
@@ -499,15 +499,6 @@ img {
       height: 40px;
     }
     </style>
-    
-    <div id="chatMessages">
-      <div class="bot-message">
-        <div class="clippy-container">
-          <img src="https://upload.wikimedia.org/wikipedia/en/d/db/Clippy-letter.PNG" class="clippy-image" alt="Clippy">
-          <span>how can i help you today?</span>
-        </div>
-      </div>
-    </div>
   
   <script>
   function toggleChat() {
