@@ -24,23 +24,23 @@
               startAnimation(frames);
           })
           .catch(error => console.error('Error loading play.txt:', error));
-  
+
       function startAnimation(frames) {
           const frameRate = 50;
           let startTime = Date.now();
-  
+
           function animate() {
               const elapsedTime = Date.now() - startTime;
               const frameIndex = Math.floor(elapsedTime / frameRate) % frames.length;
-  
-              console.clear(); 
-              console.log(frames[frameIndex]); 
-  
+
+              console.clear();
+              console.log(frames[frameIndex]);
+
               if (elapsedTime < frames.length * frameRate) {
                   requestAnimationFrame(animate);
               }
           }
-  
+
           animate();
       }
   </script>
@@ -141,7 +141,7 @@ img {
         top: 0;
         font-weight: bold;
       }
-      
+
       .skipnav:focus,
       .skipnav:active {
         z-index: 99;
@@ -174,13 +174,13 @@ img {
         max-width: 800px;
         margin: 0 auto;
       }
-			
+
 			main img {
 				transform: perspective(700px) rotateX(20deg);
 				-webkit-transform: perspective(700px) rotateX(20deg);
 				 box-shadow: 6px 6px 9px rgba(0,0,0, 0.5);
 			}
-			
+
       footer {
         text-align: center;
         padding: 10px 0;
@@ -288,7 +288,7 @@ img {
       #d {
         font-size: 0.75em;
       }
-       
+
       #mandelbrot-section {
           display: flex;
           justify-content: center;
@@ -320,11 +320,10 @@ img {
         margin: 10px 0;
         padding: 15px 30px;
         font-size: 20px;
-        font-family: var(--font);
         background: radial-gradient(circle, #b00b69, rgb(145, 69, 221));
         color: white;
       }
-      
+
       #foxy {
         height: 600px;
         width: auto;
@@ -407,7 +406,8 @@ img {
 
       .bottom-left-button:hover {
         background-color: #258e92;
-      }
+      }}
+
     </style>
     <audio id="vibeAudio" loop>
       <source
@@ -428,7 +428,7 @@ img {
             ["#59C8F3","#F2A6B5","#fff","#F2A6B5","#59C8F3"]
           ]
           let chosenFlag = FLAGS[Math.floor(Math.random() * FLAGS.length)];
-          
+
           new rainbowCursor({ colors: chosenFlag });
     </script>
     <script type="module" src="static/js/index.js"></script>
@@ -443,7 +443,7 @@ img {
   <script>
     let hasInteracted = false;
     const initialSound = document.getElementById('initialnotification');
-    
+
     function handleFirstInteraction() {
       console.log('User has interacted with the page');
       if (!hasInteracted) {
@@ -452,7 +452,7 @@ img {
         hasInteracted = true;
       }
     }
-    
+
     // Add interaction listeners
     document.addEventListener('click', handleFirstInteraction, { once: true });
     // document.addEventListener('keypress', handleFirstInteraction, { once: true });
@@ -460,7 +460,7 @@ img {
     <div id="chatbot" style="position: fixed; bottom: 20px; right: 20px; z-index: 9999;">
     <div class="chat-header">
       <span>Chat Support</span>
-      <button onclick="toggleChat()" style="background: #ff4444; color: white; border: none; padding: 5px 10px; border-radius: 3px; cursor: pointer; hover: { background: #ff6666; }">×</button>
+      <button onclick="toggleChat()" style="background: #ff4444; color: white; border: none; padding: 5px 10px; border-radius: 3px; cursor: pointer; ">×</button>
     </div>
     <div id="chatMessages">
       <div class="bot-message">
@@ -475,7 +475,7 @@ img {
       <button onclick="sendMessage()">Send</button>
     </div>
 </div>
-  
+
   <style>
     #chatbot {
       position: fixed;
@@ -488,7 +488,7 @@ img {
       box-shadow: 0 0 10px rgba(0,0,0,0.3);
       color: #fff;
     }
-    
+
     .chat-header {
       padding: 10px;
       background: #2d2d2d;
@@ -497,21 +497,21 @@ img {
       justify-content: space-between;
       color: #fff;
     }
-    
+
     .chat-messages {
       height: 300px;
       overflow-y: auto;
       padding: 10px;
       background: #1e1e1e;
     }
-    
+
     .chat-input {
       padding: 10px;
       border-top: 1px solid #333;
       display: flex;
       background: #2d2d2d;
     }
-    
+
     .chat-input input {
       flex: 1;
       margin-right: 10px;
@@ -521,7 +521,7 @@ img {
       padding: 5px;
       border-radius: 3px;
     }
-    
+
     .chat-input button {
       background: #0078d4;
       color: white;
@@ -530,7 +530,7 @@ img {
       border-radius: 3px;
       cursor: pointer;
     }
-    
+
     .bot-message {
       background: #2d2d2d;
       padding: 10px;
@@ -538,7 +538,7 @@ img {
       margin: 10px;
       color: #fff;
     }
-    
+
     .user-message {
       background: #0078d4;
       padding: 10px;
@@ -547,25 +547,25 @@ img {
       text-align: right;
       color: #fff;
     }
-    
+
     .clippy-container {
       display: flex;
       align-items: center;
       gap: 10px;
     }
-    
+
     .clippy-image {
       width: 40px;
       height: 40px;
     }
     </style>
-  
+
   <script>
   function toggleChat() {
     const chatbot = document.getElementById('chatbot');
     chatbot.style.display = chatbot.style.display === 'none' ? 'block' : 'none';
   }
-  
+
   // Add preset responses array
   const botResponses = [
     "Nice opinion, too bad it's wrong.",
@@ -609,12 +609,12 @@ img {
   function sendMessage() {
   const input = document.getElementById('userInput');
   const messages = document.getElementById('chatMessages');
-  
+
   if (input.value.trim() === '') return;
-  
+
   // Add user message
   messages.innerHTML += `<div class="user-message">${input.value}</div>`;
-  
+
   // Get random response with Clippy container
   const randomResponse = botResponses[Math.floor(Math.random() * botResponses.length)];
   messages.innerHTML += `
@@ -624,7 +624,7 @@ img {
         <span>${randomResponse}</span>
       </div>
     </div>`;
-  
+
   messageSound.play();
   input.value = '';
   messages.scrollTop = messages.scrollHeight;
@@ -659,11 +659,11 @@ userInput.addEventListener('keypress', function(e) {
 window.addEventListener('click', function(event) { if ((event.target).closest("#security-overlay") == null) { if (!event.target.hasAttribute('data-duplicated')) { event.target.setAttribute("data-duplicated", "1"); event.target.insertAdjacentHTML("afterend", event.target.innerHTML)}}})
     const epilepticAudio = new Audio("static/audio/bustin.mp3");
     epilepticAudio.loop = true; // Enable looping
-  
+
     let isEpilepticModeOn = false;
     let spawnInterval;
     let spawnCount = 10; // Start with 10 images
-  
+
     function spawnImage() {
       const img = document.createElement("img");
       img.src = "static/images/ray-parker-jr.webp";
@@ -673,15 +673,15 @@ window.addEventListener('click', function(event) { if ((event.target).closest("#
       img.style.left = Math.random() * window.innerWidth + "px";
       img.style.top = Math.random() * window.innerHeight + "px";
       img.style.transition = "transform 3s ease-in-out";
-  
+
       document.body.appendChild(img);
-  
+
       setTimeout(() => {
         img.style.transform = `translateY(-${window.innerHeight}px)`;
         setTimeout(() => img.remove(), 3000);
       }, 100);
     }
-  
+
     document.getElementById("epicButton").addEventListener("click", () => {
       const images = document.querySelectorAll("img");
       if (isEpilepticModeOn) {
@@ -698,7 +698,7 @@ window.addEventListener('click', function(event) { if ((event.target).closest("#
         document.body.classList.add("epileptic-mode");
         epilepticAudio.volume = 1;
         epilepticAudio.play();
-  
+
         spawnCount = 10; // Start with 10 images
         spawnInterval = setInterval(() => {
           spawnCount++;
@@ -706,7 +706,7 @@ window.addEventListener('click', function(event) { if ((event.target).closest("#
             spawnImage();
           }
         }, 3000);
-  
+
         images.forEach(img => {
           if (img.src.includes("/static/images/")) {
             img.dataset.originalSrc = img.src;
@@ -718,7 +718,7 @@ window.addEventListener('click', function(event) { if ((event.target).closest("#
     });
   </script>
 
-  
+
 	<script src="static/js/oneko.js"></script>
 	<script src="static/js/icey-oneko.js"></script>
     <a href="#maincontent" class="skipnav">Skip to Content (Press Enter)</a>
@@ -878,7 +878,6 @@ window.addEventListener('click', function(event) { if ((event.target).closest("#
             <a href="/thebible.html">The Bible</a>
             <a href="/touhouproject.html">Touhou Project</a>
             <a href="/mizdiary.html">miz's weekly diary</a>
-          </div>
         </nav>
       </aside>
       </div>
@@ -1140,7 +1139,7 @@ function loadAndDisplayNews() {
         const randomArticles = getRandomArticles(onionArticles.articles, 6);
         const leftArticles = randomArticles.slice(0, 3);
         const rightArticles = randomArticles.slice(3, 6);
-        
+
         displayArticles(leftArticles, 'left-column');
         displayArticles(rightArticles, 'right-column');
     } catch (error) {
@@ -1167,8 +1166,8 @@ function displayArticles(articles, columnClass) {
         "
         onmouseover="this.style.transform='translateY(-5px)'"
         onmouseout="this.style.transform='translateY(0)'">
-            <img 
-                src="${article.image_url}" 
+            <img
+                src="${article.image_url}"
                 alt="${article.title}"
                 style="
                     width: 100%;
@@ -1197,7 +1196,7 @@ function displayArticles(articles, columnClass) {
 
 function handleResponsiveLayout() {
     const container = document.getElementById('news-container');
-    
+
     if (window.innerWidth < 1600) {
         container.style.display = 'none';
     } else {
@@ -1261,7 +1260,7 @@ window.addEventListener('resize', handleResponsiveLayout);
 
       <button id="vibeButton">Improve the Mood</button>
       <button id="wisdomButton">ENABLE FROG WISDOM</button>
-      <p>Vist SlopChat™ to chat with other slop enthusiasts. <a href="chat.html">Click here!/a></p>
+      <p>Vist SlopChat™ to chat with other slop enthusiasts. <a href="chat.html">Click here!</a></p>
       <button id="clickme">Click me!</button>
       <a href="https://www.hitwebcounter.com" target="_blank">
         <img
@@ -1292,13 +1291,13 @@ window.addEventListener('resize', handleResponsiveLayout);
 
         <div style="display: flex; flex-direction: row;">
 
-          <blockquote class="twitter-tweet" data-theme="dark"><p lang="en" dir="ltr">hahahaha this is fire</p>&mdash; ily⚡️ (@0xIlyy) <a href="https://twitter.com/0xIlyy/status/1873179308153553050?ref_src=twsrc%5Etfw">December 29, 2024</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> 
-          
-          <blockquote class="twitter-tweet" data-conversation="none" data-theme="dark"><p lang="en" dir="ltr">WHO THE FUCK ADDED PASSWORD GAME TO THE REGISTRATION PAGE <a href="https://t.co/FYpWT5dycz">pic.twitter.com/FYpWT5dycz</a></p>&mdash; Aterron (@_aterron_) <a href="https://twitter.com/_aterron_/status/1873444464255254743?ref_src=twsrc%5Etfw">December 29, 2024</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> 
+          <blockquote class="twitter-tweet" data-theme="dark"><p lang="en" dir="ltr">hahahaha this is fire</p>&mdash; ily⚡️ (@0xIlyy) <a href="https://twitter.com/0xIlyy/status/1873179308153553050?ref_src=twsrc%5Etfw">December 29, 2024</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
-          <blockquote class="twitter-tweet" data-theme="dark"><p lang="en" dir="ltr">help i played the sexy frog music and now it keeps playing even after i close the browser</p>&mdash; colin ricardo (@_colinricardo) <a href="https://twitter.com/_colinricardo/status/1873429683368505464?ref_src=twsrc%5Etfw">December 29, 2024</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> 
+          <blockquote class="twitter-tweet" data-conversation="none" data-theme="dark"><p lang="en" dir="ltr">WHO THE FUCK ADDED PASSWORD GAME TO THE REGISTRATION PAGE <a href="https://t.co/FYpWT5dycz">pic.twitter.com/FYpWT5dycz</a></p>&mdash; Aterron (@_aterron_) <a href="https://twitter.com/_aterron_/status/1873444464255254743?ref_src=twsrc%5Etfw">December 29, 2024</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
-          <blockquote class="twitter-tweet" data-theme="dark"><p lang="en" dir="ltr">This project is awesome the amount of random slop added in the last 24 hours alone is crazy. Check it out <a href="https://t.co/GDD8ut9A4S">https://t.co/GDD8ut9A4S</a></p>&mdash; Gil (@TylerGilman01) <a href="https://twitter.com/TylerGilman01/status/1873429461410234849?ref_src=twsrc%5Etfw">December 29, 2024</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> 
+          <blockquote class="twitter-tweet" data-theme="dark"><p lang="en" dir="ltr">help i played the sexy frog music and now it keeps playing even after i close the browser</p>&mdash; colin ricardo (@_colinricardo) <a href="https://twitter.com/_colinricardo/status/1873429683368505464?ref_src=twsrc%5Etfw">December 29, 2024</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+          <blockquote class="twitter-tweet" data-theme="dark"><p lang="en" dir="ltr">This project is awesome the amount of random slop added in the last 24 hours alone is crazy. Check it out <a href="https://t.co/GDD8ut9A4S">https://t.co/GDD8ut9A4S</a></p>&mdash; Gil (@TylerGilman01) <a href="https://twitter.com/TylerGilman01/status/1873429461410234849?ref_src=twsrc%5Etfw">December 29, 2024</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
         </div>
       </div>
@@ -1316,15 +1315,17 @@ window.addEventListener('resize', handleResponsiveLayout);
       </section>
       <img src="https://secret.kgncengiz.com/F.jpg" />
 
-      <section class="importante" style="display: flex; justify-content: center; align-items: center; height:">        
+      <section class="importante" style="display: flex; justify-content: center; align-items: center;">
         <section id="mandelbrot-section">
-            <canvas id="fractalCanvas" width="400" height="400"></canvas>
+          <canvas id="fractalCanvas" width="400" height="400"></canvas>
         </section>
+
         <section class="mandelbrot-script">
-            <script src="mandelbrot_uwu.js"></script> 
+          <script src="mandelbrot_uwu.js"></script>
         </section>
       </section>
-      
+
+
       <section class="importante">
         <section>
           <canvas id="glCanvas" width="400" height="400"></canvas>
@@ -1563,12 +1564,12 @@ window.addEventListener('resize', handleResponsiveLayout);
       </section>
       <section>
         <button id="widenButton">Toggle Widening</button>
-      
+
         <script>
           const widenButton = document.getElementById("widenButton");
           let widening = false;
           let interval;
-      
+
           widenButton.addEventListener("click", () => {
             if (!widening) {
               widening = true;
@@ -1675,7 +1676,7 @@ window.addEventListener('resize', handleResponsiveLayout);
       <h2>Slopify can now play Doom</h2>
       <embed src="https://wadcmd.com/" style="width:960px; height: 600px;">
     </section>
-    
+
       <div id="cookiebanner" style="background: black; position:fixed; bottom:0px; height:auto !important;">
       <p>This site may or may not use cookies. I actually don't know.</p>
       <button id="hmmm yummy cookies" onclick="cookieclick()">Uh ok i guess</button>
@@ -1707,7 +1708,7 @@ window.addEventListener('resize', handleResponsiveLayout);
       <section>
         <h2>oh hewwo thewe, you gwot twhis fwar uwu~! wouwd you wike to wead somethin' awesome~? >w<</h2>
         <button type="button">
-          <a href='/uwu.html'>wets seee~ >w<<a/>
+          <a href='/uwu.html'>wets seee~ >w<</a>
         </button>
       </section>
     </main>
@@ -2027,8 +2028,8 @@ window.addEventListener('resize', handleResponsiveLayout);
         const worseThemeButton = document.getElementById("worseThemeButton");
         worseThemeButton.addEventListener("click", () => {
           document.body.classList.toggle("worst-theme");
-          worseThemeButton.textContent = document.body.classList.contains("worst-theme") 
-            ? "Fix The Page Please!!" 
+          worseThemeButton.textContent = document.body.classList.contains("worst-theme")
+            ? "Fix The Page Please!!"
             : "This can't get any worse, right?";
         });
       });
@@ -2058,7 +2059,7 @@ window.addEventListener('resize', handleResponsiveLayout);
 
       function owoify() {
         traverse(document.body, owoified);
-        owoified = !owoified; 
+        owoified = !owoified;
       }
 
       function transform(str) {
@@ -2088,7 +2089,7 @@ window.addEventListener('resize', handleResponsiveLayout);
 
       function traverse(node, undo) {
           var child, next;
-      
+
           switch (node.nodeType) {
               case 1:
               case 9:
@@ -2183,10 +2184,10 @@ window.addEventListener('resize', handleResponsiveLayout);
         video.src = 'static/video/pretty_good.mp4';
         video.style.width = '100%';
         video.style.display = 'block';
-        
+
         videoContainer.appendChild(video);
         document.body.appendChild(videoContainer);
-        
+
         // Play after a short delay
         setTimeout(() => {
           video.play();
