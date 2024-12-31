@@ -38,6 +38,7 @@ For coutributing, check **[CONTRIBUTING.md](https://github.com/DishpitDev/Slopif
 * "Current features" list
 * Chat
 * Various visual themes (dark mode, Windows 95 style, retro)
+* Katamari Damacy clone
 * Discord embed integrations
 * Frog Wisdom (frog quotes with voice synthesis)
 * Fappy Berd
