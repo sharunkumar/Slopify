@@ -4,7 +4,7 @@ import { readFileSync } from "node:fs";
 import emojiRegex from "emoji-regex";
 import { exec } from "child_process";
 
-// Function to play video using system default video player
+// Function to play audio using system default video player
 function playVideo(videoName) {
   const videoPath = `${process.cwd()}/static/video/${videoName}`;
   const command =
