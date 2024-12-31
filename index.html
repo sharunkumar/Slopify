@@ -199,6 +199,7 @@
             <a href="/embr" id="embrLink">Embr</a>
           </p>
         </div>
+        <a href="public/leaderboard.html" class="rainbow-text">Leaderboard</a>
         <div id="gallery">
           <img src="static/images/bobi.jpg" alt="Bobi" class="gallery-item gallery-item-custom">
           <img src="static/images/kofte.jpg" alt="Kofte" class="gallery-item gallery-item-custom">
@@ -281,7 +282,17 @@
             <canvas id="fractalCanvas" width="400" height="400"></canvas>
           </section>
         </section>
-        <div class="katamari-container" style="width: 400px; height: 600px; position: fixed; top: 50%; right: 0; transform: translateY(-50%); z-index: 100;">
+        <div style="position: fixed; right: 20px; top: 20px; z-index: 1000;">
+          <a href="https://poeskatprinter.zepje.space/">
+            <img src="static/images/rip_poeskat.png" alt="RIP Poeskat"
+              style="animation: bob 2s infinite ease-in-out, fadeOut 1s ease-in forwards 10s;" />
+          </a>
+        </div>
+        <div style="position: absolute; top: 20px; right: 20px;">
+          <img src="static/images/sac.png" alt="SAC" style="animation: bob 2s infinite ease-in-out;" />
+        </div>
+        <div class="katamari-container"
+          style="width: 400px; height: 600px; position: fixed; top: 50%; right: 0; transform: translateY(-50%); z-index: 100;">
           <iframe id="katamariFrame" src="katamari.html" style="width: 100%; height: 100%; border: none;"></iframe>
         </div>
         <script src="katamari-loader.js"></script>
@@ -350,12 +361,12 @@
           </ul>
         </section>
         <section>
-          <div id = "huzzbutton">
+          <div id="huzzbutton">
             <p2>
               Press To Huzz
             </p2>
             <section>
-              <button id = "huzzButton">Huzz</button>
+              <button id="huzzButton">Huzz</button>
             </section>
         </section>
         <section>
@@ -368,6 +379,9 @@
           <button type="button" id="sunBtn">hey, can we go on land?</button>
         </section>
         <section>
+          <div>
+            <button onClick=killEverything()>Clear up some space</button>
+          </div>
           <center>
             <a href="static/images/monster_zero_ultra.jpg">
               <img src="static/images/come_here_marisa_kirisame.gif" />
@@ -419,6 +433,8 @@
           <img src="static/images/w95link.gif" alt="Banner 4" width="88" height="31" />
           <img src="static/images/800x600.gif" alt="Banner 5" width="88" height="31" />
           <img src="static/images/lowtiergod.gif" alt="Banner 6" width="88" height="31" />
+          <!-- this was originally a gif thats ~500 bytes, but i wanted to slow down page load even more by serving a 3 kb png file :3 -->
+          <img src="static/images/catgirl_yuri.png" alt="Banner 7" width="88" height="31" />
         </div>
 
         <div id="error-0" class="window window--active" role="alertdialog" aria-modal="true"
@@ -570,6 +586,9 @@
 
       <!-- huzz script -->
       <script src="static/js/huzz.js"></script>
+
+      <!-- kill everything script -->
+      <script src="static/js/killEverything.js"></script>
 </body>
 
 </html>
