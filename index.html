@@ -115,7 +115,7 @@
         waiter! more woke please</button>
       <a href="#maincontent" class="skipnav">Skip to Content (Press Enter)</a>
 
-      <div id="security-overlay">
+      <div style = "z-index: 100000; "id="security-overlay">
         <div id="security-overlay-inner">
           <h2 id="security-overlay-title">
             🔒 Welcome to Slopify 🔒
@@ -296,10 +296,23 @@
           </section>
         </section>
         <div style="position: fixed; right: 20px; top: 20px; z-index: 1000;">
-          <a href="https://poeskatprinter.zepje.space/">
+          <a href="https://poeskatprinter.zepje.space/" id="poeskatLink">
             <img src="static/images/rip_poeskat.png" alt="RIP Poeskat"
-              style="animation: bob 2s infinite ease-in-out, fadeOut 1s ease-in forwards 10s;" />
-          </a>
+                style="animation: bob 2s infinite ease-in-out, fadeOut 1s ease-in forwards 10s;"
+                onanimationend="handleAnimationEnd(event)" />
+            </a>
+            
+            <script>
+            function handleAnimationEnd(event) {
+              if (event.animationName === 'fadeOut') {
+                const link = document.getElementById('poeskatLink');
+                link.style.pointerEvents = 'none';
+                setTimeout(() => {
+                  link.remove();
+                }, 100); // Small delay to ensure the animation is complete
+              }
+            }
+            </script>
         </div>
         <div style="position: absolute; top: 20px; right: 20px;">
           <img src="static/images/sac.png" alt="SAC" style="animation: bob 2s infinite ease-in-out;" />
