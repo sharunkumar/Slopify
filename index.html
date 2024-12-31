@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <title>SLOPIFY!</title>
   <meta charset="UTF-8" />
@@ -24,6 +25,15 @@
   <!-- chatbot styles -->
   <link rel="stylesheet" href="static/css/chatbot.css" />
 
+  <!-- security overlay styles -->
+  <link rel="stylesheet" href="static/css/security.css" />
+
+  <!-- flappy musk styles -->
+  <link rel="stylesheet" href="static/css/flappyMusk.css" />
+
+  <!-- news styles -->
+  <link rel="stylesheet" href="static/css/news.css" />
+
   <!-- Q: Do we need this? -->
   <script>
     !function (t, e) { var o, n, p, r; e.__SV || (window.posthog = e, e._i = [], e.init = function (i, s, a) { function g(t, e) { var o = e.split("."); 2 == o.length && (t = t[o[0]], e = o[1]), t[e] = function () { t.push([e].concat(Array.prototype.slice.call(arguments, 0))) } } (p = t.createElement("script")).type = "text/javascript", p.crossOrigin = "anonymous", p.async = !0, p.src = s.api_host.replace(".i.posthog.com", "-assets.i.posthog.com") + "/static/array.js", (r = t.getElementsByTagName("script")[0]).parentNode.insertBefore(p, r); var u = e; for (void 0 !== a ? u = e[a] = [] : a = "posthog", u.people = u.people || [], u.toString = function (t) { var e = "posthog"; return "posthog" !== a && (e += "." + a), t || (e += " (stub)"), e }, u.people.toString = function () { return u.toString(1) + ".people (stub)" }, o = "init capture register register_once register_for_session unregister unregister_for_session getFeatureFlag getFeatureFlagPayload isFeatureEnabled reloadFeatureFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSessionId getSurveys getActiveMatchingSurveys renderSurvey canRenderSurvey getNextSurveyStep identify setPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException loadToolbar get_property getSessionProperty createPersonProfile opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing clear_opt_in_out_capturing debug".split(" "), n = 0; n < o.length; n++)g(u, o[n]); e._i.push([i, s, a]) }, e.__SV = 1) }(document, window.posthog || []);
@@ -45,16 +55,10 @@
     <source src="/static/audio/rick.m4a" type="audio/mp3" />
     Your browser does not support the audio element.
   </audio>
-  <div id="chatbot" style="position: fixed; bottom: 20px; right: 20px; z-index: 9999;">
+  <div id="chatbot">
     <div class="chat-header">
       <span>Chat Support</span>
-      <button id="chatToggleButton" onclick="toggleChat()"
-        style="background: #ff4444; color: white; border: none; padding: 5px 10px; border-radius: 3px; cursor: pointer;">×</button>
-      <style>
-        #chatToggleButton:hover {
-          background: #ff6666;
-        }
-      </style>
+      <button id="chatToggleButton" onclick="toggleChat()">×</button>
     </div>
     <div id="chatMessages">
       <div class="bot-message">
@@ -72,7 +76,7 @@
     </div>
   </div>
 
-  <div style="position: absolute;top:200px;left:300px;z-index:99999;">
+  <div id="chatContainer">
     <a href="/chat.html">
       <img src="/static/images/slopchat.jpg" width="400px" height="200px">
     </a>
@@ -82,89 +86,31 @@
   <button class="bottom-left-button" onclick="owoify()">What?</button>
   <a href="#maincontent" class="skipnav">Skip to Content (Press Enter)</a>
 
-  <!-- TODO: move these inline styles to a to css file -->
-  <div id="security-overlay" style="
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.9);
-        z-index: 1000;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      ">
-    <div style="
-          background: #3c3836;
-          padding: 20px;
-          border-radius: 8px;
-          max-width: 400px;
-          width: 100%;
-        ">
-      <h2 style="color: #ebdbb2; text-align: center">
+  <div id="security-overlay">
+    <div id="security-overlay-inner">
+      <h2 id="security-overlay-title">
         🔒 Welcome to Slopify 🔒
       </h2>
 
-      <div id="captcha-container" style="margin-bottom: 20px; text-align: center">
-        <div id="captcha-prompt" style="margin-bottom: 10px; color: #ebdbb2"></div>
+      <div id="captcha-container">
+        <div id="captcha-prompt"></div>
         <div id="captcha-content"></div>
-        <input type="text" id="captcha-input" placeholder="Enter your answer" style="
-              padding: 8px;
-              margin: 10px 0;
-              background: #282828;
-              color: #ebdbb2;
-              border: 1px solid #b8bb26;
-              width: 100%;
-            " />
-        <button id="submit-captcha" style="
-              background: #b8bb26;
-              color: #282828;
-              padding: 10px;
-              border: none;
-              cursor: pointer;
-              width: 100%;
-            ">
+        <input type="text" id="captcha-input" placeholder="Enter your answer" />
+        <button id="submit-captcha">
           Submit CAPTCHA
         </button>
       </div>
 
       <!-- Skip Security Button -->
-      <button id="skip-security" style="
-            background: #d9534f;
-            color: #fff;
-            padding: 10px;
-            border: none;
-            cursor: pointer;
-            width: 100%;
-            margin-top: 20px;
-          ">
+      <button id="skip-security">
         Skip Security :(
       </button>
 
-      <form id="registration-form" style="display: none; flex-direction: column; gap: 10px">
-        <input type="text" id="username" placeholder="Username" style="
-              padding: 8px;
-              margin: 5px 0;
-              background: #282828;
-              color: #ebdbb2;
-              border: 1px solid #b8bb26;
-            " />
-        <input type="password" id="password" placeholder="Password" style="
-              padding: 8px;
-              margin: 5px 0;
-              background: #282828;
-              color: #ebdbb2;
-              border: 1px solid #b8bb26;
-            " />
-        <div id="requirements-list" style="color: #ebdbb2; font-size: 0.9em; margin: 10px 0"></div>
-        <button type="submit" style="
-              background: #b8bb26;
-              color: #282828;
-              padding: 10px;
-              border: none;
-              cursor: pointer;
-            ">
+      <form id="registration-form">
+        <input type="text" id="username" class="registration-input" placeholder="Username" />
+        <input type="password" id="password" class="registration-input" placeholder="Password" />
+        <div id="requirements-list"></div>
+        <button type="submit" id="register-button">
           Register
         </button>
       </form>
@@ -199,7 +145,7 @@
     </div>
 
     <a href="/second.html">
-      <button style="position: fixed;left:1%;top:2%;">
+      <button id="secondButton">
         <p>alan becker</p> <img src="static/images/alanbecker/alan.png" width="50" height="50" />
       </button>
     </a>
@@ -211,51 +157,26 @@
       </div>
     </div>
 
-    <video src="https://sleepie.dev/dwl-youtube.com__E_videodlyoutubegQzWr8MoJXA.mp4" controls
-      style="width: 300px; height: 200px;">
+    <video src="https://sleepie.dev/dwl-youtube.com__E_videodlyoutubegQzWr8MoJXA.mp4" controls id="videoPixels">
       Your potato browser does not support the video tag. Please stop using your grandma's computer.
     </video>
 
-    <div id="news-container" style="
-    position: absolute;
-    top: 50%;
-    left: 0;
-    right: 0;
-    transform: translateY(-50%);
-    pointer-events: none;
-    z-index: 1;
-">
-      <div id="news-grid" style="
-        display: flex;
-        justify-content: space-between;
-        padding: 0 20px;
-        max-width: 100%;
-        margin: 0 auto;
-    ">
-        <div class="left-column" style="
-            width: 300px;
-            position: fixed;
-            left: 20px;
-            pointer-events: auto;
-        "></div>
-        <div class="right-column" style="
-            width: 300px;
-            position: fixed;
-            right: 20px;
-            pointer-events: auto;
-        "></div>
+    <div id="news-container">
+      <div id="news-grid">
+        <div class="news-column news-column-left"></div>
+        <div class="news-column news-column right"></div>
       </div>
     </div>
 
     <div>
       <p>
         Try out the new coding language that is 100% better than anything:
-        <a href="/embr" style="color: #b8bb26">Embr</a>
+        <a href="/embr" id="embrLink">Embr</a>
       </p>
     </div>
     <div id="gallery">
-      <img src="static/images/bobi.jpg" alt="Bobi" class="gallery-item" style="width: 480px; height: 640px;">
-      <img src="static/images/kofte.jpg" alt="Kofte" class="gallery-item" style="width: 400px; height: 400px;">
+      <img src="static/images/bobi.jpg" alt="Bobi" class="gallery-item gallery-item-custom">
+      <img src="static/images/kofte.jpg" alt="Kofte" class="gallery-item gallery-item-custom">
       <img src="static/images/frog.webp" alt="Frog" class="gallery-item">
     </div>
 
@@ -288,8 +209,7 @@
       <h2>Twittermoanials</h2>
       <p>They're like testimonials, but for twitter moaning</p>
 
-      <div style="display: flex; flex-direction: row;">
-
+      <div id="twitter-tweet-container">
         <blockquote class="twitter-tweet" data-theme="dark">
           <p lang="en" dir="ltr">hahahaha this is fire</p>&mdash; ily⚡️ (@0xIlyy) <a
             href="https://twitter.com/0xIlyy/status/1873179308153553050?ref_src=twsrc%5Etfw">December 29, 2024</a>
@@ -314,9 +234,8 @@
         </blockquote>
       </div>
     </div>
-    <div class="center" style="display:flex; flex-direction: column; justify-content: center;">
-      <h2 style="font-family: Comic Sans MS, Comic Sans, cursive; color:snow; font-size: 50px; text-align: center;">do
-        you like penguins?</h2>
+    <div class="center">
+      <h2 id="penguins">do you like penguins?</h2>
       <img src="static/images/penguin.webp" />
       <img src="https://secret.kgncengiz.com/F.jpg" />
       <img src="static/images/Jesus.png" />
@@ -329,7 +248,7 @@
     </section>
     <img src="https://secret.kgncengiz.com/F.jpg" />
 
-    <section class="importante" style="display: flex; justify-content: center; align-items: center;">
+    <section class="importante" id="mandelbrot-wrapper">
       <section id="mandelbrot-section">
         <canvas id="fractalCanvas" width="400" height="400"></canvas>
       </section>
@@ -361,7 +280,7 @@
         the hedge funds with our incredible algorithm!
       </p>
       <p>
-        <span id="stock_ticker" style="color: yellow"></span><span id="stock_msg"></span>
+        <span id="stock_ticker"></span><span id="stock_msg"></span>
       </p>
       <img src="" id="stock_img" />
     </section>
@@ -378,7 +297,7 @@
     <section>
       <h2>Enjoy some Slopify tunes 🎺</h2>
       <div>
-        <iframe style="border-radius:12px"
+        <iframe id="spotifyFrame"
           src="https://open.spotify.com/embed/playlist/43g9WYiJsP8cyeNhU4ry89?utm_source=generator&theme=0" width="100%"
           height="352" frameBorder="0" allowfullscreen=""
           allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
@@ -417,128 +336,42 @@
 
     <section>
       <h2>Slopify can now play Doom</h2>
-      <embed src="https://wadcmd.com/" style="width:960px; height: 600px;">
+      <embed src="https://wadcmd.com/" id="doom">
     </section>
 
-    <div id="cookiebanner" style="background: black; position:fixed; bottom:0px; height:auto !important;">
+    <div id="cookiebanner">
       <p>This site may or may not use cookies. I actually don't know.</p>
       <button id="hmmm yummy cookies" onclick="cookieclick()">Uh ok i guess</button>
       <button id="ewww cookies no yummy" onclick="cookieclick()">Get out of my face</button>
-      </div>
-      <section>
-        <iframe width="5%" height="1" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1633786749&auto_play=true"></iframe>
-      </section>
-      <section>
-        <h2>Flappy Musk</h2>
-        <canvas id="flappyMuskCanvas" width="400" height="600" style="border: 1px solid #000;"></canvas>
-        <br/>
-        <Button id="flappyMuskButton">Make it gayer?</Button>
-        <p>Click to make Elon Musk fly! Avoid the obstacles!</p>
-      </section>
-			<section id="slopcursion">
-			<h2>So you can Slopify while you Slopify</h2>
-			<iframe src="index.html?slopcursion=true" width="100%" height="500px" frameborder="0">
-      </iframe>
-			</section>
-      <section>
-        <h2>oh hewwo thewe, you gwot twhis fwar uwu~! wouwd you wike to wead somethin' awesome~? >w<</h2>
-        <button type="button">
-          <a href='/uwu.html'>wets seee~ >w<<a/>
-        </button>
-      </section>
-    </main>
-    <footer>
-      <div style="text-align: center; margin-top: 20px">
-        <img
-          src="static/images/aol-sucks.gif"
-          alt="Banner 1"
-          width="88"
-          height="31"
-        />
-	        <img
-          src="static/images/heimdal.png"
-          alt="Banner 2"
-          width="88"
-          height="31"
-        />
-        <img
-          src="static/images/bestview.gif"
-          alt="Banner 3"
-          width="88"
-          height="31"
-        />
-        <img
-          src="static/images/w95link.gif"
-          alt="Banner 4"
-          width="88"
-          height="31"
-        />
-        <img
-          src="static/images/800x600.gif"
-          alt="Banner 5"
-          width="88"
-          height="31"
-        />
-        <img
-          src="static/images/lowtiergod.gif"
-          alt="Banner 6"
-          width="88"
-          height="31"
-        />
-      </div>
-      <div id="error-0" class="window window--active" role="alertdialog" aria-modal="true" aria-labelledby="error-label-0" aria-describedby="error-desc-0" data-window hidden>
-        <div class="window__header" data-header>
-          <div id="error-label-0" class="window__title" data-label>Error</div>
-          <button class="window__button" type="button" disabled>
-            <span class="window__sprite window__sprite--close-disabled"></span>
-            <span class="window__sr">Close</span>
-          </button>
-        </div>
-        <div class="window__body">
-          <img class="window__body-icon" alt="White X on a red circle with dark red outline and drop shadow" src="https://assets.codepen.io/416221/win95_error_icon.png" width="32" height="32">
-          <p id="error-desc-0" class="window__body-text" data-desc></p>
-        </div>
-        <div class="window__footer">
-          <button class="window__button window__button--lg" type="button" data-ok>OK</button>
-        </div>
-      </div>
-	    <div>
-	    <a href="https://sleepie.dev/femboy-not-gay" target="_blank">Why its not gay to like femboys</a>
-		    <iframe width="560" height="315" src="https://www.youtube.com/embed/mFfYORTqzog?si=i3uW4a8OnDXaAKEI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-	    </div>
-      <p>
-        &copy; 2024 DishpitDev.
-        <a href="https://github.com/dishpitdev/slopify">Built by the community</a>, against the community.
-      </p>
-    </footer>
-    <div id="dvd-bounce" style="position: fixed; z-index: 999; pointer-events: none;">
-      <img src="static/images/DVD_logo.png" width="500" height="250" alt="Bouncing DVD Logo">
     </div>
+
     <section>
       <iframe width="5%" height="1" scrolling="no" frameborder="no" allow="autoplay"
         src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1633786749&auto_play=true"></iframe>
     </section>
+
     <section>
       <h2>Flappy Musk</h2>
-      <canvas id="flappyMuskCanvas" width="400" height="600" style="border: 1px solid #000;"></canvas>
+      <canvas id="flappyMuskCanvas" width="400" height="600"></canvas>
       <br />
       <Button id="flappyMuskButton">Make it gayer?</Button>
       <p>Click to make Elon Musk fly! Avoid the obstacles!</p>
     </section>
+
     <section id="slopcursion">
       <h2>So you can Slopify while you Slopify</h2>
-      <iframe src="index.html?slopcursion=true" width="100%" height="500px" frameborder="0">
-      </iframe>
+      <iframe src="index.html?slopcursion=true" width="100%" height="500px" frameborder="0"></iframe>
     </section>
+
     <section>
-      <h2>oh hewwo thewe, you gwot twhis fwar uwu~! wouwd you wike to wead somethin' awesome~? >w</h2>
-      <button type="button">
-        <a href='/uwu.html'>wets seee~ >w</a>
-      </button>
+      <h2>oh hewwo thewe, you gwot twhis fwar uwu~! wouwd you wike to wead somethin' awesome~? >w<< /h2>
+          <button type="button">
+            <a href='/uwu.html'>wets seee~ >w<< /a>
+          </button>
     </section>
   </main>
   <footer>
-    <div style="text-align: center; margin-top: 20px">
+    <div id="banner-container">
       <img src="static/images/aol-sucks.gif" alt="Banner 1" width="88" height="31" />
       <img src="static/images/heimdal.png" alt="Banner 2" width="88" height="31" />
       <img src="static/images/bestview.gif" alt="Banner 3" width="88" height="31" />
@@ -546,6 +379,7 @@
       <img src="static/images/800x600.gif" alt="Banner 5" width="88" height="31" />
       <img src="static/images/lowtiergod.gif" alt="Banner 6" width="88" height="31" />
     </div>
+
     <div id="error-0" class="window window--active" role="alertdialog" aria-modal="true" aria-labelledby="error-label-0"
       aria-describedby="error-desc-0" data-window hidden>
       <div class="window__header" data-header>
@@ -564,9 +398,7 @@
         <button class="window__button window__button--lg" type="button" data-ok>OK</button>
       </div>
     </div>
-    <div>
-      <iframe src="https://poeskatprinter.zepje.space/" width="600" height="400" style="border:none;"></iframe>
-    </div>
+
     <div>
       <a href="https://sleepie.dev/femboy-not-gay" target="_blank">Why its not gay to like femboys</a>
       <iframe width="560" height="315" src="https://www.youtube.com/embed/mFfYORTqzog?si=i3uW4a8OnDXaAKEI"
@@ -574,12 +406,13 @@
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
         referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
     </div>
+
     <p>
       &copy; 2024 DishpitDev.
       <a href="https://github.com/dishpitdev/slopify">Built by the community</a>, against the community.
     </p>
   </footer>
-  <div id="dvd-bounce" style="position: fixed; z-index: 999; pointer-events: none;">
+  <div id="dvd-bounce">
     <img src="static/images/DVD_logo.png" width="500" height="250" alt="Bouncing DVD Logo">
   </div>
 

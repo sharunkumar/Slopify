@@ -8,6 +8,7 @@
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
     color: #fff;
+    z-index: 9999;
 }
 
 .chat-header {
@@ -78,4 +79,17 @@
 .clippy-image {
     width: 40px;
     height: 40px;
+}
+
+#chatToggleButton {
+    background: #ff4444;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+#chatToggleButton:hover {
+    background: #ff6666;
 }
