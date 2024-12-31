@@ -48,19 +48,20 @@ export default function RegisterForm() {
 
       if (authError) {
         setError(authError.message);
-      } else {
-        const { error: profileError } = await supabase.from("profiles").insert([
-          {
-            id: data.user.id,
-            display_name: displayName,
-          },
-        ]);
+        return;
+      }
 
-        if (profileError) {
-          setError(profileError.message);
-        } else {
-          navigate("/chat");
-        }
+      const { error: profileError } = await supabase.from("profiles").insert([
+        {
+          id: data.user.id,
+          display_name: displayName,
+        },
+      ]);
+
+      if (profileError && profileError.code !== "406") {
+        setError(profileError.message);
+      } else {
+        navigate("/chat");
       }
     } catch (err) {
       setError("An error occurred during registration.");
@@ -97,3 +98,4 @@ export default function RegisterForm() {
     </form>
   );
 }
+
