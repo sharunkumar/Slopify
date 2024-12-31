@@ -335,6 +335,13 @@ canvas {
     z-index: 99999;
 }
 
+#slopTVContainer {
+    position: absolute;
+    top: 200px;
+    left: 300px;
+    z-index: 99999;
+}
+
 #banner-container {
     text-align: center;
     margin-top: 20px;

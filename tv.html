@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SLOP TV</title>
+    <style>
+        .move {
+            position: absolute;
+            top: 68px;
+            left: 104px;
+            width: 517px;
+            height: 290px;
+        }
+
+        .silly {
+            background-color: rgba(202, 202, 202, 0.795);
+            mix-blend-mode: color-dodge;
+        }
+
+        .feed {
+            z-index: 99;
+            opacity: 1;
+        }
+
+        body html {
+            background-color: rgba(0, 0, 0, 0);
+        }
+    </style>
+    <script>
+        window.addEventListener('load', function () {
+            const feedImage = document.querySelector('.feed');
+
+            function refreshImage() {
+                const newImage = new Image();
+                const timestamp = new Date().getTime();
+
+                newImage.onload = function () {
+                    feedImage.src = newImage.src;
+                };
+
+                newImage.onerror = function (e) {
+                    console.log('Error loading image, will try again next interval');
+                    console.log(e)
+                };
+
+                feedImage.classList.add('loading');
+                newImage.src = `https://sloptv.infernity.dev/screenshot?t=${timestamp}`;
+            }
+
+            // Start the refresh cycle
+            setInterval(refreshImage, 1000);
+        });
+    </script>
+</head>
+
+<body>
+    <div id="hold">
+        <img src="/static/images/TV.webp" alt="">
+        <img class="feed move" src="http://127.0.0.1:3000/screenshot" alt="">
+        <div class="silly move"></div>
+    </div>
+</body>
+
+</html>
