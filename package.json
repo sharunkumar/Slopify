@@ -8,6 +8,7 @@
   },
   "devDependencies": {
     "@types/bun": "latest",
+    "emoji-regex": "^10.4.0",
     "husky": "^9.1.7"
   },
   "peerDependencies": {
@@ -19,3 +20,4 @@
     "stripe": "^17.5.0"
   }
 }
+
