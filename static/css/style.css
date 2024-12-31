@@ -337,9 +337,16 @@ canvas {
 
 #slopTVContainer {
     position: absolute;
-    top: 200px;
-    left: 300px;
+    top: 600px;
+    left: 100px;
+    transform: scale(0.5);
     z-index: 99999;
+    box-shadow: inset 0.2em 0.2em 0.2em 0 rgba(255, 255, 255, 0.5), inset -0.2em -0.2em 0.2em 0 rgba(0, 0, 0, 0.5);
+}
+
+#slopTVContainer>a>iframe {
+    width: 720px;
+    height: 790px;
 }
 
 #banner-container {
