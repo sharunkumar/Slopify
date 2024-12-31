@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { supabase } from "../supabaseClient";
 import { useNavigate } from "react-router-dom";
+import MessageList from "../components/MessageList";
+import MessageForm from "../components/MessageForm";
 
 export default function ChatPage() {
   const [displayName, setDisplayName] = useState(null);
@@ -38,8 +40,9 @@ export default function ChatPage() {
 
   return (
     <div>
-      <h1>Welcome to the Chat Page</h1>
-      {displayName && <p>Welcome back, {displayName}!</p>}
+      <h1>Welcome back to Slopify, {displayName}!</h1>
+      <MessageList />
+      <MessageForm />
     </div>
   );
 }
