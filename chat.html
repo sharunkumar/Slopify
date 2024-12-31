@@ -14,8 +14,6 @@
             --text-primary: #e0e0e0;
             --text-secondary: #b0b0b0;
         }
-
-        <!best comment here>
         
         body {
             margin: 0;
@@ -129,6 +127,7 @@
             background-color: var(--bg-primary);
             color: var(--text-primary);
             font-family: monospace;
+            appearance: none;
             -moz-appearance: none;
         }
 
@@ -141,6 +140,7 @@
             background-color: var(--border-color);
             border: 2px outset var(--border-color);
             font-family: monospace;
+            appearance: none;
             -moz-appearance: none;
         }
 
@@ -334,7 +334,7 @@
             document.getElementById('roomInfo').textContent = `Connected to room: ${room}`;
             localMessage('System:', `${window.userName} connected to room ${room}. ---`, true);
 
-            
+
 
             // Announce username in new room
             window.usernameConnection.send(JSON.stringify({
@@ -453,7 +453,7 @@
         }
 
         function toggleImages(state) {
-            if (typeof(state) !== 'undefined') {
+            if (typeof (state) !== 'undefined') {
                 window.chatState = state;
             } else {
                 window.chatState++;
@@ -469,7 +469,7 @@
             switch (window.chatState) {
                 case 0:
                     btn.innerText = 'Hide Images';
-                    break; 
+                    break;
                 case 1:
                     btn.innerText = 'Blur Images';
                     document.body.classList.add('hide-images');
@@ -526,9 +526,7 @@
 
 
         }
-    }
-}
-
+        
         function processMessage(message) {
             try {
                 let messageData = JSON.parse(message);
@@ -613,13 +611,12 @@
                 }
             });
 
-            window.chatState =  localStorage.getItem('imageState');
-            if(null === window.chatState)
-            {
+            window.chatState = localStorage.getItem('imageState');
+            if (null === window.chatState) {
                 window.chatState = 1;
             }
-    
-            
+
+
             if (localStorage.getItem('hideImages') === "true") {
                 window.chatState = 1;
                 localStorage.removeItem('hideImages');
@@ -635,7 +632,7 @@
             }, 100);
         }
     </script>
-		<script>
+    <script>
         const ceo = document.querySelector('.ceo');
         const ceoRect = ceo.getBoundingClientRect();
 
