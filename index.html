@@ -669,6 +669,21 @@ userInput.addEventListener('keypress', function(e) {
 });
   </script>
   <body>
+    <!-- Map Section -->
+  <div id="map-container" style="position: relative; width: 100%; height: 500px; margin-top: 20px;">
+    <div id="world-map" style="width: 100%; height: 100%;"></div>
+  </div>
+
+  <!-- Load Dependencies -->
+  <link rel="stylesheet" href="css/world_map/styles.css" />
+  <script src="scripts/world_map.js"></script>
+
+  <script>
+    // Initialize the map after the DOM is fully loaded
+    document.addEventListener("DOMContentLoaded", function () {
+      initWorldMap("world-map", "data/cities.json");
+    });
+  </script>
 <div style="position: absolute;top:200px;left:300px;z-index:99999;">
   <a href="/chat.html">
     <img src="/static/images/slopchat.jpg" width="400px" height="200px">
