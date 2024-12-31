@@ -209,8 +209,8 @@ function loadAndDisplayNews() {
         const leftArticles = randomArticles.slice(0, 3);
         const rightArticles = randomArticles.slice(3, 6);
 
-        displayArticles(leftArticles, 'left-column');
-        displayArticles(rightArticles, 'right-column');
+        displayArticles(leftArticles, 'news-column-left');
+        displayArticles(rightArticles, 'news-column-right');
     } catch (error) {
         console.error('Error:', error);
     }
