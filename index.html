@@ -709,7 +709,33 @@ userInput.addEventListener('keypress', function(e) {
   }
 });
   </script>
+
+  <style>
+    @font-face {
+      font-family: "Comic Sans MS";
+      src: url(./static/fonts/Comic\ Sans\ MS.ttf);
+    }
+    #comic-font {
+      font-family: "Comic Sans MS" !important;
+    }
+  </style>
+
   <body>
+    <button id="comicButton" type="button" style="width: 200px; height: 100px; position: absolute; right: 0; top: auto; bottom: auto;">comic sans-inator 5000</button>
+    <script>
+      var isComic = false;
+      var comicButton = document.getElementById("comicButton");
+      comicButton.addEventListener("click", () => {
+        if (!isComic) {
+          document.body.setAttribute("id", "comic-font");
+          isComic = true;
+        }
+        else {
+          document.body.removeAttribute("id");
+          isComic = false;
+        }
+      })
+  </script>
     <!-- Map Section -->
   <div id="map-container" style="position: relative; width: 100%; height: 500px; margin-top: 20px;">
     <div id="world-map" style="width: 100%; height: 100%;"></div>
