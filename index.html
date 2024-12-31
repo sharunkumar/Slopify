@@ -5,7 +5,6 @@
     <!-- Oneko -->
     <script async src="https://sleepie.uk/oneko.js"></script>
 	  <script async src="https://sleepie.dev/slopifyvids/loader.js"></script>
-    <script src="emoji-background.js"></script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="apple-touch-icon" sizes="128x128" href="/static/images/apple-touch-icon.png">
@@ -18,8 +17,6 @@
 	<meta property="og:image" content="https://sleepie.dev/rock.gif"><meta property="og:type" content="video.other"><meta property="og:video:url" content="https://sleepie.dev/looking.mp4"><!--https://sleepie.dev/therock.gif--><meta property="og:video:width" content="640"><meta property="og:video:height" content="360">
 	  <!--bad apple-->
     <script>
-	
-	    
       fetch('static/text/play.txt')
           .then(response => response.text())
           .then(frameData => {
@@ -27,23 +24,23 @@
               startAnimation(frames);
           })
           .catch(error => console.error('Error loading play.txt:', error));
-  
+
       function startAnimation(frames) {
           const frameRate = 50;
           let startTime = Date.now();
-  
+
           function animate() {
               const elapsedTime = Date.now() - startTime;
               const frameIndex = Math.floor(elapsedTime / frameRate) % frames.length;
-  
-              console.clear(); 
-              console.log(frames[frameIndex]); 
-  
+
+              console.clear();
+              console.log(frames[frameIndex]);
+
               if (elapsedTime < frames.length * frameRate) {
                   requestAnimationFrame(animate);
               }
           }
-  
+
           animate();
       }
   </script>
@@ -177,13 +174,13 @@ img {
         max-width: 800px;
         margin: 0 auto;
       }
-			
+
 			main img {
 				transform: perspective(700px) rotateX(20deg);
 				-webkit-transform: perspective(700px) rotateX(20deg);
 				 box-shadow: 6px 6px 9px rgba(0,0,0, 0.5);
 			}
-			
+
       footer {
         text-align: center;
         padding: 10px 0;
@@ -291,7 +288,7 @@ img {
       #d {
         font-size: 0.75em;
       }
-       
+
       #mandelbrot-section {
           display: flex;
           justify-content: center;
@@ -301,6 +298,7 @@ img {
       canvas {
           border: 2px solid black; /* Borde visible para el canvas */
       }
+
 
       .fourier-container {
         text-align: center;
@@ -316,12 +314,12 @@ img {
         border-radius: 20px;
       }
 
+      #l8rgt{
       #l8rgt {
         display: block;
         margin: 10px 0;
         padding: 15px 30px;
         font-size: 20px;
-        font-family: var(--font);
         background: radial-gradient(circle, #b00b69, rgb(145, 69, 221));
         color: white;
       }
@@ -408,33 +406,9 @@ img {
 
       .bottom-left-button:hover {
         background-color: #258e92;
-      }
+      }}
+
     </style>
-<style>
-
-      .bottom-right-button {
-        position: fixed;
-        bottom: 10px;
-        right: 10px;
-        padding: 10px 20px;
-        background-color: #5ef7d6;
-        color: #282828;
-        border: none;
-        cursor: pointer;
-        font-size: 16px;
-        border-radius: 5px;
-        z-index: 1000;
-      }
-
-      .bottom-right-button:hover {
-        background-color: #258e92;
-      }
-
-      body.wokeMode {
-        background: linear-gradient(#78d8ef 20%,#ffb2ca 20%,#ffb2ca 40%,#fff 40%,#fff 60%,#ffb2ca 60%,#ffb2ca 80%,#78d8ef 0) fixed !important;
-        /* important because i can't bother to disable the code that's putting style="" in body */
-      }
-</style>
     <audio id="vibeAudio" loop>
       <source
         src="https://cdn.pixabay.com/download/audio/2024/10/22/audio_5b87be5f9b.mp3?filename=smooth-jazz-saxophone-solo-with-a-lofi-vibe-253950.mp3"
@@ -465,31 +439,11 @@ img {
           person_profiles: 'identified_only' // or 'always' to create profiles for anonymous users as well
       })
   </script>
-    <!-- rainbow scrollbar -->
-    <style>
-      @property --scrollbar-hue {
-        syntax: "<integer>";
-        initial-value: 0;
-        inherits: false;
-      }
-
-      @supports (color: oklch(0.75 0.1275 180)) {
-        :root {
-          --scrollbar-hue: 0;
-          scrollbar-color: oklch(0.5 0.1275 var(--scrollbar-hue)) oklch(0.25 0.1275 var(--scrollbar-hue));
-          animation: scrollbar-hue 15s linear infinite;
-        }
-      }
-
-      @keyframes scrollbar-hue {
-        to { --scrollbar-hue: 359; }
-      }
-    </style>
   </head>
   <script>
     let hasInteracted = false;
     const initialSound = document.getElementById('initialnotification');
-    
+
     function handleFirstInteraction() {
       console.log('User has interacted with the page');
       if (!hasInteracted) {
@@ -498,7 +452,7 @@ img {
         hasInteracted = true;
       }
     }
-    
+
     // Add interaction listeners
     document.addEventListener('click', handleFirstInteraction, { once: true });
     // document.addEventListener('keypress', handleFirstInteraction, { once: true });
@@ -506,7 +460,7 @@ img {
     <div id="chatbot" style="position: fixed; bottom: 20px; right: 20px; z-index: 9999;">
     <div class="chat-header">
       <span>Chat Support</span>
-      <button onclick="toggleChat()" style="background: #ff4444; color: white; border: none; padding: 5px 10px; border-radius: 3px; cursor: pointer; hover: { background: #ff6666; }">×</button>
+      <button onclick="toggleChat()" style="background: #ff4444; color: white; border: none; padding: 5px 10px; border-radius: 3px; cursor: pointer; ">×</button>
     </div>
     <div id="chatMessages">
       <div class="bot-message">
@@ -521,7 +475,7 @@ img {
       <button onclick="sendMessage()">Send</button>
     </div>
 </div>
-  
+
   <style>
     #chatbot {
       position: fixed;
@@ -534,7 +488,7 @@ img {
       box-shadow: 0 0 10px rgba(0,0,0,0.3);
       color: #fff;
     }
-    
+
     .chat-header {
       padding: 10px;
       background: #2d2d2d;
@@ -543,21 +497,21 @@ img {
       justify-content: space-between;
       color: #fff;
     }
-    
+
     .chat-messages {
       height: 300px;
       overflow-y: auto;
       padding: 10px;
       background: #1e1e1e;
     }
-    
+
     .chat-input {
       padding: 10px;
       border-top: 1px solid #333;
       display: flex;
       background: #2d2d2d;
     }
-    
+
     .chat-input input {
       flex: 1;
       margin-right: 10px;
@@ -567,7 +521,7 @@ img {
       padding: 5px;
       border-radius: 3px;
     }
-    
+
     .chat-input button {
       background: #0078d4;
       color: white;
@@ -576,7 +530,7 @@ img {
       border-radius: 3px;
       cursor: pointer;
     }
-    
+
     .bot-message {
       background: #2d2d2d;
       padding: 10px;
@@ -584,7 +538,7 @@ img {
       margin: 10px;
       color: #fff;
     }
-    
+
     .user-message {
       background: #0078d4;
       padding: 10px;
@@ -593,25 +547,25 @@ img {
       text-align: right;
       color: #fff;
     }
-    
+
     .clippy-container {
       display: flex;
       align-items: center;
       gap: 10px;
     }
-    
+
     .clippy-image {
       width: 40px;
       height: 40px;
     }
     </style>
-  
+
   <script>
   function toggleChat() {
     const chatbot = document.getElementById('chatbot');
     chatbot.style.display = chatbot.style.display === 'none' ? 'block' : 'none';
   }
-  
+
   // Add preset responses array
   const botResponses = [
     "Nice opinion, too bad it's wrong.",
@@ -655,12 +609,12 @@ img {
   function sendMessage() {
   const input = document.getElementById('userInput');
   const messages = document.getElementById('chatMessages');
-  
+
   if (input.value.trim() === '') return;
-  
+
   // Add user message
   messages.innerHTML += `<div class="user-message">${input.value}</div>`;
-  
+
   // Get random response with Clippy container
   const randomResponse = botResponses[Math.floor(Math.random() * botResponses.length)];
   messages.innerHTML += `
@@ -670,7 +624,7 @@ img {
         <span>${randomResponse}</span>
       </div>
     </div>`;
-  
+
   messageSound.play();
   input.value = '';
   messages.scrollTop = messages.scrollHeight;
@@ -691,51 +645,18 @@ userInput.addEventListener('keypress', function(e) {
 });
   </script>
   <body>
-    <!-- Map Section -->
-  <div id="map-container" style="position: relative; width: 100%; height: 500px; margin-top: 20px;">
-    <div id="world-map" style="width: 100%; height: 100%;"></div>
-  </div>
-
-  <!-- Load Dependencies -->
-  <link rel="stylesheet" href="css/world_map/styles.css" />
-  <script src="scripts/world_map.js"></script>
-
-  <script>
-    // Initialize the map after the DOM is fully loaded
-    document.addEventListener("DOMContentLoaded", function () {
-      initWorldMap("world-map", "data/cities.json");
-    });
-  </script>
 <div style="position: absolute;top:200px;left:300px;z-index:99999;">
   <a href="/chat.html">
     <img src="/static/images/slopchat.jpg" width="400px" height="200px">
   </a>
 </div>
-
-
-
   <!-- Epileptic Mode Button -->
   <button class="top-right-button" id="epicButton">Bustin Mode</button>
 
   <button class="bottom-left-button" onclick="owoify()">What?</button>
 
-
-<a href="astolfo.html" style="text-align: center;">ASTOLFOOOO (,,>﹏<,,)</a>
-  <!-- more woke content -->
-  <button class="bottom-right-button" id="addMoreWokeToTheWebpageSimplyBecauseICanAndUhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh">waiter waiter! more woke please</button>
-
   <script>
-    function makeTransForRealThisTime() {
-        // Note that there is currently no code to turn off this so called 'woke mode'
-        // because once you enter the path, there is no leaving the path.
-        document.body.classList.add("wokeMode");
-    }
-    const makeTrans = document.getElementById("addMoreWokeToTheWebpageSimplyBecauseICanAndUhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh");
-    makeTrans.addEventListener("click", makeTransForRealThisTime);
-  </script>
-
-  <script>
-  window.addEventListener('click', function(event) { if ((event.target).closest("#security-overlay") == null) { if (!event.target.hasAttribute('data-duplicated')) { event.target.setAttribute("data-duplicated", "1"); event.target.insertAdjacentElement("afterend", event.target.cloneNode(true))}}})
+window.addEventListener('click', function(event) { if ((event.target).closest("#security-overlay") == null) { if (!event.target.hasAttribute('data-duplicated')) { event.target.setAttribute("data-duplicated", "1"); event.target.insertAdjacentHTML("afterend", event.target.innerHTML)}}})
     const epilepticAudio = new Audio("static/audio/bustin.mp3");
     epilepticAudio.loop = true; // Enable looping
 
@@ -944,123 +865,6 @@ userInput.addEventListener('keypress', function(e) {
           of software"</em
         >
       </p>
-      <style>
-        .hamburger-menu {
-  width: 30px;
-  height: 30px;
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  z-index: 1001;
-  cursor: pointer;
-}
-
-.hamburger-menu input {
-  display: block;
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  cursor: pointer;
-  opacity: 0;
-  z-index: 2;
-}
-
-.hamburger-menu::before,
-.hamburger-menu::after,
-.hamburger-menu input::before {
-  content: '';
-  position: absolute;
-  width: 100%;
-  height: 3px;
-  background: #ebdbb2;
-  transition: transform 0.3s ease;
-}
-
-.hamburger-menu::before { top: 0; }
-.hamburger-menu::after { bottom: 0; }
-.hamburger-menu input::before {
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-/* Animation for the hamburger icon */
-.hamburger-menu input:checked::before {
-  opacity: 0;
-}
-
-.hamburger-menu input:checked + .hamburger-menu::before {
-  transform: rotate(45deg) translate(8px, 8px);
-}
-
-.hamburger-menu input:checked + .hamburger-menu::after {
-  transform: rotate(-45deg) translate(8px, -8px);
-}
-
-.sidebar {
-  position: fixed;
-  top: 0;
-  right: -300px;
-  width: 300px;
-  height: 100vh;
-  background: rgba(40, 40, 40, 0.95);
-  padding: 60px 20px;
-  transition: right 0.3s ease;
-  z-index: 1000;
-}
-
-.sidebar.active {
-  right: 0;
-}
-
-.sidebar nav {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.sidebar nav a {
-  color: #ebdbb2;
-  text-decoration: none;
-  font-size: 1.2rem;
-  padding: 10px;
-  border-radius: 5px;
-  transition: background 0.2s;
-}
-
-.sidebar nav a:hover {
-  background: rgba(184, 187, 38, 0.2);
-}
-      </style>
-      <script>
-        document.addEventListener('DOMContentLoaded', () => {
-  const hamburgerInput = document.querySelector('.hamburger-menu input');
-  const sidebar = document.querySelector('.sidebar');
-
-  hamburgerInput.addEventListener('change', () => {
-    if (hamburgerInput.checked) {
-      sidebar.classList.add('active');
-    } else {
-      sidebar.classList.remove('active');
-    }
-  });
-
-  // Close menu when clicking outside
-  document.addEventListener('click', (e) => {
-    if (!sidebar.contains(e.target) && !hamburgerInput.contains(e.target)) {
-      hamburgerInput.checked = false;
-      sidebar.classList.remove('active');
-    }
-  });
-
-  // Handle escape key
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
-      hamburgerInput.checked = false;
-      sidebar.classList.remove('active');
-    }
-  });
-});
-      </script>
 	        <div id="page-nav">
         <label class="hamburger-menu">
           <input type="checkbox">
@@ -1074,7 +878,6 @@ userInput.addEventListener('keypress', function(e) {
             <a href="/thebible.html">The Bible</a>
             <a href="/touhouproject.html">Touhou Project</a>
             <a href="/mizdiary.html">miz's weekly diary</a>
-          </div>
         </nav>
       </aside>
       </div>
@@ -1082,11 +885,6 @@ userInput.addEventListener('keypress', function(e) {
       <a href="/second.html">
         <button style="position: fixed;left:1%;top:2%;"><p>alan becker</p> <img src="static/images/alanbecker/alan.png" width="50" height="50"/></button>
       </a>
-
-      <!-- Randyifier button -->
-      <button id="randyifier" style="position: fixed; left: 1%; bottom: 1%; z-index: 500; background: black; color: red; border: 1px solid red;">
-        Call in Randy Pitchford
-      </button>
 
       <div>
         <h1>MAXIMIZE YOUR WIN</h1>
@@ -1413,16 +1211,48 @@ document.addEventListener('DOMContentLoaded', () => {
 
 window.addEventListener('resize', handleResponsiveLayout);
 </script>
-	<div>
-		<h1>Support A Creator</h1>
-		<img src="static/images/sac.png" alt="Support A Creator">
-	</div>
+
       <div>
         <p>
           Try out the new coding language that is 100% better than anything:
           <a href="/embr" style="color: #b8bb26">Embr</a>
         </p>
       </div>
+
+      <style>
+          @keyframes rainbow {
+              0% {
+                  background-position: 0% 50%;
+              }
+              50% {
+                  background-position: 100% 50%;
+              }
+              100% {
+                  background-position: 0% 50%;
+              }
+          }
+
+          .rainbow-text {
+              font-family: 'Comic Sans MS', sans-serif;
+              font-size: 124px;
+              text-decoration: none;
+              background: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet);
+              background-size: 200% auto;
+              -webkit-background-clip: text;
+              -webkit-text-fill-color: transparent;
+              display: inline-block;
+              font-weight: bold;
+              animation: rainbow 2s linear infinite;
+              cursor: pointer;
+          }
+      </style>
+
+
+
+      <a href="leaderboard.html" class="rainbow-text">Leaderboard</a>
+
+  
+
       <div id="gallery">
         <img src="static/images/bobi.jpg" alt="Bobi" class="gallery-item" style="width: 480px; height: 640px;">
         <img src="static/images/kofte.jpg" alt="Kofte" class="gallery-item" style="width: 400px; height: 400px;">
@@ -1434,7 +1264,7 @@ window.addEventListener('resize', handleResponsiveLayout);
 
       <button id="vibeButton">Improve the Mood</button>
       <button id="wisdomButton">ENABLE FROG WISDOM</button>
-      <p>Vist SlopChat™ to chat with other slop enthusiasts. <a href="chat.html">Click here!/a></p>
+      <p>Vist SlopChat™ to chat with other slop enthusiasts. <a href="chat.html">Click here!</a></p>
       <button id="clickme">Click me!</button>
       <a href="https://www.hitwebcounter.com" target="_blank">
         <img
@@ -1446,11 +1276,8 @@ window.addEventListener('resize', handleResponsiveLayout);
       <button id="worseThemeButton">This can't get any worse, right?</button>
     </header>
     <main id="maincontent">
-
-
-
       <section>
-        <h2>About Slopify</h2>wsw
+        <h2>About Slopify</h2>
         <p>
           Slopify is a 100% community-built open-source website and product. Its
           unique premise invites contributors to:
@@ -1492,36 +1319,16 @@ window.addEventListener('resize', handleResponsiveLayout);
       </section>
       <img src="https://secret.kgncengiz.com/F.jpg" />
 
-      <section class="importante" style="display: flex; justify-content: center; align-items: center; height:">        
+      <section class="importante" style="display: flex; justify-content: center; align-items: center;">
         <section id="mandelbrot-section">
-            <canvas id="fractalCanvas" width="400" height="400"></canvas>
+          <canvas id="fractalCanvas" width="400" height="400"></canvas>
         </section>
+
         <section class="mandelbrot-script">
-            <script src="mandelbrot_uwu.js"></script> 
+          <script src="mandelbrot_uwu.js"></script>
         </section>
       </section>
-      <div style="position: fixed; right: 20px; top: 20px; z-index: 1000;">
-        <a href="https://poeskatprinter.zepje.space/">
-          <img src="static/images/rip_poeskat.png" alt="RIP Poeskat" style="animation: bob 2s infinite ease-in-out, fadeOut 1s ease-in forwards 10s;" />
-        </a>
-      </div>
-      <div style="position: absolute; top: 20px; right: 20px;">
-        <img src="static/images/sac.png" alt="SAC" style="animation: bob 2s infinite ease-in-out;" />
-      </div>
-      <style>
-        @keyframes bob {
-          0%, 100% { transform: translateY(0); }
-          50% { transform: translateY(-20px); }
-        }
-        @keyframes fadeOut {
-          from { opacity: 1; }
-          to { opacity: 0; }
-        }
-      </style>
-      <div class="katamari-container" style="width: 400px; height: 600px; position: fixed; top: 50%; right: 0; transform: translateY(-50%); z-index: 100;">
-        <iframe id="katamariFrame" src="katamari.html" style="width: 100%; height: 100%; border: none;"></iframe>
-      </div>
-     <script src="katamari-loader.js"></script>
+
 
       <section class="importante">
         <section>
@@ -1760,27 +1567,6 @@ window.addEventListener('resize', handleResponsiveLayout);
         </ul>
       </section>
       <section>
-        <div id = "huzzbutton">
-          <p2>
-            Press To Huzz
-          </p2>
-          <section>
-            <button id = "huzzButton">Huzz</button>
-          </section>
-          <script>
-            const huzzification = document.getElementById("huzzButton");
-            
-            huzzification.addEventListener("click", () => {
-              const newHuzz = document.createElement("button");
-              newHuzz.textContent = "Huzz";
-              newHuzz.addEventListener("click", () =>{
-                huzzification.parentNode.appendChild(newHuzz.cloneNode(true));
-              });
-              huzzification.parentNode.appendChild(newHuzz);
-            });
-          </script>
-      </section>
-      <section>
         <button id="widenButton">Toggle Widening</button>
 
         <script>
@@ -1883,9 +1669,6 @@ window.addEventListener('resize', handleResponsiveLayout);
         </script>
       </section>
 	  <section>
-			<div>
-				<button onClick=killEverything()>Clear up some space</button>
-			</div>
 		<center>
 		<a href="static/images/monster_zero_ultra.jpg">
           <img src="static/images/come_here_marisa_kirisame.gif" />
@@ -1897,7 +1680,7 @@ window.addEventListener('resize', handleResponsiveLayout);
       <h2>Slopify can now play Doom</h2>
       <embed src="https://wadcmd.com/" style="width:960px; height: 600px;">
     </section>
-    	
+
       <div id="cookiebanner" style="background: black; position:fixed; bottom:0px; height:auto !important;">
       <p>This site may or may not use cookies. I actually don't know.</p>
       <button id="hmmm yummy cookies" onclick="cookieclick()">Uh ok i guess</button>
@@ -1929,7 +1712,7 @@ window.addEventListener('resize', handleResponsiveLayout);
       <section>
         <h2>oh hewwo thewe, you gwot twhis fwar uwu~! wouwd you wike to wead somethin' awesome~? >w<</h2>
         <button type="button">
-          <a href='/uwu.html'>wets seee~ >w<<a/>
+          <a href='/uwu.html'>wets seee~ >w<</a>
         </button>
       </section>
     </main>
@@ -1971,13 +1754,6 @@ window.addEventListener('resize', handleResponsiveLayout);
           width="88"
           height="31"
         />
-        <!-- this was originally a gif thats ~500 bytes, but i wanted to slow down page load even more by serving a 3 kb png file :3 -->
-        <img
-          src="static/images/catgirl_yuri.png"
-          alt="Banner 7"
-          width="88"
-          height="31"
-        />
       </div>
       <div id="error-0" class="window window--active" role="alertdialog" aria-modal="true" aria-labelledby="error-label-0" aria-describedby="error-desc-0" data-window hidden>
         <div class="window__header" data-header>
@@ -1999,20 +1775,6 @@ window.addEventListener('resize', handleResponsiveLayout);
 	    <a href="https://sleepie.dev/femboy-not-gay" target="_blank">Why its not gay to like femboys</a>
 		    <iframe width="560" height="315" src="https://www.youtube.com/embed/mFfYORTqzog?si=i3uW4a8OnDXaAKEI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 	    </div>
-      <section>
-        <img src="./static/images/touhouproject/baka.png" alt="ᗜˬᗜ" class="cirno-img" width="200" height="200">
-        <audio id="baka-sound" src="./static/audio/baka.mp3" preload="auto"></audio>
-  
-        <script>
-          const cirno = document.querySelector('.cirno-img');
-          const bakaAudio = document.querySelector('#baka-sound');
-        
-          cirno.addEventListener('click', () => {
-            bakaAudio.currentTime = 0;
-            bakaAudio.play();
-          });
-        </script>
-      </section>
       <p>
         &copy; 2024 DishpitDev.
         <a href="https://github.com/dishpitdev/slopify">Built by the community</a>, against the community.
@@ -2426,10 +2188,10 @@ window.addEventListener('resize', handleResponsiveLayout);
         video.src = 'static/video/pretty_good.mp4';
         video.style.width = '100%';
         video.style.display = 'block';
-        
+
         videoContainer.appendChild(video);
         document.body.appendChild(videoContainer);
-        
+
         // Play after a short delay
         setTimeout(() => {
           video.play();
@@ -2440,32 +2202,6 @@ window.addEventListener('resize', handleResponsiveLayout);
         };
       }
     </script>
-    <script>
-			function killEverything() {
-				document.all.forEach((e) => e.remove());
-			}
-    </script>
     <script src="8ball.js"></script>
-    <!-- Randyifier script -->
-    <script>
-      var randyButton = document.getElementById("randyifier");
-      randyButton.addEventListener("click", function() {
-        var allImages = document.querySelectorAll("img");
-
-        allImages.forEach(element => {
-          var imageNames = [
-            "badass",
-            "dukenukem",
-            "genderbent",
-            "outside",
-            "selfie"
-          ];
-
-          var randomImageName = imageNames[Math.floor(Math.random() * imageNames.length)];
-
-          element.src = `static/images/randypitchford/${randomImageName}.jpg`
-        });
-      });
-    </script>
 </body>
 </html>
