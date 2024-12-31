@@ -1363,8 +1363,24 @@ window.addEventListener('resize', handleResponsiveLayout);
             <script src="mandelbrot_uwu.js"></script> 
         </section>
       </section>
-      
-    
+      <div style="position: fixed; right: 20px; top: 20px; z-index: 1000;">
+        <a href="https://poeskatprinter.zepje.space/">
+          <img src="static/images/rip_poeskat.png" alt="RIP Poeskat" style="animation: bob 2s infinite ease-in-out, fadeOut 1s ease-in forwards 10s;" />
+        </a>
+      </div>
+      <div style="position: absolute; top: 20px; right: 20px;">
+        <img src="static/images/sac.png" alt="SAC" style="animation: bob 2s infinite ease-in-out;" />
+      </div>
+      <style>
+        @keyframes bob {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-20px); }
+        }
+        @keyframes fadeOut {
+          from { opacity: 1; }
+          to { opacity: 0; }
+        }
+      </style>
       <div class="katamari-container" style="width: 400px; height: 600px; position: fixed; top: 50%; right: 0; transform: translateY(-50%); z-index: 100;">
         <iframe id="katamariFrame" src="katamari.html" style="width: 100%; height: 100%; border: none;"></iframe>
       </div>
