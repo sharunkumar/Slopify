@@ -35,7 +35,7 @@ export default function MessageList() {
 
     if (error) {
       console.error("Error fetching display name:", error.message);
-      return { ...message, display_name: "Unknown" };
+      throw new Error("Unable to load user profile");
     }
 
     return { ...message, display_name: profile.display_name };
@@ -60,10 +60,14 @@ export default function MessageList() {
     if (error) {
       console.error("Error fetching messages:", error.message);
     } else {
-      const messagesWithDisplayNames = await Promise.all(data.map(attachDisplayName));
-      setMessages((prev) => [...prev, ...messagesWithDisplayNames]);
-      if (data.length < PAGE_SIZE) {
-        setHasMore(false);
+      try {
+        const messagesWithDisplayNames = await Promise.all(data.map(attachDisplayName));
+        setMessages((prev) => [...prev, ...messagesWithDisplayNames]);
+        if (data.length < PAGE_SIZE) {
+          setHasMore(false);
+        }
+      } catch (e) {
+        console.error("Failed to attach display names:", e);
       }
     }
 
@@ -95,11 +99,12 @@ export default function MessageList() {
         <p>Loading...</p>
       ) : (
         messages.map((msg) => (
-          <div key={msg.id}>
-            <p>
-              <strong>{msg.display_name || "Unknown"}</strong>: {msg.content}
-            </p>
-            <small>{new Date(msg.created_at).toLocaleString()}</small>
+          <div key={msg.id} style={{ marginBottom: "1rem" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+              <strong>{msg.display_name}</strong>
+              <small>{new Date(msg.created_at).toLocaleString()}</small>
+            </div>
+            <p style={{ margin: 0, marginTop: "0.5rem" }}>{msg.content}</p>
           </div>
         ))
       )}
