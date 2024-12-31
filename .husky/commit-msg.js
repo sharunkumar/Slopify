@@ -198,6 +198,15 @@ async function checkCommit() {
   const commitMsg = readFileSync(commitMsgFile, "utf8");
   const commitMsgLower = commitMsg.toLowerCase();
 
+  // If our marker is missing, this commit likely used --no-verify
+  if (!commitMsg.includes("#[verify:active]")) {
+    console.error("\x1b[33m💀 Caught in 4K trying to skip the rizz check with --no-verify\x1b[0m");
+    console.error("\x1b[33mFr fr you thought you could escape? That's kinda mid ngl\x1b[0m");
+    await playVideo("no_rizz.mp4");
+    // We could optionally fail the commit here if we want to be strict
+    // process.exit(1);
+  }
+
   // Check both conditions
   const hasEmoji = emojiRegex().test(commitMsg);
   const hasRizz = slangWords.some((word) => commitMsgLower.includes(word.toLowerCase()));
