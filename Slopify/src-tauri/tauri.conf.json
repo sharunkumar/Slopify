@@ -12,7 +12,7 @@
   "app": {
     "windows": [
       {
-        "title": "slopify",
+        "title": "Slopify",
         "width": 800,
         "height": 600
       }
