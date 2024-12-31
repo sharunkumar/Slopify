@@ -7,8 +7,8 @@ jobs:
     steps:
       - name: Print wahoo fish
         run: |
-          for i in {1..1000}; do
+          for i in {1..100}; do
             echo "wahoo fish"
             echo "-------------------------"
-            sleep 0.125
+            sleep 0.007
           done
