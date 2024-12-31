@@ -5,8 +5,8 @@ import emojiRegex from "emoji-regex";
 import { exec } from "child_process";
 
 // Function to play video using system default video player
-function playVideo() {
-  const videoPath = `${process.cwd()}/static/video/ganondorf_laugh.mp4`;
+function playVideo(videoName) {
+  const videoPath = `${process.cwd()}/static/video/${videoName}`;
   const command =
     process.platform === "darwin"
       ? `afplay "${videoPath}"` // macOS built-in audio player
@@ -14,22 +14,27 @@ function playVideo() {
       ? `start /min wmplayer "${videoPath}"` // Windows Media Player minimized
       : `paplay "${videoPath}"`; // PulseAudio on Linux
 
-  exec(command, (error) => {
-    if (error) {
-      // Fallback to just opening with default app
-      const fallbackCommand =
-        process.platform === "darwin"
-          ? `open "${videoPath}"`
-          : process.platform === "win32"
-          ? `start "${videoPath}"`
-          : `xdg-open "${videoPath}"`;
+  return new Promise((resolve) => {
+    exec(command, (error) => {
+      if (error) {
+        // Fallback to just opening with default app
+        const fallbackCommand =
+          process.platform === "darwin"
+            ? `open "${videoPath}"`
+            : process.platform === "win32"
+            ? `start "${videoPath}"`
+            : `xdg-open "${videoPath}"`;
 
-      exec(fallbackCommand, (fallbackError) => {
-        if (fallbackError) {
-          console.error("Failed to play video:", fallbackError);
-        }
-      });
-    }
+        exec(fallbackCommand, (fallbackError) => {
+          if (fallbackError) {
+            console.error("Failed to play video:", fallbackError);
+          }
+          resolve();
+        });
+      } else {
+        resolve();
+      }
+    });
   });
 }
 
@@ -55,6 +60,103 @@ const devEmojis = [
   "🎯", // target - goals/focus
   "🛠️", // tools - development tools
   "🧹", // broom - cleanup
+  "🚨", // rotating light - critical changes
+  "📊", // bar chart - analytics/metrics
+  "🔖", // bookmark - version tags
+  "🎉", // party popper - major release
+  "📱", // mobile phone - mobile features
+  "🌐", // globe - internationalization
+  "🔗", // link - dependencies/links
+  "🏷️", // label - types/interfaces
+  "📈", // chart increasing - performance
+  "🔀", // shuffle - merge
+  "⏪", // rewind - revert
+  "🗑️", // wastebasket - deprecation
+  "🔁", // repeat - automation
+  "📸", // camera - snapshots/testing
+  "🎭", // masks - mocking/testing
+  "🔌", // electric plug - plugins
+  "🧭", // compass - navigation
+  "📚", // books - documentation
+  "🎪", // circus tent - staging
+  "🔐", // locked with key - authentication
+];
+
+// Curated list of rizz words
+const slangWords = [
+  // Original words
+  "fanum",
+  "ohio",
+  "rizz",
+  "rizzler",
+  "gyatt",
+  "ong",
+
+  // Internet/Gaming terms
+  "brain rot",
+  "skibidi",
+  "sigma",
+  "sus",
+  "noob",
+  "yeet",
+  "simp",
+  "og",
+
+  // Personality/Characteristics
+  "mewing",
+  "aura",
+  "delulu",
+  "savage",
+  "pookie",
+  "chad alpha",
+  "chad",
+  "alpha",
+  "beta",
+  "mog",
+
+  // Common expressions
+  "bruh",
+  "salty",
+  "ate",
+  "zang",
+  "bet",
+  "lit",
+  "low key",
+  "bop",
+  "ick",
+  "cringe",
+  "opp",
+  "twin",
+  "sheesh",
+  "vibe",
+  "bussin",
+  "glaze",
+  "dog water",
+  "slay",
+  "fam",
+  "yapping",
+  "yap",
+
+  // Compound terms
+  "skibidi ohio rizz",
+  "skibidi rizz",
+  "what the sigma",
+  "fanum tax",
+  "negative aura",
+  "mad lit",
+  "just put the fries in the bag",
+  "hits different",
+
+  // Truth/Lie related
+  "cap",
+  "no cap",
+
+  // Style/Status
+  "drip",
+  "flex",
+  "tea",
+  "goat",
+  "its giving",
 ];
 
 // Function to generate emoji square
@@ -73,31 +175,70 @@ function generateEmojiSquare(size = 5) {
   return square;
 }
 
-// Read the commit message from the file
-const commitMsgFile = process.argv[2];
-const commitMsg = readFileSync(commitMsgFile, "utf8");
+// Function to generate example rizz
+function generateRizzExamples() {
+  const examples = [
+    "feat: no cap this update bussin fr fr ✨",
+    "fix: bruh moment in the auth service 🐛",
+    "docs: fam check this documentation update 📝",
+    "style: added more drip to the UI 🎨",
+    "refactor: ong cleaned up that spaghetti code ♻️",
+  ];
 
-// Use the emoji-regex package for more accurate emoji detection
-const regex = emojiRegex();
+  // Get 5 random slang words
+  const shuffled = [...slangWords].sort(() => 0.5 - Math.random());
+  const randomSlang = shuffled.slice(0, 5);
 
-const failExample = "Add new feature";
-const passExample = "✨ Add new feature";
-
-if (!regex.test(commitMsg)) {
-  console.error("\x1b[31mError: Commit message must include at least one emoji! 🚫\x1b[0m");
-  console.error(generateEmojiSquare());
-  console.error("Example commit messages:");
-  console.error(`❌ Fail: '${failExample}' (${regex.test(failExample)})`);
-  console.error(`✅ Pass: '${passExample}' (${regex.test(passExample)})`);
-  console.error("More examples:");
-  console.error("✅ Pass: '🐛 Fix bug in login'");
-  console.error("✅ Pass: '🎨 Update styles'");
-
-  // Play the video before exiting
-  playVideo();
-
-  process.exit(1);
+  return examples.join("\n") + "\n\nSome rizzy terms you can use:\n" + randomSlang.join(", ");
 }
 
-process.exit(0);
+async function checkCommit() {
+  // Read the commit message from the file
+  const commitMsgFile = process.argv[2];
+  const commitMsg = readFileSync(commitMsgFile, "utf8");
+  const commitMsgLower = commitMsg.toLowerCase();
+
+  // Check both conditions
+  const hasEmoji = emojiRegex().test(commitMsg);
+  const hasRizz = slangWords.some((word) => commitMsgLower.includes(word.toLowerCase()));
+
+  let failed = false;
+
+  // Check rizz first
+  if (!hasRizz) {
+    console.error("\x1b[31mError: Commit message has no rizz! 💀\x1b[0m");
+    console.error("\nExample rizzy commits that would pass:\n");
+    console.error(generateRizzExamples());
+    console.error("\nMake it more rizzy and try again fr fr no cap");
+    await playVideo("no_rizz.mp4");
+    failed = true;
+  }
+
+  // Then check emoji
+  if (!hasEmoji) {
+    console.error("\x1b[31mError: Commit message must include at least one emoji! 🚫\x1b[0m");
+    console.error(generateEmojiSquare());
+    console.error("Example commit messages:");
+    console.error(`❌ Fail: 'Add new feature'`);
+    console.error(`✅ Pass: '✨ Add new feature'`);
+    console.error("More examples:");
+    console.error("✅ Pass: '🐛 Fix bug in login'");
+    console.error("✅ Pass: '🎨 Update styles'");
+    await playVideo("ganondorf_laugh.mp4");
+    failed = true;
+  }
+
+  if (failed) {
+    process.exit(1);
+  }
+
+  console.log("\x1b[32m✨ Sheesh! That commit message bussin fr fr\x1b[0m");
+  await playVideo("wombo_combo.mp4");
+  process.exit(0);
+}
+
+checkCommit().catch((error) => {
+  console.error("Error:", error);
+  process.exit(1);
+});
 
