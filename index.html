@@ -189,7 +189,10 @@
             <div class="news-column news-column-right"></div>
           </div>
         </div>
-
+        <div>
+          <h1>Support A Creator</h1>
+          <img src="static/images/sac.png" alt="Support A Creator">
+        </div>
         <div>
           <p>
             Try out the new coding language that is 100% better than anything:
@@ -278,7 +281,10 @@
             <canvas id="fractalCanvas" width="400" height="400"></canvas>
           </section>
         </section>
-
+        <div class="katamari-container" style="width: 400px; height: 600px; position: fixed; top: 50%; right: 0; transform: translateY(-50%); z-index: 100;">
+          <iframe id="katamariFrame" src="katamari.html" style="width: 100%; height: 100%; border: none;"></iframe>
+        </div>
+        <script src="katamari-loader.js"></script>
         <section class="importante">
           <section>
             <canvas id="glCanvas" width="400" height="400"></canvas>
@@ -342,6 +348,15 @@
             <li><a href="https://nohello.net/" target="_blank">no hello - please don't say just hello in chat</a></li>
             <li><a href="https://dontasktoask.com/" target="_blank">Don't ask to ask, just ask</a></li>
           </ul>
+        </section>
+        <section>
+          <div id = "huzzbutton">
+            <p2>
+              Press To Huzz
+            </p2>
+            <section>
+              <button id = "huzzButton">Huzz</button>
+            </section>
         </section>
         <section>
           <button id="widenButton">Toggle Widening</button>
@@ -432,6 +447,11 @@
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
         </div>
+
+        <section>
+          <img src="./static/images/touhouproject/baka.png" alt="ᗜˬᗜ" class="cirno-img" width="200" height="200">
+          <audio id="baka-sound" src="./static/audio/baka.mp3" preload="auto"></audio>
+        </section>
 
         <p>
           &copy; 2024 DishpitDev.
@@ -544,6 +564,12 @@
 
       <!-- more woke content script -->
       <script src="static/js/makeWoke.js"></script>
+
+      <!-- cirno script -->
+      <script src="static/js/cirno.js"></script>
+
+      <!-- huzz script -->
+      <script src="static/js/huzz.js"></script>
 </body>
 
 </html>
