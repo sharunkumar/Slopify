@@ -36,6 +36,10 @@
 
   <!-- comic sans button styles -->
   <link rel="stylesheet" href="static/css/comicButton.css" />
+  
+  <!-- scoped bootstrap -->
+  <!-- Add the .use-bootstrap class to apply Bootstrap styles -->
+  <link rel="stylesheet" href="static/css/scoped-bootstrap.css" />
 
   <!-- Q: Do we need this? -->
   <script>
@@ -48,6 +52,58 @@
 </head>
 
 <body>
+  <div data-bs-theme="dark" class="use-bootstrap" style="position: absolute; top: 0; z-index: 2147483647; width: 100%; background: transparent;">
+    <nav class="navbar navbar-expand-lg" style="--bs-navbar-padding-y: 0; background: transparent; backdrop-filter: blur(1rem);">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+          <img src="/static/images/apple-touch-icon.png" alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="#">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/astolfo.html">Astolfo</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/chat.html">Chat</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/god.html">God</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/health-check.html">Health Check</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/katamari.html">Katamari</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/leaderboard.html">Leaderboard</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/mizdiary.html">miz's weekly diary</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/second.html">Second</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/thebible.html">The Bible</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/touhouproject.html">Touhou Project</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/uwu.html">UwU</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </div>
   <button id="comicButton" type="button">comic sans-inator 5000</button>
   <iframe src="https://sleepie.dev/testpopup.html"
     style="position: fixed; top: 0; right: 0; width: 440px; height: 280px; border: none;">

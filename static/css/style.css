@@ -513,3 +513,7 @@ body.wokeMode {
         --scrollbar-hue: 359;
     }
 }
+
+.nav-link {
+    cursor: pointer !important;
+}
