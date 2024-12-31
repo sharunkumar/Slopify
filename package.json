@@ -7,6 +7,7 @@
     "prepare": "husky install"
   },
   "devDependencies": {
+    "live-server": "^1.2.2",
     "@types/bun": "latest",
     "emoji-regex": "^10.4.0",
     "husky": "^9.1.7"
@@ -16,9 +17,8 @@
   },
   "dependencies": {
     "@stripe/stripe-js": "^5.4.0",
-    "live-server": "^1.2.2",
     "stripe": "^17.5.0",
     "three": "^0.171.0"
-  }
+  },
+  "packageManager": "bun@1.1.42"
 }
-
