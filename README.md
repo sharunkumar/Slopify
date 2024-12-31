@@ -20,6 +20,7 @@ The premise? Commit whatever code you want for whatever features you want in wha
 * "Current features" list
 * Chat
 * Various visual themes (dark mode, Windows 95 style, retro)
+* Katamari Damacy clone
 * Discord embed integrations
 * Frog Wisdom (frog quotes with voice synthesis)
 * Fappy Berd
