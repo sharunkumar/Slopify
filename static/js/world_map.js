@@ -168,3 +168,8 @@ function drawCityMarker(cityId) {
   // Add to the overlay
   mapOverlay.appendChild(marker);
 }
+
+// Initialize the map after the DOM is fully loaded
+document.addEventListener("DOMContentLoaded", function () {
+  initWorldMap("world-map", "../data/cities.json");
+});
