@@ -409,3 +409,36 @@ canvas {
 #spotifyFrame {
     border-radius: 12px;
 }
+
+#randyifier {
+    position: fixed;
+    left: 1%;
+    bottom: 1%;
+    z-index: 500;
+    background: black;
+    color: red;
+    border: 1px solid red;
+}
+
+.bottom-right-button {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    padding: 10px 20px;
+    background-color: #5ef7d6;
+    color: #282828;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+    z-index: 1000;
+}
+
+.bottom-right-button:hover {
+    background-color: #258e92;
+}
+
+body.wokeMode {
+    background: linear-gradient(#78d8ef 20%, #ffb2ca 20%, #ffb2ca 40%, #fff 40%, #fff 60%, #ffb2ca 60%, #ffb2ca 80%, #78d8ef 0) fixed !important;
+    /* important because i can't bother to disable the code that's putting style="" in body */
+}
