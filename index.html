@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-  <title>SLOPIFY!</title>
+  <title>Slopify UwU</title>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="apple-touch-icon" sizes="128x128" href="/static/images/apple-touch-icon.png">
@@ -34,6 +34,9 @@
   <!-- news styles -->
   <link rel="stylesheet" href="static/css/news.css" />
 
+  <!-- comic sans button styles -->
+  <link rel="stylesheet" href="static/css/comicButton.css" />
+
   <!-- Q: Do we need this? -->
   <script>
     !function (t, e) { var o, n, p, r; e.__SV || (window.posthog = e, e._i = [], e.init = function (i, s, a) { function g(t, e) { var o = e.split("."); 2 == o.length && (t = t[o[0]], e = o[1]), t[e] = function () { t.push([e].concat(Array.prototype.slice.call(arguments, 0))) } } (p = t.createElement("script")).type = "text/javascript", p.crossOrigin = "anonymous", p.async = !0, p.src = s.api_host.replace(".i.posthog.com", "-assets.i.posthog.com") + "/static/array.js", (r = t.getElementsByTagName("script")[0]).parentNode.insertBefore(p, r); var u = e; for (void 0 !== a ? u = e[a] = [] : a = "posthog", u.people = u.people || [], u.toString = function (t) { var e = "posthog"; return "posthog" !== a && (e += "." + a), t || (e += " (stub)"), e }, u.people.toString = function () { return u.toString(1) + ".people (stub)" }, o = "init capture register register_once register_for_session unregister unregister_for_session getFeatureFlag getFeatureFlagPayload isFeatureEnabled reloadFeatureFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSessionId getSurveys getActiveMatchingSurveys renderSurvey canRenderSurvey getNextSurveyStep identify setPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException loadToolbar get_property getSessionProperty createPersonProfile opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing clear_opt_in_out_capturing debug".split(" "), n = 0; n < o.length; n++)g(u, o[n]); e._i.push([i, s, a]) }, e.__SV = 1) }(document, window.posthog || []);
@@ -45,6 +48,15 @@
 </head>
 
 <body>
+  <button id="comicButton" type="button">comic sans-inator 5000</button>
+  <iframe src="https://sleepie.dev/testpopup.html"
+    style="position: fixed; top: 0; right: 0; width: 440px; height: 280px; border: none;">
+  </iframe>
+  <audio id="pageLoadUwUSound" autoplay>
+    <source src="sound.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+  <a href="https://youareanidiot.cc/">YOU ARE AN IDIOT</a>
   <!-- Map Section -->
   <div id="map-container" style="position: relative; width: 100%; height: 500px; margin-top: 20px;">
     <div id="world-map" style="width: 100%; height: 100%;"></div>
@@ -154,6 +166,7 @@
               <a href="/uwu.html">UwU</a>
               <a href="/chat.html">Chat</a>
               <a href="/thebible.html">The Bible</a>
+              <a href="/god.html">God</a>
               <a href="/touhouproject.html">Touhou Project</a>
               <a href="/mizdiary.html">miz's weekly diary</a>
         </div>
@@ -477,6 +490,13 @@
         <img src="static/images/DVD_logo.png" width="500" height="250" alt="Bouncing DVD Logo">
       </div>
 
+      <img src="https://sleepie.dev/i/dumbass.gif">
+      <a href="https://www.microsoft.com/en-us/download/details.aspx?id=40784">Download this random executable from
+        microsoft</a>
+      <a href="https://twitter.com/eepyfemboi?ref_src=twsrc%5Etfw" class="twitter-follow-button" data-size="large"
+        data-lang="en" data-show-count="false">Follow @eepyfemboi</a>
+      <script type="text/javascript" async src="https://platform.twitter.com/widgets.js"></script>
+
       <!-- error script -->
       <script src="static/js/error.js"></script>
 
@@ -556,6 +576,9 @@
       <!-- slopify vids loader -->
       <script async src="https://sleepie.dev/slopifyvids/loader.js"></script>
 
+      <!-- emoji playground script -->
+      <script src="static/js/emoji-background.js"></script>
+
       <!-- bouncy caleb script -->
       <script src="static/js/bouncy-caleb.js"></script>
 
@@ -588,6 +611,12 @@
 
       <!-- kill everything script -->
       <script src="static/js/killEverything.js"></script>
+
+      <!-- page load uwu sound script -->
+      <script src="static/js/pageLoadUwUSound.js"></script>
+
+      <!-- comic sans button script -->
+      <script src="static/js/comicButton.js"></script>
 </body>
 
 </html>

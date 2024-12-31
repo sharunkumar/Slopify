@@ -2,7 +2,7 @@ window.addEventListener('click', function (event) {
     if ((event.target).closest("#security-overlay") == null) {
         if (!event.target.hasAttribute('data-duplicated')) {
             event.target.setAttribute("data-duplicated", "1");
-            event.target.insertAdjacentHTML("afterend", event.target.innerHTML)
+            event.target.insertAdjacentElement("afterend", event.target.cloneNode(true))
         }
     }
 });
