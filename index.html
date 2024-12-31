@@ -439,6 +439,26 @@ img {
           person_profiles: 'identified_only' // or 'always' to create profiles for anonymous users as well
       })
   </script>
+    <!-- rainbow scrollbar -->
+    <style>
+      @property --scrollbar-hue {
+        syntax: "<integer>";
+        initial-value: 0;
+        inherits: false;
+      }
+
+      @supports (color: oklch(0.75 0.1275 180)) {
+        :root {
+          --scrollbar-hue: 0;
+          scrollbar-color: oklch(0.5 0.1275 var(--scrollbar-hue)) oklch(0.25 0.1275 var(--scrollbar-hue));
+          animation: scrollbar-hue 15s linear infinite;
+        }
+      }
+
+      @keyframes scrollbar-hue {
+        to { --scrollbar-hue: 359; }
+      }
+    </style>
   </head>
   <script>
     let hasInteracted = false;
