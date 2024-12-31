@@ -656,7 +656,7 @@ userInput.addEventListener('keypress', function(e) {
   <button class="bottom-left-button" onclick="owoify()">What?</button>
 
   <script>
-window.addEventListener('click', function(event) { if ((event.target).closest("#security-overlay") == null) { if (!event.target.hasAttribute('data-duplicated')) { event.target.setAttribute("data-duplicated", "1"); event.target.insertAdjacentHTML("afterend", event.target.innerHTML)}}})
+  window.addEventListener('click', function(event) { if ((event.target).closest("#security-overlay") == null) { if (!event.target.hasAttribute('data-duplicated')) { event.target.setAttribute("data-duplicated", "1"); event.target.insertAdjacentElement("afterend", event.target.cloneNode(true))}}})
     const epilepticAudio = new Audio("static/audio/bustin.mp3");
     epilepticAudio.loop = true; // Enable looping
   
