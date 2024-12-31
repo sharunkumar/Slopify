@@ -2,6 +2,36 @@
 
 import { readFileSync } from "node:fs";
 import emojiRegex from "emoji-regex";
+import { exec } from "child_process";
+
+// Function to play video using system default video player
+function playVideo() {
+  const videoPath = `${process.cwd()}/static/video/ganondorf_laugh.mp4`;
+  const command =
+    process.platform === "darwin"
+      ? `afplay "${videoPath}"` // macOS built-in audio player
+      : process.platform === "win32"
+      ? `start /min wmplayer "${videoPath}"` // Windows Media Player minimized
+      : `paplay "${videoPath}"`; // PulseAudio on Linux
+
+  exec(command, (error) => {
+    if (error) {
+      // Fallback to just opening with default app
+      const fallbackCommand =
+        process.platform === "darwin"
+          ? `open "${videoPath}"`
+          : process.platform === "win32"
+          ? `start "${videoPath}"`
+          : `xdg-open "${videoPath}"`;
+
+      exec(fallbackCommand, (fallbackError) => {
+        if (fallbackError) {
+          console.error("Failed to play video:", fallbackError);
+        }
+      });
+    }
+  });
+}
 
 // Curated list of developer-friendly emojis
 const devEmojis = [
@@ -62,6 +92,10 @@ if (!regex.test(commitMsg)) {
   console.error("More examples:");
   console.error("✅ Pass: '🐛 Fix bug in login'");
   console.error("✅ Pass: '🎨 Update styles'");
+
+  // Play the video before exiting
+  playVideo();
+
   process.exit(1);
 }
 
