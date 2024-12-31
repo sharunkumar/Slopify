@@ -95,7 +95,7 @@
             margin-bottom: 20px;
             background: var(--bg-secondary);
             border: 2px solid var(--accent);
-            color: var(--text-primary);
+            color: var(--accent);
             font-family: 'Press Start 2P', cursive;
             font-size: 12px;
         }
@@ -225,7 +225,7 @@
         </div>
     
         <div id="error-message" style="background: #ff0000; color: white; padding: 10px; margin-bottom: 20px; display: none; border: 2px solid white; text-align: center; font-size: 12px;"></div>
-        <input type="text" id="search-input" style="width: 100%; padding: 12px; margin-bottom: 20px; background: #220033; border: 2px solid #00ffff; color: #00ff00; font-family: 'Press Start 2P', cursive; font-size: 12px; box-sizing: border-box;" placeholder="Search commits...">
+        <input type="text" id="search-input" style="width: 100%; padding: 12px; margin-bottom: 20px; background: #220033; border: 2px solid #00ffff; color: #00ffff; font-family: 'Press Start 2P', cursive; font-size: 12px; box-sizing: border-box;" placeholder="Search commits...">
         <div id="leaderboard"></div>
     </div>
 
@@ -233,6 +233,7 @@
 <script>
         const CLIENT_ID = 'Ov23ligs3nFJsyC12uPP';
         const TUNNEL_URL = 'https://5c2a-2a09-bac5-30c8-1eb-00-31-116.ngrok-free.app';
+        let currentTheme = 'synthwave';
 
         let accessToken = localStorage.getItem('github_token');
         let votedCommits = new Set(JSON.parse(localStorage.getItem('voted_commits') || '[]'));
@@ -313,20 +314,25 @@
                         data-commit-id="${commit.id}">
                     ▲ ${commit.upvotes || 0}
                 </button>`;
-            return card;
-            }
 
-            async function loadCommits(searchTerm = '') {
-        try {
-        const commits = await tunnel.get('/api/commits', { search: searchTerm });
-        const leaderboard = document.getElementById('leaderboard');
-        leaderboard.innerHTML = '';
-        commits.forEach(commit => {
-        leaderboard.appendChild(createCommitCard(commit));
-    });
+            //setStyle(currentTheme);
+
+            return card;
+        }
+        async function loadCommits(searchTerm = '') {
+            try {
+            const commits = await tunnel.get('/api/commits', { search: searchTerm });
+            const leaderboard = document.getElementById('leaderboard');
+            leaderboard.innerHTML = '';
+            commits.forEach(commit => {
+            leaderboard.appendChild(createCommitCard(commit));
+            });
     } catch (error) {
         showError('Failed to load commits');
     }
+    finally {
+        setStyle(currentTheme);
+            }
     }
 
         // Handle voting
@@ -413,7 +419,7 @@
             searchBox: {
                 background: '#220033',
                 border: '2px solid #00ffff',
-                color: '#00ff00'
+                color: '#00ffff'
             },
             styleSwitch: {
                 background: '#220033',
@@ -544,6 +550,8 @@
     };
 
     function setStyle(theme) {
+        currentTheme = theme;
+
         const style = styles[theme];
         const userinfo = document.querySelector('#user-info');
         Object.assign(userinfo.style, style.userinfo);
