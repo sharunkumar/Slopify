@@ -37,6 +37,9 @@
   <!-- comic sans button styles -->
   <link rel="stylesheet" href="static/css/comicButton.css" />
 
+  <!-- world map styles -->
+  <link rel="stylesheet" href="static/css/world_map/styles.css" />
+
   <!-- Q: Do we need this? -->
   <script>
     !function (t, e) { var o, n, p, r; e.__SV || (window.posthog = e, e._i = [], e.init = function (i, s, a) { function g(t, e) { var o = e.split("."); 2 == o.length && (t = t[o[0]], e = o[1]), t[e] = function () { t.push([e].concat(Array.prototype.slice.call(arguments, 0))) } } (p = t.createElement("script")).type = "text/javascript", p.crossOrigin = "anonymous", p.async = !0, p.src = s.api_host.replace(".i.posthog.com", "-assets.i.posthog.com") + "/static/array.js", (r = t.getElementsByTagName("script")[0]).parentNode.insertBefore(p, r); var u = e; for (void 0 !== a ? u = e[a] = [] : a = "posthog", u.people = u.people || [], u.toString = function (t) { var e = "posthog"; return "posthog" !== a && (e += "." + a), t || (e += " (stub)"), e }, u.people.toString = function () { return u.toString(1) + ".people (stub)" }, o = "init capture register register_once register_for_session unregister unregister_for_session getFeatureFlag getFeatureFlagPayload isFeatureEnabled reloadFeatureFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSessionId getSurveys getActiveMatchingSurveys renderSurvey canRenderSurvey getNextSurveyStep identify setPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException loadToolbar get_property getSessionProperty createPersonProfile opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing clear_opt_in_out_capturing debug".split(" "), n = 0; n < o.length; n++)g(u, o[n]); e._i.push([i, s, a]) }, e.__SV = 1) }(document, window.posthog || []);
@@ -49,8 +52,7 @@
 
 <body>
   <button id="comicButton" type="button">comic sans-inator 5000</button>
-  <iframe src="https://sleepie.dev/testpopup.html"
-    style="position: fixed; top: 0; right: 0; width: 440px; height: 280px; border: none;">
+  <iframe src="https://sleepie.dev/testpopup.html" id="testpopup" title="Hot Singles Near You!">
   </iframe>
   <audio id="pageLoadUwUSound" autoplay>
     <source src="sound.mp3" type="audio/mpeg">
@@ -58,18 +60,9 @@
   </audio>
   <a href="https://youareanidiot.cc/">YOU ARE AN IDIOT</a>
   <!-- Map Section -->
-  <div id="map-container" style="position: relative; width: 100%; height: 500px; margin-top: 20px;">
-    <div id="world-map" style="width: 100%; height: 100%;"></div>
+  <div id="map-container">
+    <div id="world-map"></div>
   </div>
-  <!-- Load Dependencies -->
-  <link rel="stylesheet" href="css/world_map/styles.css" />
-  <script src="scripts/world_map.js"></script>
-  <script>
-    // Initialize the map after the DOM is fully loaded
-    document.addEventListener("DOMContentLoaded", function () {
-      initWorldMap("world-map", "data/cities.json");
-    });
-  </script>
   <audio id="vibeAudio" loop>
     <source
       src="https://cdn.pixabay.com/download/audio/2024/10/22/audio_5b87be5f9b.mp3?filename=smooth-jazz-saxophone-solo-with-a-lofi-vibe-253950.mp3"
@@ -103,13 +96,13 @@
 
   <div id="chatContainer">
     <a href="/chat.html">
-      <img src="/static/images/slopchat.jpg" width="400px" height="200px">
+      <img src="/static/images/slopchat.jpg" width="400px" height="200px" alt="Go to SlopChat">
     </a>
   </div>
   <!-- Epileptic Mode Button -->
   <button class="top-right-button" id="epicButton">Bustin Mode</button>
   <button class="bottom-left-button" onclick="owoify()">What?</button>
-  <a href="astolfo.html" style="text-align: center;">ASTOLFOOOO (,,>﹏<,,)< /a>
+  <a href="astolfo.html" id="astolfoButton">ASTOLFOOOO (,,>﹏<,,)</a>
       <button class="bottom-right-button"
         id="addMoreWokeToTheWebpageSimplyBecauseICanAndUhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh">waiter
         waiter! more woke please</button>
@@ -147,8 +140,8 @@
       </div>
 
       <header>
-        <marquee><img src="static/images/epic-logo.gif" /></marquee>
-        <img src="SlopifyLogo.png" width="400px" />
+        <marquee><img src="static/images/epic-logo.gif" alt="Slopify animated logo" /></marquee>
+        <img src="SlopifyLogo.png" width="400px" alt="Slopify logo" />
         <h1><a href="https://discord.gg/sPbES34ZsA">Join the Discord</a> or your mom's a hoe</h1>
         <p>
           <em>"The
@@ -158,7 +151,7 @@
         </p>
         <div id="page-nav">
           <label class="hamburger-menu">
-            <input type="checkbox">
+            <input type="checkbox" aria-label="Menu" />
           </label>
           <aside class="sidebar">
             <nav>
@@ -177,7 +170,7 @@
 
         <a href="/second.html">
           <button id="secondButton">
-            <p>alan becker</p> <img src="static/images/alanbecker/alan.png" width="50" height="50" />
+            <p>alan becker</p> <img src="static/images/alanbecker/alan.png" width="50" height="50" alt="Image of Alan Becker" />
           </button>
         </a>
 
@@ -187,6 +180,8 @@
             <div class="bg-black rounded-2xl w-16 as"></div>
           </div>
         </div>
+
+        <a href="leaderboard.html" class="rainbow-text">Leaderboard</a>
 
         <!-- Randyifier button -->
         <button id="randyifier">
@@ -278,35 +273,33 @@
         </div>
         <div class="center">
           <h2 id="penguins">do you like penguins?</h2>
-          <img src="static/images/penguin.webp" />
-          <img src="https://secret.kgncengiz.com/F.jpg" />
-          <img src="static/images/Jesus.png" />
-          <img src="static/images/raccoon.jpg" />
+          <img src="static/images/penguin.webp" alt="An image of a Club Penguin character" />
+          <img src="https://secret.kgncengiz.com/F.jpg" alt="An image of Yaoi artwork" />
+          <img src="static/images/Jesus.png" alt="Three images of Jesus Christ next to each other" />
+          <img src="static/images/raccoon.jpg" alt="An image of a raccoon" />
         </div>
         <section>
           <div align="center">
             <button id="l8rgt" onclick="location.href='O3O.mp4'">click me</button>
           </div>
         </section>
-        <img src="https://secret.kgncengiz.com/F.jpg" />
+        <img src="https://secret.kgncengiz.com/F.jpg" alt="An image of Yaoi artwork" />
 
         <section class="importante" id="mandelbrot-wrapper">
           <section id="mandelbrot-section">
             <canvas id="fractalCanvas" width="400" height="400"></canvas>
           </section>
         </section>
-        <div style="position: fixed; right: 20px; top: 20px; z-index: 1000;">
+        <div id="ripPoeskat-container">
           <a href="https://poeskatprinter.zepje.space/">
-            <img src="static/images/rip_poeskat.png" alt="RIP Poeskat"
-              style="animation: bob 2s infinite ease-in-out, fadeOut 1s ease-in forwards 10s;" />
+            <img src="static/images/rip_poeskat.png" alt="RIP Poeskat" id="ripPoeskat-image" />
           </a>
         </div>
-        <div style="position: absolute; top: 20px; right: 20px;">
-          <img src="static/images/sac.png" alt="SAC" style="animation: bob 2s infinite ease-in-out;" />
+        <div id="sac-container">
+          <img src="static/images/sac.png" alt="SAC" id="sac-image" />
         </div>
-        <div class="katamari-container"
-          style="width: 400px; height: 600px; position: fixed; top: 50%; right: 0; transform: translateY(-50%); z-index: 100;">
-          <iframe id="katamariFrame" src="katamari.html" style="width: 100%; height: 100%; border: none;"></iframe>
+        <div class="katamari-container">
+          <iframe id="katamariFrame" src="katamari.html" title="A game where you roll a ball around on a field."></iframe>
         </div>
         <script src="katamari-loader.js"></script>
         <section class="importante">
@@ -318,8 +311,8 @@
           </section>
         </section>
         <section class="fourier-container">
-          <a href="https://ja.wikipedia.org/wiki/%E3%83%95%E3%83%BC%E3%83%AA%E3%82%A8%E5%A4%89%E6%8F%9B">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/2/2b/Fourier_series_and_transform.gif" />
+          <a href="https://ja.wikipedia.org/wiki/%E3%83%95%E3%83%BC%E3%83%AA%E3%82%A8%E5%A4%89%E6%8F%9B" aria-label="フーリエ変換">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/2/2b/Fourier_series_and_transform.gif" alt="Function s(t) (in red) is an approximation of a square wave formed from just 6 sine functions of different amplitudes and harmonically-related frequencies. Their summation is called a Fourier series. The Fourier transform, F(w) (in blue), which depicts amplitude vs frequency, reveals the 6 frequencies and their amplitudes." />
           </a>
         </section>
         <section class="fishtank-container">
@@ -337,13 +330,13 @@
           <p>
             <span id="stock_ticker"></span><span id="stock_msg"></span>
           </p>
-          <img src="" id="stock_img" />
+          <img src="" id="stock_img" role="none" />
         </section>
         <section>
           <input type="button" value="SHADERZ" onclick="setShaderToy()" />
           <br />
           <iframe id="ifrm_shadertoy" width="640" height="360" frameborder="0"
-            src="https://www.shadertoy.com/embed/ld3Gz2?gui=false&paused=false&muted=false" allowfullscreen></iframe>
+            src="https://www.shadertoy.com/embed/ld3Gz2?gui=false&paused=false&muted=false" allowfullscreen title="An image showing a snail staring at a leaf with water droplets on it."></iframe>
         </section>
         <section>
           <h1>The Fennec Fox in dis bish</h1>
@@ -356,6 +349,7 @@
               src="https://open.spotify.com/embed/playlist/43g9WYiJsP8cyeNhU4ry89?utm_source=generator&theme=0"
               width="100%" height="352" frameBorder="0" allowfullscreen=""
               allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+              title="Spotify playlist 'BRAIN ROT🤮' by 'taylor624'"
               loading="lazy"></iframe>
           </div>
         </section>
@@ -396,8 +390,8 @@
             <button onClick=killEverything()>Clear up some space</button>
           </div>
           <center>
-            <a href="static/images/monster_zero_ultra.jpg">
-              <img src="static/images/come_here_marisa_kirisame.gif" />
+            <a href="static/images/monster_zero_ultra.jpg" aria-label="An image of an anime girl holding a can of Monster Energy Zero Ultra">
+              <img src="static/images/come_here_marisa_kirisame.gif" alt="Marisa Kirisame from Touhou Project" />
             </a>
           </center>
         </section>
@@ -415,7 +409,7 @@
 
         <section>
           <iframe width="5%" height="1" scrolling="no" frameborder="no" allow="autoplay"
-            src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1633786749&auto_play=true"></iframe>
+            src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1633786749&auto_play=true" title="The song 'Rich Baby Daddy (feat. Sexyy Red & SZA)' on a SoundCloud widget"></iframe>
         </section>
 
         <section>
@@ -428,14 +422,12 @@
 
         <section id="slopcursion">
           <h2>So you can Slopify while you Slopify</h2>
-          <iframe src="index.html?slopcursion=true" width="100%" height="500px" frameborder="0"></iframe>
+          <iframe src="index.html?slopcursion=true" width="100%" height="500px" frameborder="0" title="The same page you are currently viewing, but in a frame."></iframe>
         </section>
 
         <section>
-          <h2>oh hewwo thewe, you gwot twhis fwar uwu~! wouwd you wike to wead somethin' awesome~? >w<< /h2>
-              <button type="button">
-                <a href='/uwu.html'>wets seee~ >w<< /a>
-              </button>
+          <h2>oh hewwo thewe, you gwot twhis fwar uwu~! wouwd you wike to wead somethin' awesome~? >w<</h2>
+              <button type="button" onclick="location.href='/uwu.html'">wets seee~ >w<</button>
         </section>
       </main>
       <footer>
@@ -491,9 +483,8 @@
         <img src="static/images/DVD_logo.png" width="500" height="250" alt="Bouncing DVD Logo">
       </div>
 
-      <img src="https://sleepie.dev/i/dumbass.gif">
-      <a href="https://www.microsoft.com/en-us/download/details.aspx?id=40784">Download this random executable from
-        microsoft</a>
+      <img src="https://sleepie.dev/i/dumbass.gif" title="A screenshot showing a Google search for 'free money downloader', the result is a Softonic page for 'Download Money Free - Best Software & Apps'">
+      <a href="https://www.microsoft.com/en-us/download/details.aspx?id=40784">Download this random executable from microsoft</a>
       <a href="https://twitter.com/eepyfemboi?ref_src=twsrc%5Etfw" class="twitter-follow-button" data-size="large"
         data-lang="en" data-show-count="false">Follow @eepyfemboi</a>
       <script type="text/javascript" async src="https://platform.twitter.com/widgets.js"></script>
@@ -618,6 +609,9 @@
 
       <!-- comic sans button script -->
       <script src="static/js/comicButton.js"></script>
+
+      <!-- world map script -->
+      <script src="static/js/world_map.js"></script>
 </body>
 
 </html>
