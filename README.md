@@ -38,6 +38,7 @@ The premise? Commit whatever code you want for whatever features you want in wha
 * Stockify (random stock investment decisions)
 * Enterprise-level security
 * Credit card requirement for security
+* Fourier_transform_time_and_frequency_domains_(small).gif
 * Virtual Fish Tank
 * Custom cursor with flags in the trail
 * “Twittermoanials” section (Twitter-style testimonials)
