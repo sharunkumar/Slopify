@@ -5,6 +5,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
 class HellProtection {
     activate() {
+        // do not read out loud
         const forbiddenActionWordRegex = /([Ss]+[Ee]+[Xx]+)/g;
 
         const goodActionsList = [
