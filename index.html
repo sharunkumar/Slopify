@@ -48,6 +48,37 @@
 </head>
 
 <body>
+     <!-- seizuring rotating SKIBIDI GOAT -->
+ <img src="static/images/RotatingGoat.png" class="bouncing-rotating-image" onclick="window.location.href='https://n0rule.is-a.dev'" alt="Rotating Goat">
+
+ <script>
+     document.addEventListener('DOMContentLoaded', function() {
+         const goat = document.querySelector('.bouncing-rotating-image');
+         let x = Math.random() * (window.innerWidth - 100);
+         let y = Math.random() * (window.innerHeight - 100);
+         let dx = 8;
+         let dy = 8;
+
+         function moveGoat() {
+             const rect = goat.getBoundingClientRect();
+             if (rect.right >= window.innerWidth || rect.left <= 0) {
+                 dx = -dx;
+             }
+             if (rect.bottom >= window.innerHeight || rect.top <= 0) {
+                 dy = -dy;
+             }
+             x += dx;
+             y += dy;
+             goat.style.left = `${x}px`;
+             goat.style.top = `${y}px`;
+             requestAnimationFrame(moveGoat);
+         }
+
+         goat.style.left = `${x}px`;
+         goat.style.top = `${y}px`;
+         moveGoat();
+     });
+ </script><div style="position: absolute;top:200px;left:300px;z-index:99999;">
   <button id="comicButton" type="button">comic sans-inator 5000</button>
   <iframe src="https://sleepie.dev/testpopup.html"
     style="position: fixed; top: 0; right: 0; width: 440px; height: 280px; border: none;">
@@ -214,6 +245,27 @@
               animation: rainbow 2s linear infinite;
               cursor: pointer;
           }
+          
+          @keyframes rotateGoat {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .bouncing-rotating-image {
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            animation: rotateGoat 4s linear infinite;
+            cursor: pointer;
+        }
+
+
+
+
       </style>
 
 
