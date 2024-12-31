@@ -3,15 +3,21 @@ import HomePage from "./pages/HomePage";
 import ChatPage from "./pages/ChatPage";
 import "./styles/global.css";
 
-function App() {
+export default function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/chat" element={<ChatPage />} />
-      </Routes>
-    </Router>
+    <div className="app" style={{ backgroundColor: "var(--bg-dark)" }}>
+      <main>
+        <Router>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/chat" element={<ChatPage />} />
+          </Routes>
+        </Router>
+      </main>
+      <footer>
+        <p>Powered by Gruvbox</p>
+      </footer>
+    </div>
   );
 }
 
-export default App;
