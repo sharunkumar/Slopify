@@ -118,7 +118,20 @@ img {
     src="https://sleepie.dev/testpopup.html" 
     style="position: fixed; top: 0; right: 0; width: 440px; height: 280px; border: none;">
 </iframe>
-
+<audio id="pageLoadUwUSound" autoplay>
+        <source src="sound.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+    <script>
+        const audioElement = document.getElementById('pageLoadUwUSound');
+        document.addEventListener('DOMContentLoaded', () => {
+            if (audioElement.paused) {
+                audioElement.play().catch(error => {
+                    console.error('Audio playback failed:', error);
+                });
+            }
+        });
+    </script>
     <style>
       * {
         border: 0;
