@@ -1,11 +1,7 @@
-# Slopify App
+# Tauri + React
 
-General Direction: a dedicated chat app for slop enthusiats, to rival discord
+This template should help get you started developing with Tauri and React in Vite.
 
-Theory: main slop playground is on the website, chat can be accessed on the website or through the app
+## Recommended IDE Setup
 
-Stack: we can leverage the current chat.html stuff for now, will eventually get supabase auth and various other nifty things up and running so we can build _good_ slop
-
-also maybe some in-app crypto BS or something, idfk
-
-ily all
+- [VS Code](https://code.visualstudio.com/) + [Tauri](https://marketplace.visualstudio.com/items?itemName=tauri-apps.tauri-vscode) + [rust-analyzer](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer)
