@@ -22,6 +22,9 @@
   <!-- TODO: figure out which PRs this was actually part of -->
   <link rel="stylesheet" href="static/css/style.css" />
 
+  <!-- slopbot styles -->
+  <link rel="stylesheet" href="static/css/slopbot.css" />
+
   <!-- chatbot styles -->
   <link rel="stylesheet" href="static/css/chatbot.css" />
 
@@ -51,6 +54,13 @@
 </head>
 
 <body>
+  <!-- slopbot AD -->
+  <div class="slop-teaser" onclick="window.location.href='/ai.html'">
+    <span>🤖</span>
+    <span>CLICK FOR AI SLOP</span>
+    <div class="close" onclick="event.stopPropagation(); this.parentElement.style.display='none'">×</div>
+  </div>
+
   <!-- seizuring rotating SKIBIDI GOAT -->
   <img src="static/images/RotatingGoat.png" class="bouncing-rotating-image"
     onclick="window.location.href='https://n0rule.is-a.dev'" alt="Rotating Goat" />
