@@ -517,3 +517,63 @@ body.wokeMode {
 .nav-link {
     cursor: pointer !important;
 }
+
+#testpopup {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 440px;
+    height: 280px;
+    border: none;
+}
+
+@keyframes rainbow {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+.rainbow-text {
+    font-family: 'Comic Sans MS', sans-serif;
+    font-size: 124px;
+    text-decoration: none;
+    background: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet);
+    background-size: 200% auto;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+    font-weight: bold;
+    animation: rainbow 2s linear infinite;
+    cursor: pointer;
+}
+
+#astolfoButton {
+    text-align: center;
+}
+
+#ripPoeskat-container {
+    position: fixed;
+    right: 20px;
+    top: 20px;
+    z-index: 1000;
+}
+
+#ripPoeskat-image {
+    animation: bob 2s infinite ease-in-out, fadeOut 1s ease-in forwards 10s;
+}
+
+#sac-container {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+#sac-image {
+    animation: bob 2s infinite ease-in-out;
+}

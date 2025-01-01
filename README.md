@@ -10,16 +10,35 @@ The premise? Commit whatever code you want for whatever features you want in wha
 
 <br>
 
-> ### Contributing
-> For coutributing, check **[CONTRIBUTING.md](https://github.com/DishpitDev/Slopify/blob/main/CONTRIBUTING.md)**
+## Building and Running The Slopify App
+
+Need to have Rust (cargo) installed.
+
+`cd ./Slopify/Slopify`
+
+`npm run tauri build`
+
+`cd src-tauri/target/release`
+
+`./slopify`
+
+Please note that the Slopify App is a completely different experience from the Slopify Website.
+
+The Website is a creative playground for shipping slop.
+
+The app is a dedicated chat app for talking about shipping slop (or whatever tf else you wanna talk about).
+
+## Contributing
+For coutributing, check **[CONTRIBUTING.md](https://github.com/DishpitDev/Slopify/blob/main/CONTRIBUTING.md)**
 
 <br>
 
-# Current features
+## Current features
 * Rust
 * "Current features" list
 * Chat
 * Various visual themes (dark mode, Windows 95 style, retro)
+* Katamari Damacy clone
 * Discord embed integrations
 * Frog Wisdom (frog quotes with voice synthesis)
 * Fappy Berd

@@ -31,6 +31,7 @@ document.body.appendChild(overlay);
 
 const deadlyGif = document.createElement('img');
 deadlyGif.src = './static/images/deadly.gif';
+deadlyGif.alt = 'The sun is a deadly lazer!';
 deadlyGif.style.position = 'absolute';
 deadlyGif.style.top = '0';
 deadlyGif.style.left = '0';
