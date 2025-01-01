@@ -33,6 +33,7 @@
                 align-items: center;     
                 height: 100vh;           
                 text-align: center;
+                z-index: 2; /* Ensure it's above the overlay */
             }
 
             #astolfoImg {
@@ -51,10 +52,17 @@
                 margin-top: 20px; 
                 z-index: 1000;
             }
+
+            .go-home-link {
+                position: relative; 
+                z-index: 2; 
+                font-size: 30px;                      
+            }
         </style>
     </head>
     <body>
         <div class="overlay"></div>
+        <a href="index.html" class="go-home-link">GO HOME</a>
         <div class="container">
             <img 
                 id="astolfoImg" 
