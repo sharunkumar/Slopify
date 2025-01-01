@@ -527,3 +527,143 @@ body.wokeMode {
         --scrollbar-hue: 359;
     }
 }
+
+#testpopup {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 440px;
+    height: 280px;
+    border: none;
+}
+
+@keyframes rainbow {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.rainbow-text {
+    font-family: 'Comic Sans MS', sans-serif;
+    font-size: 124px;
+    text-decoration: none;
+    background: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet);
+    background-size: 200% auto;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+    font-weight: bold;
+    animation: rainbow 2s linear infinite;
+    cursor: pointer;
+}
+
+#astolfoButton {
+    text-align: center;
+}
+
+#ripPoeskat-container {
+    position: fixed;
+    right: 20px;
+    top: 20px;
+    z-index: 1000;
+}
+
+#ripPoeskat-image {
+    animation: bob 2s infinite ease-in-out, fadeOut 1s ease-in forwards 10s;
+}
+
+#sac-container {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+#sac-image {
+    animation: bob 2s infinite ease-in-out;
+}
+
+@keyframes rotateGoat {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.bouncing-rotating-image {
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    animation: rotateGoat 4s linear infinite;
+    cursor: pointer;
+}
+
+#randomDiv {
+    position: absolute;
+    top: 200px;
+    left: 300px;
+    z-index: 99999;
+}
+
+#cookie-banner1 {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #333;
+    color: #fff;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
+}
+
+#cookie-banner2 {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #f1f1f1;
+    color: #333;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
+}
+
+#cookie-banner3 {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    background-color: #fff;
+    color: #000;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
+}
+
+.agree-button {
+    padding: 8px 16px;
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    cursor: pointer;
+}
