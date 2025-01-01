@@ -34,6 +34,7 @@ For contributing, check **[CONTRIBUTING.md](https://github.com/DishpitDev/Slopif
 <br>
 
 ## Current features
+* Catgirl downloader via [nekos.best](https://nekos.best)
 * Rust
 * "Current features" list
 * Chat
