@@ -14,7 +14,7 @@
             --text-primary: #e0e0e0;
             --text-secondary: #b0b0b0;
         }
-        
+
         body {
             margin: 0;
             padding: 0;
@@ -262,7 +262,26 @@
         window.chatState = 0; // 0 show 1 hide 2 blur
         let notificationSound = new Audio("/static/audio/youvegotmail.mp3")
 
-        let emojis = {};
+        let emojis = {
+            "ayaya": "/static/images/emojis/ayaya.png",
+            "clueless": "/static/images/emojis/clueless.png",
+            "dopepe": "/static/images/emojis/dopepe.png",
+            "dread": "/static/images/emojis/dread.png",
+            "endme": "/static/images/emojis/endMe.png",
+            "feelsbadman": "/static/images/emojis/feelsBadMan.png",
+            "kekw": "/static/images/emojis/kekw.png",
+            "laughingpepe": "/static/images/emojis/laughingPepe.png",
+            "lfg": "/static/images/emojis/lfg.png",
+            "minipog": "/static/images/emojis/minipog.png",
+            "monkagiga": "/static/images/emojis/monkaGiga.png",
+            "monkas": "/static/images/emojis/monkaS.png",
+            "monkasnake": "/static/images/emojis/monkaSnake.png",
+            "pogu": "/static/images/emojis/pogU.png",
+            "pooga": "/static/images/emojis/pooga.png",
+            "superkek": "/static/images/emojis/superkek.png",
+            "thonk": "/static/images/emojis/thonk.png",
+            "weirdga": "/static/images/emojis/weirdga.png",
+        };
 
         function getRandomSoftColor() {
             const hue = Math.floor(Math.random() * 360);
@@ -554,7 +573,7 @@
 
 
         }
-        
+
         function processMessage(message) {
             try {
                 let messageData = JSON.parse(message);
@@ -619,7 +638,14 @@
             await window.chatConnection.init();
             await window.chatConnection.create();
             await window.chatConnection.connect();
-            emojis = await fetch('https://api.github.com/emojis').then(response => response.json()).catch(() => ({}));
+            await fetch('https://api.github.com/emojis')
+              .then(response => response.json())
+              .catch(() => ({}))
+              .then(data => {
+                  for (let emoji in data) {
+                      emojis[emoji] = data[emoji];
+                  }
+              });
 
             await initUsernameTracking('global');
 
