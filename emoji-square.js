@@ -202,7 +202,7 @@ const uniqueEmojis = [...new Set(devEmojis)];
 // Ensure we have enough unique emojis
 if (totalEmojis > uniqueEmojis.length) {
   console.error(
-    `Not enough unique emojis available. Need ${totalEmojis} but only have ${uniqueEmojis.length} unique emojis`
+    `Not enough unique emojis available. Need ${totalEmojis} but only have ${uniqueEmojis.length} unique emojis`,
   );
   process.exit(1);
 }

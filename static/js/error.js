@@ -32,8 +32,14 @@ class Windows95 {
   async errorLoop(e) {
     const { code, target } = e;
 
-    if (code === "Enter" || code === "NumpadEnter" || (!code && target?.hasAttribute("data-ok"))) {
-      const activeError = this.errors.find((error) => error.id === target?.getAttribute("data-ok") || error.active);
+    if (
+      code === "Enter" ||
+      code === "NumpadEnter" ||
+      (!code && target?.hasAttribute("data-ok"))
+    ) {
+      const activeError = this.errors.find(
+        (error) => error.id === target?.getAttribute("data-ok") || error.active,
+      );
       if (activeError) {
         activeError.close();
         this.errors = this.errors.filter((error) => !error.isClosing);
@@ -80,7 +86,9 @@ class Windows95 {
         target = target?.parentElement;
       } while (target && !headerFound);
       if (headerFound) {
-        this.errorDragging = this.errors.find((error) => error.el.id === target.id);
+        this.errorDragging = this.errors.find(
+          (error) => error.el.id === target.id,
+        );
         this.switchError(e);
         if (e.touches?.length) {
           const [touch] = e.touches;
@@ -111,7 +119,9 @@ class Windows95 {
     if (target) {
       const errorFound = this.errors.find((error) => error.el.id === target.id);
       if (errorFound) {
-        this.errors.push(this.errors.splice(this.errors.indexOf(errorFound), 1)[0]);
+        this.errors.push(
+          this.errors.splice(this.errors.indexOf(errorFound), 1)[0],
+        );
         this.errors[this.errors.length - 1]?.activate();
       }
     }
@@ -141,9 +151,17 @@ class Windows95Error {
       const halfElHeight = Math.round(this.parent.offsetHeight / 2);
       const halfWinWidth = Math.round(windowNew.offsetWidth / 2);
       const halfWinHeight = Math.round(windowNew.offsetHeight / 2);
-      if (x === undefined) this.x = Utils.randomInt(-halfElWidth + halfWinWidth, halfElWidth - halfWinWidth);
+      if (x === undefined)
+        this.x = Utils.randomInt(
+          -halfElWidth + halfWinWidth,
+          halfElWidth - halfWinWidth,
+        );
       else this.x = x;
-      if (y === undefined) this.y = Utils.randomInt(-halfElHeight + halfWinHeight, halfElHeight - halfWinHeight);
+      if (y === undefined)
+        this.y = Utils.randomInt(
+          -halfElHeight + halfWinHeight,
+          halfElHeight - halfWinHeight,
+        );
       else this.y = y;
       const label = `error-label-${this.id}`;
       const desc = `error-desc-${this.id}`;

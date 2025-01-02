@@ -104,7 +104,9 @@ function updateProgress() {
   var notZero = player.getDuration();
   var percentage = 0;
   if (notZero != 0) {
-    percentage = Math.floor((100 / player.getDuration()) * player.getCurrentTime());
+    percentage = Math.floor(
+      (100 / player.getDuration()) * player.getCurrentTime(),
+    );
   }
   progress_bar.value = percentage;
 }

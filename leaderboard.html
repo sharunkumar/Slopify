@@ -1,7 +1,10 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"
+      rel="stylesheet"
+    />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Commit Leaderboard</title>
@@ -148,7 +151,12 @@
       }
 
       .upvote-btn {
-        background: linear-gradient(45deg, var(--bg-primary) 0%, #330066 50%, var(--bg-primary) 100%);
+        background: linear-gradient(
+          45deg,
+          var(--bg-primary) 0%,
+          #330066 50%,
+          var(--bg-primary) 100%
+        );
         border: 2px solid var(--accent);
         color: var(--accent);
         padding: 8px 16px;
@@ -173,7 +181,12 @@
       }
 
       .auth-button {
-        background: linear-gradient(45deg, var(--bg-primary) 0%, #330066 50%, var(--bg-primary) 100%);
+        background: linear-gradient(
+          45deg,
+          var(--bg-primary) 0%,
+          #330066 50%,
+          var(--bg-primary) 100%
+        );
         color: var(--accent);
         border: 2px solid var(--accent);
         padding: 10px 20px;
@@ -226,7 +239,16 @@
           padding-bottom: 20px;
         "
       >
-        <h1 style="font-size: 24px; color: #00ffff; text-transform: uppercase; margin: 0">Commit Leaderboard</h1>
+        <h1
+          style="
+            font-size: 24px;
+            color: #00ffff;
+            text-transform: uppercase;
+            margin: 0;
+          "
+        >
+          Commit Leaderboard
+        </h1>
         <div id="auth-section">
           <button
             id="login-button"
@@ -244,15 +266,29 @@
           >
             Login with GitHub
           </button>
-          <span id="user-info" style="color: #ff00ff; font-size: 12px; display: none"></span>
+          <span
+            id="user-info"
+            style="color: #ff00ff; font-size: 12px; display: none"
+          ></span>
         </div>
       </div>
 
       <!-- Add the style switcher buttons here, right after the header -->
       <div
-        style="margin-bottom: 20px; text-align: center; padding: 10px; border: 2px solid #00ffff; background: #220033"
+        style="
+          margin-bottom: 20px;
+          text-align: center;
+          padding: 10px;
+          border: 2px solid #00ffff;
+          background: #220033;
+        "
       >
-        <p class="style_text" style="color: #00ffff; margin-bottom: 10px; font-size: 12px">SELECT YOUR STYLE</p>
+        <p
+          class="style_text"
+          style="color: #00ffff; margin-bottom: 10px; font-size: 12px"
+        >
+          SELECT YOUR STYLE
+        </p>
         <button
           onclick="setStyle('synthwave')"
           style="
@@ -342,7 +378,9 @@
       let currentTheme = "synthwave";
 
       let accessToken = localStorage.getItem("github_token");
-      let votedCommits = new Set(JSON.parse(localStorage.getItem("voted_commits") || "[]"));
+      let votedCommits = new Set(
+        JSON.parse(localStorage.getItem("voted_commits") || "[]"),
+      );
 
       // Configure tunnel
       tunnel.setBaseUrl(TUNNEL_URL);
@@ -362,7 +400,11 @@
             accessToken = response.access_token;
             localStorage.setItem("github_token", accessToken);
             // Remove code from URL
-            window.history.replaceState({}, document.title, "/leaderboard.html");
+            window.history.replaceState(
+              {},
+              document.title,
+              "/leaderboard.html",
+            );
             updateAuthUI();
             syncCommits();
           })
@@ -382,7 +424,8 @@
           })
             .then((res) => res.json())
             .then((user) => {
-              document.getElementById("user-info").textContent = `Logged in as ${user.login}`;
+              document.getElementById("user-info").textContent =
+                `Logged in as ${user.login}`;
             });
         }
       }
@@ -429,7 +472,9 @@
       }
       async function loadCommits(searchTerm = "") {
         try {
-          const commits = await tunnel.get("/api/commits", { search: searchTerm });
+          const commits = await tunnel.get("/api/commits", {
+            search: searchTerm,
+          });
           const leaderboard = document.getElementById("leaderboard");
           leaderboard.innerHTML = "";
           commits.forEach((commit) => {
@@ -443,30 +488,35 @@
       }
 
       // Handle voting
-      document.getElementById("leaderboard").addEventListener("click", async (e) => {
-        if (!e.target.classList.contains("upvote-btn")) return;
-        if (!accessToken) {
-          showError("Please login to vote");
-          return;
-        }
+      document
+        .getElementById("leaderboard")
+        .addEventListener("click", async (e) => {
+          if (!e.target.classList.contains("upvote-btn")) return;
+          if (!accessToken) {
+            showError("Please login to vote");
+            return;
+          }
 
-        const commitId = e.target.dataset.commitId;
-        if (votedCommits.has(commitId)) return;
+          const commitId = e.target.dataset.commitId;
+          if (votedCommits.has(commitId)) return;
 
-        try {
-          await tunnel.post("/api/votes", {
-            commitId,
-            userId: accessToken, // Using token as userId
-          });
-          votedCommits.add(commitId);
-          localStorage.setItem("voted_commits", JSON.stringify([...votedCommits]));
-          e.target.classList.add("voted");
-          const currentVotes = parseInt(e.target.innerText.split("▲")[1]);
-          e.target.innerText = `▲ ${currentVotes + 1}`;
-        } catch (error) {
-          showError("Failed to vote");
-        }
-      });
+          try {
+            await tunnel.post("/api/votes", {
+              commitId,
+              userId: accessToken, // Using token as userId
+            });
+            votedCommits.add(commitId);
+            localStorage.setItem(
+              "voted_commits",
+              JSON.stringify([...votedCommits]),
+            );
+            e.target.classList.add("voted");
+            const currentVotes = parseInt(e.target.innerText.split("▲")[1]);
+            e.target.innerText = `▲ ${currentVotes + 1}`;
+          } catch (error) {
+            showError("Failed to vote");
+          }
+        });
 
       // Handle search
       let searchTimeout;
@@ -511,13 +561,15 @@
             boxShadow: "4px 4px 0 #ff00ff",
           },
           button: {
-            background: "linear-gradient(45deg, #000000 0%, #330066 50%, #000000 100%)",
+            background:
+              "linear-gradient(45deg, #000000 0%, #330066 50%, #000000 100%)",
             color: "#00ffff",
             border: "2px solid #00ffff",
             boxShadow: "3px 3px 0 #ff00ff",
           },
           buttonHover: {
-            background: "linear-gradient(45deg, #00ffff 0%, #0099ff 50%, #00ffff 100%)",
+            background:
+              "linear-gradient(45deg, #00ffff 0%, #0099ff 50%, #00ffff 100%)",
             color: "#000000",
           },
           heading: {
@@ -539,7 +591,8 @@
             color: "#ff00ff",
           },
           votedButton: {
-            background: "linear-gradient(45deg, #00ffff 0%, #00ccff 50%, #00ffff 100%)",
+            background:
+              "linear-gradient(45deg, #00ffff 0%, #00ccff 50%, #00ffff 100%)",
             color: "#000000",
           },
         },
@@ -565,17 +618,20 @@
             boxShadow: "3px 3px 0 #d2691e",
           },
           button: {
-            background: "linear-gradient(45deg, #f4a460 0%, #d2691e 50%, #f4a460 100%)",
+            background:
+              "linear-gradient(45deg, #f4a460 0%, #d2691e 50%, #f4a460 100%)",
             color: "#000000",
             border: "2px solid #8b4513",
             boxShadow: "2px 2px 0 #8b4513",
           },
           buttonHover: {
-            background: "linear-gradient(45deg, #d2691e 0%, #8b4513 50%, #d2691e 100%)",
+            background:
+              "linear-gradient(45deg, #d2691e 0%, #8b4513 50%, #d2691e 100%)",
             color: "#ffffff",
           },
           votedButton: {
-            background: "linear-gradient(45deg, #8b4513 0%, #654321 50%, #8b4513 100%)",
+            background:
+              "linear-gradient(45deg, #8b4513 0%, #654321 50%, #8b4513 100%)",
             color: "#ffffff",
           },
           heading: {
@@ -620,17 +676,20 @@
             boxShadow: "none",
           },
           button: {
-            background: "linear-gradient(45deg, #000000 0%, #001100 50%, #000000 100%)",
+            background:
+              "linear-gradient(45deg, #000000 0%, #001100 50%, #000000 100%)",
             color: "#33ff33",
             border: "1px solid #33ff33",
             boxShadow: "none",
           },
           buttonHover: {
-            background: "linear-gradient(45deg, #33ff33 0%, #00ff00 50%, #33ff33 100%)",
+            background:
+              "linear-gradient(45deg, #33ff33 0%, #00ff00 50%, #33ff33 100%)",
             color: "#000000",
           },
           votedButton: {
-            background: "linear-gradient(45deg, #33ff33 0%, #00cc00 50%, #33ff33 100%)",
+            background:
+              "linear-gradient(45deg, #33ff33 0%, #00cc00 50%, #33ff33 100%)",
             color: "#000000",
           },
           heading: {
@@ -663,12 +722,30 @@
         const userinfo = document.querySelector("#user-info");
         Object.assign(userinfo.style, style.userinfo);
 
-        document.documentElement.style.setProperty("--button-gradient", style.button.background);
-        document.documentElement.style.setProperty("--button-hover-gradient", style.buttonHover.background);
-        document.documentElement.style.setProperty("--button-hover-color", style.buttonHover.color);
-        document.documentElement.style.setProperty("--voted-gradient", style.votedButton.background);
-        document.documentElement.style.setProperty("--voted-color", style.votedButton.color);
-        document.documentElement.style.setProperty("--border", style.button.boxShadow.split(" ")[3]);
+        document.documentElement.style.setProperty(
+          "--button-gradient",
+          style.button.background,
+        );
+        document.documentElement.style.setProperty(
+          "--button-hover-gradient",
+          style.buttonHover.background,
+        );
+        document.documentElement.style.setProperty(
+          "--button-hover-color",
+          style.buttonHover.color,
+        );
+        document.documentElement.style.setProperty(
+          "--voted-gradient",
+          style.votedButton.background,
+        );
+        document.documentElement.style.setProperty(
+          "--voted-color",
+          style.votedButton.color,
+        );
+        document.documentElement.style.setProperty(
+          "--border",
+          style.button.boxShadow.split(" ")[3],
+        );
         // Apply body styles
         Object.assign(document.body.style, style.body);
 
@@ -714,7 +791,9 @@
         Object.assign(searchBox.style, style.searchBox);
 
         // Apply styles to style switcher container
-        const styleSwitch = document.querySelector('[style*="text-align: center"]');
+        const styleSwitch = document.querySelector(
+          '[style*="text-align: center"]',
+        );
         Object.assign(styleSwitch.style, style.styleSwitch);
 
         const styletext = document.querySelector(".style_text");

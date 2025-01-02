@@ -173,7 +173,12 @@ MODIFIED BY KOSAN https://github.com/MegaKosan
           setSprite(deltaY > 0 ? "scratchWallN" : "scratchWallS", frameCount);
         }
 
-        if (grabStop || absDeltaX > 10 || absDeltaY > 10 || Math.sqrt(deltaX ** 2 + deltaY ** 2) > 10) {
+        if (
+          grabStop ||
+          absDeltaX > 10 ||
+          absDeltaY > 10 ||
+          Math.sqrt(deltaX ** 2 + deltaY ** 2) > 10
+        ) {
           grabStop = false;
           clearTimeout(grabInterval);
           grabInterval = setTimeout(() => {
@@ -261,7 +266,11 @@ MODIFIED BY KOSAN https://github.com/MegaKosan
     idleTime += 1;
 
     // every ~ 20 seconds
-    if (idleTime > 10 && Math.floor(Math.random() * 200) == 0 && idleAnimation == null) {
+    if (
+      idleTime > 10 &&
+      Math.floor(Math.random() * 200) == 0 &&
+      idleAnimation == null
+    ) {
       let avalibleIdleAnimations = ["sleeping", "scratchSelf"];
 
       if (nekoPosX < 32) {
@@ -276,7 +285,10 @@ MODIFIED BY KOSAN https://github.com/MegaKosan
       if (nekoPosY > window.innerHeight - 32) {
         avalibleIdleAnimations.push("scratchWallS");
       }
-      idleAnimation = avalibleIdleAnimations[Math.floor(Math.random() * avalibleIdleAnimations.length)];
+      idleAnimation =
+        avalibleIdleAnimations[
+          Math.floor(Math.random() * avalibleIdleAnimations.length)
+        ];
     }
 
     if (forceSleep) {
@@ -332,7 +344,11 @@ MODIFIED BY KOSAN https://github.com/MegaKosan
     const distance = Math.sqrt(diffX ** 2 + diffY ** 2);
 
     // Cat has to sleep on top of the progress bar
-    if (forceSleep && Math.abs(diffY) < nekoSpeed && Math.abs(diffX) < nekoSpeed) {
+    if (
+      forceSleep &&
+      Math.abs(diffY) < nekoSpeed &&
+      Math.abs(diffX) < nekoSpeed
+    ) {
       // Make the cat sleep exactly on the top of the progress bar
       nekoPosX = mousePosX;
       nekoPosY = mousePosY;

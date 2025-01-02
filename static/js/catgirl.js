@@ -5,7 +5,9 @@ function downloadCatgirl() {
   fetch(imageUrl)
     .then((response) => {
       if (!response.ok) {
-        throw new Error(`http error (translation: skill issue): ${response.status}`);
+        throw new Error(
+          `http error (translation: skill issue): ${response.status}`,
+        );
       }
       return response.blob();
     })

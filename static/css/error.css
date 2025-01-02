@@ -212,7 +212,8 @@
 .window--active .window__button--lg:before {
   background:
     linear-gradient(90deg, transparent 50%, #000000 50%) 0 0/"2px 1px" repeat-x,
-    linear-gradient(90deg, transparent 50%, #000000 50%) 0 100%/"2px 1px" repeat-x,
+    linear-gradient(90deg, transparent 50%, #000000 50%) 0 100%/"2px 1px"
+      repeat-x,
     linear-gradient(transparent 50%, #000000 50%) 0 0/"1px 2px" repeat-y,
     linear-gradient(transparent 50%, #000000 50%) 100% 0/"1px 2px" repeat-y;
   content: "";

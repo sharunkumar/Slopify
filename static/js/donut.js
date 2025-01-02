@@ -30,7 +30,13 @@ const asciiframe = () => {
       const x = 0 | (40 + 30 * D * (cp * h * cB - t * sB)),
         y = 0 | (12 + 15 * D * (cp * h * sB + t * cB)),
         o = x + 80 * y,
-        N = 0 | (8 * ((st * sA - sp * ct * cA) * cB - sp * ct * sA - st * cA - cp * ct * sB));
+        N =
+          0 |
+          (8 *
+            ((st * sA - sp * ct * cA) * cB -
+              sp * ct * sA -
+              st * cA -
+              cp * ct * sB));
       if (y < 22 && y >= 0 && x >= 0 && x < 79 && D > z[o]) {
         z[o] = D;
         b[o] = ".,-~:;=!*#$@"[N > 0 ? N : 0];

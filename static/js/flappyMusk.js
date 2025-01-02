@@ -27,7 +27,8 @@ document.addEventListener("DOMContentLoaded", function () {
     pipes = [];
     for (let i = 0; i < 3; i++) {
       const pipeX = canvas.width + i * 200;
-      const pipeHeight = Math.floor(Math.random() * (canvas.height - pipeGap - 20)) + 10;
+      const pipeHeight =
+        Math.floor(Math.random() * (canvas.height - pipeGap - 20)) + 10;
       pipes.push({ x: pipeX, top: pipeHeight, bottom: pipeHeight + pipeGap });
     }
   }
@@ -39,7 +40,12 @@ document.addEventListener("DOMContentLoaded", function () {
   function drawPipes() {
     pipes.forEach((pipe) => {
       if (rainbowMode) {
-        const gradient = ctx.createLinearGradient(pipe.x, 0, pipe.x + pipeWidth, 0);
+        const gradient = ctx.createLinearGradient(
+          pipe.x,
+          0,
+          pipe.x + pipeWidth,
+          0,
+        );
         gradient.addColorStop(0, "red");
         gradient.addColorStop(0.2, "orange");
         gradient.addColorStop(0.4, "yellow");
@@ -62,7 +68,8 @@ document.addEventListener("DOMContentLoaded", function () {
       pipe.x -= 2;
       if (pipe.x + pipeWidth < 0) {
         pipe.x = canvas.width;
-        pipe.top = Math.floor(Math.random() * (canvas.height - pipeGap - 20)) + 10;
+        pipe.top =
+          Math.floor(Math.random() * (canvas.height - pipeGap - 20)) + 10;
         pipe.bottom = pipe.top + pipeGap;
       }
     });
@@ -76,7 +83,7 @@ document.addEventListener("DOMContentLoaded", function () {
       (pipe) =>
         bird.x + bird.width > pipe.x &&
         bird.x < pipe.x + pipeWidth &&
-        (bird.y < pipe.top || bird.y + bird.height > pipe.bottom)
+        (bird.y < pipe.top || bird.y + bird.height > pipe.bottom),
     );
   }
 
@@ -114,7 +121,11 @@ document.addEventListener("DOMContentLoaded", function () {
       const middleY = canvas.height / 2;
 
       ctx.fillText("Game Over!", canvas.width / 2, middleY - 20);
-      ctx.fillText("Click or Press Space to Retard", canvas.width / 2, middleY + 20);
+      ctx.fillText(
+        "Click or Press Space to Retard",
+        canvas.width / 2,
+        middleY + 20,
+      );
       return;
     }
 
@@ -123,7 +134,11 @@ document.addEventListener("DOMContentLoaded", function () {
       ctx.fillStyle = "#ffffff";
       ctx.font = "18px Arial";
       ctx.textAlign = "center";
-      ctx.fillText("Click or Press Space to Start", canvas.width / 2, canvas.height / 2 - 40);
+      ctx.fillText(
+        "Click or Press Space to Start",
+        canvas.width / 2,
+        canvas.height / 2 - 40,
+      );
     }
 
     requestAnimationFrame(gameLoop);
@@ -153,7 +168,9 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
-  document.getElementById("flappyMuskButton").addEventListener("click", toggleRainbowMode);
+  document
+    .getElementById("flappyMuskButton")
+    .addEventListener("click", toggleRainbowMode);
 
   elonImage.onload = () => {
     createInitialPipes();

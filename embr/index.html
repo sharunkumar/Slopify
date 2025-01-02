@@ -2,7 +2,10 @@
 <html>
   <head>
     <title>Embr Web IDE</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.36.1/min/vs/loader.min.js"></script>
 
     <style>
@@ -147,14 +150,18 @@
     <div class="header">
       <h1 class="header-title">Embr Web Editor</h1>
       <span class="header-version">v0.19.0-wasm</span>
-      <span class="header-credits">Embr by Dishpit & Compiled for Web by Shafil</span>
+      <span class="header-credits"
+        >Embr by Dishpit & Compiled for Web by Shafil</span
+      >
     </div>
     <div class="navbar">
       <div class="tab active">
         <i class="far fa-file-code"></i>
         <span style="margin-left: 5px">main.embr</span>
       </div>
-      <button class="run-button" id="runButton"><i class="fas fa-play"></i> Run</button>
+      <button class="run-button" id="runButton">
+        <i class="fas fa-play"></i> Run
+      </button>
     </div>
     <div class="main-container">
       <div class="editor-terminal-container">
@@ -176,7 +183,10 @@
             <span style="margin-left: 5px">Documentation</span>
           </div>
         </div>
-        <iframe class="docs-iframe" src="https://www.embrlang.com/docs/home"></iframe>
+        <iframe
+          class="docs-iframe"
+          src="https://www.embrlang.com/docs/home"
+        ></iframe>
       </div>
     </div>
 
@@ -192,13 +202,18 @@
           document.getElementById("output").textContent += text + "\n";
         },
         printErr: function (text) {
-          document.getElementById("output").textContent += "Error: " + text + "\n";
+          document.getElementById("output").textContent +=
+            "Error: " + text + "\n";
         },
       };
     </script>
     <script src="/embr/embr.js"></script>
     <script>
-      require.config({ paths: { vs: "https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.36.1/min/vs" } });
+      require.config({
+        paths: {
+          vs: "https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.36.1/min/vs",
+        },
+      });
       require(["vs/editor/editor.main"], function () {
         // Register Embr language
         monaco.languages.register({ id: "embr" });
@@ -207,12 +222,26 @@
         monaco.languages.setMonarchTokensProvider("embr", {
           keywords: ["var", "fn", "class", "out"],
           typeKeywords: ["@void", "@int", "@bool", "@str"],
-          builtins: ["out", "clock", "time", "length", "rest", "tail", "head", "append", "prepend", "remove"],
+          builtins: [
+            "out",
+            "clock",
+            "time",
+            "length",
+            "rest",
+            "tail",
+            "head",
+            "append",
+            "prepend",
+            "remove",
+          ],
           tokenizer: {
             root: [
               [/@[a-zA-Z]+/, "type"],
               [/\b(var|fn|class|out)\b/, "keyword"],
-              [/\b(out|clock|time|length|rest|tail|head|append|prepend|remove)\b/, "builtin"],
+              [
+                /\b(out|clock|time|length|rest|tail|head|append|prepend|remove)\b/,
+                "builtin",
+              ],
               [/"([^"\\]|\\.)*$/, "string.invalid"],
               [/"/, { token: "string.quote", next: "@string" }],
               [/[a-zA-Z_]\w*/, "variable"],
@@ -234,19 +263,22 @@
                 label: "var",
                 kind: monaco.languages.CompletionItemKind.Keyword,
                 insertText: "var ${1:name} = ${2:value}",
-                insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+                insertTextRules:
+                  monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
               },
               {
                 label: "fn",
                 kind: monaco.languages.CompletionItemKind.Keyword,
                 insertText: "fn ${1:name}() @${2:void} {\n\t${3}\n}",
-                insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+                insertTextRules:
+                  monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
               },
               {
                 label: "out",
                 kind: monaco.languages.CompletionItemKind.Keyword,
                 insertText: 'out "${1:text}"',
-                insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+                insertTextRules:
+                  monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
               },
             ];
 
@@ -295,7 +327,8 @@
 
         document.getElementById("runButton").onclick = function () {
           if (!moduleInitialized) {
-            document.getElementById("output").textContent = "Error: Runtime not initialized yet. Please wait...\n";
+            document.getElementById("output").textContent =
+              "Error: Runtime not initialized yet. Please wait...\n";
             return;
           }
 
@@ -307,11 +340,17 @@
             var ptr = Module._malloc(code.length + 1);
             Module.stringToUTF8(code, ptr, code.length + 1);
 
-            var result = Module.ccall("interpretString", "number", ["number"], [ptr]);
+            var result = Module.ccall(
+              "interpretString",
+              "number",
+              ["number"],
+              [ptr],
+            );
 
             Module._free(ptr);
           } catch (e) {
-            document.getElementById("output").textContent = "Error: " + e.message + "\n";
+            document.getElementById("output").textContent =
+              "Error: " + e.message + "\n";
           }
         };
       });

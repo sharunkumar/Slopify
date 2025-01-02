@@ -1,5 +1,14 @@
 class ConstrainedPoint {
-  constructor(x, y, constraintRadius, speed, isHead = false, canvasWidth, canvasHeight, buffer = 30) {
+  constructor(
+    x,
+    y,
+    constraintRadius,
+    speed,
+    isHead = false,
+    canvasWidth,
+    canvasHeight,
+    buffer = 30,
+  ) {
     this.x = x;
     this.y = y;
     this.constraintRadius = constraintRadius;
@@ -24,8 +33,10 @@ class ConstrainedPoint {
       const dy = targetY - this.y;
       const targetAngle = Math.atan2(dy, dx);
 
-      const angleDiff = ((targetAngle - this.angle + 3 * Math.PI) % (2 * Math.PI)) - Math.PI;
-      this.angle += Math.sign(angleDiff) * Math.min(Math.abs(angleDiff), this.turnRate);
+      const angleDiff =
+        ((targetAngle - this.angle + 3 * Math.PI) % (2 * Math.PI)) - Math.PI;
+      this.angle +=
+        Math.sign(angleDiff) * Math.min(Math.abs(angleDiff), this.turnRate);
     } else {
       // No food available, wander randomly
       if (Math.random() < 0.02) {
@@ -92,8 +103,8 @@ class Fish {
           i === 0,
           canvasWidth,
           canvasHeight,
-          buffer
-        )
+          buffer,
+        ),
     );
 
     for (let i = 1; i < this.points.length; i++) {
@@ -188,7 +199,11 @@ class Fish {
 
     // Limit joint angles
     for (let i = 0; i < this.points.length - 2; i++) {
-      this.limitJointAngle(this.points[i], this.points[i + 1], this.points[i + 2]);
+      this.limitJointAngle(
+        this.points[i],
+        this.points[i + 1],
+        this.points[i + 2],
+      );
     }
 
     // Try to eat anblogy food you're close to
@@ -249,7 +264,10 @@ class Fish {
     const path = new Path2D();
 
     const getContourPoint = (t, side) => {
-      const index = Math.min(Math.floor(t * (this.points.length - 1)), this.points.length - 2);
+      const index = Math.min(
+        Math.floor(t * (this.points.length - 1)),
+        this.points.length - 2,
+      );
       const localT = (t * (this.points.length - 1)) % 1;
       const p1 = this.points[index];
       const p2 = this.points[index + 1];
@@ -269,14 +287,24 @@ class Fish {
 
     const head = this.points[0];
     const headRadius = this.bodySizes[0];
-    const headAngle = Math.atan2(this.points[1].y - head.y, this.points[1].x - head.x);
+    const headAngle = Math.atan2(
+      this.points[1].y - head.y,
+      this.points[1].x - head.x,
+    );
 
     path.moveTo(
       head.x + headRadius * Math.cos(headAngle + Math.PI / 2),
-      head.y + headRadius * Math.sin(headAngle + Math.PI / 2)
+      head.y + headRadius * Math.sin(headAngle + Math.PI / 2),
     );
 
-    path.arc(head.x, head.y, headRadius, headAngle + Math.PI / 2, headAngle - Math.PI / 2, false);
+    path.arc(
+      head.x,
+      head.y,
+      headRadius,
+      headAngle + Math.PI / 2,
+      headAngle - Math.PI / 2,
+      false,
+    );
 
     for (let t = 0; t <= 1; t += 0.1) {
       const point = getContourPoint(t, -1);
@@ -300,7 +328,8 @@ class Fish {
 
     const finShape = (t, foldFactor) => {
       const x = t * finLength;
-      const y = finWidth * Math.sin(t * Math.PI) * foldFactor + x * Math.tan(finAngle);
+      const y =
+        finWidth * Math.sin(t * Math.PI) * foldFactor + x * Math.tan(finAngle);
       return { x, y };
     };
 
@@ -309,7 +338,8 @@ class Fish {
     const p0 = this.points[Math.max(0, finPointIndex - 1)];
     const bodyAngle = Math.atan2(p2.y - p1.y, p2.x - p1.x);
     const prevBodyAngle = Math.atan2(p1.y - p0.y, p1.x - p0.x);
-    const turnAngle = ((bodyAngle - prevBodyAngle + 3 * Math.PI) % (2 * Math.PI)) - Math.PI;
+    const turnAngle =
+      ((bodyAngle - prevBodyAngle + 3 * Math.PI) % (2 * Math.PI)) - Math.PI;
 
     const size = this.bodySizes[finPointIndex];
     const rightFinBase = {
@@ -321,15 +351,21 @@ class Fish {
       y: p1.y + size * Math.sin(bodyAngle - Math.PI / 2),
     };
 
-    const rightFoldFactor = 1 - Math.max(0, Math.min(1, turnAngle / (Math.PI / 4)));
-    const leftFoldFactor = 1 + Math.max(0, Math.min(1, turnAngle / (Math.PI / 4)));
+    const rightFoldFactor =
+      1 - Math.max(0, Math.min(1, turnAngle / (Math.PI / 4)));
+    const leftFoldFactor =
+      1 + Math.max(0, Math.min(1, turnAngle / (Math.PI / 4)));
 
     // Right fin
     path.moveTo(rightFinBase.x, rightFinBase.y);
     for (let t = 0; t <= 1; t += 0.1) {
       const point = finShape(t, rightFoldFactor);
-      const rotatedX = point.x * Math.cos(bodyAngle + finAngle) - point.y * Math.sin(bodyAngle + finAngle);
-      const rotatedY = point.x * Math.sin(bodyAngle + finAngle) + point.y * Math.cos(bodyAngle + finAngle);
+      const rotatedX =
+        point.x * Math.cos(bodyAngle + finAngle) -
+        point.y * Math.sin(bodyAngle + finAngle);
+      const rotatedY =
+        point.x * Math.sin(bodyAngle + finAngle) +
+        point.y * Math.cos(bodyAngle + finAngle);
       path.lineTo(rightFinBase.x + rotatedX, rightFinBase.y + rotatedY);
     }
     path.lineTo(rightFinBase.x, rightFinBase.y);
@@ -338,8 +374,12 @@ class Fish {
     path.moveTo(leftFinBase.x, leftFinBase.y);
     for (let t = 0; t <= 1; t += 0.1) {
       const point = finShape(t, leftFoldFactor);
-      const rotatedX = point.x * Math.cos(bodyAngle - finAngle) - -point.y * Math.sin(bodyAngle - finAngle);
-      const rotatedY = point.x * Math.sin(bodyAngle - finAngle) + -point.y * Math.cos(bodyAngle - finAngle);
+      const rotatedX =
+        point.x * Math.cos(bodyAngle - finAngle) -
+        -point.y * Math.sin(bodyAngle - finAngle);
+      const rotatedY =
+        point.x * Math.sin(bodyAngle - finAngle) +
+        -point.y * Math.cos(bodyAngle - finAngle);
       path.lineTo(leftFinBase.x + rotatedX, leftFinBase.y + rotatedY);
     }
     path.lineTo(leftFinBase.x, leftFinBase.y);
@@ -431,9 +471,22 @@ class FishTank {
       const x = segment * i - this.options.buffer;
       const y = Math.random() * totalHeight - this.options.buffer;
       const color = this.getRandomColor();
-      const speed = this.getRandomSpeed(this.options.minSpeed, this.options.maxSpeed);
+      const speed = this.getRandomSpeed(
+        this.options.minSpeed,
+        this.options.maxSpeed,
+      );
 
-      this.fishes.push(new Fish(x, y, color, speed, this.options.width, this.options.height, this.options.buffer));
+      this.fishes.push(
+        new Fish(
+          x,
+          y,
+          color,
+          speed,
+          this.options.width,
+          this.options.height,
+          this.options.buffer,
+        ),
+      );
     }
   }
 
@@ -515,7 +568,9 @@ class FishTank {
 
     // Show canvas and hide placeholder once everything is ready
     requestAnimationFrame(() => {
-      const placeholder = this.canvas.parentElement.querySelector(".fishtank-placeholder");
+      const placeholder = this.canvas.parentElement.querySelector(
+        ".fishtank-placeholder",
+      );
       if (placeholder) {
         placeholder.style.opacity = "0";
         setTimeout(() => placeholder.remove(), 300);

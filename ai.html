@@ -8,7 +8,8 @@
       body {
         background: #000080;
         color: #00ff00;
-        font-family: "Comic Sans MS", "Comic Sans", "Chalkboard SE", "Comic Neue", monospace;
+        font-family: "Comic Sans MS", "Comic Sans", "Chalkboard SE",
+          "Comic Neue", monospace;
         margin: 0;
         padding: 20px;
       }
@@ -61,7 +62,8 @@
         border: 2px solid #00ff00;
         color: #00ff00;
         padding: 5px;
-        font-family: "Comic Sans MS", "Comic Sans", "Chalkboard SE", "Comic Neue", monospace;
+        font-family: "Comic Sans MS", "Comic Sans", "Chalkboard SE",
+          "Comic Neue", monospace;
       }
 
       button {
@@ -70,7 +72,8 @@
         border: 2px outset #00ff00;
         cursor: pointer;
         padding: 5px 15px;
-        font-family: "Comic Sans MS", "Comic Sans", "Chalkboard SE", "Comic Neue", monospace;
+        font-family: "Comic Sans MS", "Comic Sans", "Chalkboard SE",
+          "Comic Neue", monospace;
       }
 
       button:active {
@@ -172,7 +175,8 @@
       #loadingText {
         color: #00ff00;
         font-size: 1.2em;
-        font-family: "Comic Sans MS", "Comic Sans", "Chalkboard SE", "Comic Neue", monospace;
+        font-family: "Comic Sans MS", "Comic Sans", "Chalkboard SE",
+          "Comic Neue", monospace;
       }
 
       .reset-button {
@@ -201,7 +205,8 @@
         display: block;
         font-size: 1.1em;
         text-shadow: 2px 2px #004000;
-        font-family: "Comic Sans MS", "Comic Sans", "Chalkboard SE", "Comic Neue", monospace;
+        font-family: "Comic Sans MS", "Comic Sans", "Chalkboard SE",
+          "Comic Neue", monospace;
         animation: glow 1.5s ease-in-out infinite alternate;
       }
 
@@ -255,7 +260,8 @@
         border: 2px outset #00ff00;
         border-radius: 4px;
         cursor: pointer;
-        font-family: "Comic Sans MS", "Comic Sans", "Chalkboard SE", "Comic Neue", monospace;
+        font-family: "Comic Sans MS", "Comic Sans", "Chalkboard SE",
+          "Comic Neue", monospace;
       }
 
       .add-content-btn:hover {
@@ -294,7 +300,8 @@
         background: #000000;
         color: #00ff00;
         border: 2px solid #00ff00;
-        font-family: "Comic Sans MS", "Comic Sans", "Chalkboard SE", "Comic Neue", monospace;
+        font-family: "Comic Sans MS", "Comic Sans", "Chalkboard SE",
+          "Comic Neue", monospace;
         cursor: pointer;
         text-align: center;
         transition: all 0.3s;
@@ -318,23 +325,45 @@
         <h1>🤖 SlopBot 🤖</h1>
         <marquee>Welcome to SlopBot - Slop on demand!</marquee>
         <div class="button-group">
-          <button id="resetButton" onclick="resetChat()" class="reset-button">🔄 RESET MEMORY BANKS 🔄</button>
-          <button id="changeModelButton" onclick="showModelSelect()" class="reset-button">🧠 CHANGE MODEL 🧠</button>
+          <button id="resetButton" onclick="resetChat()" class="reset-button">
+            🔄 RESET MEMORY BANKS 🔄
+          </button>
+          <button
+            id="changeModelButton"
+            onclick="showModelSelect()"
+            class="reset-button"
+          >
+            🧠 CHANGE MODEL 🧠
+          </button>
         </div>
       </div>
       <div id="modelSelectModal" class="model-select-modal">
         <div class="model-options">
-          <h2 style="color: #00ff00; margin-bottom: 20px">Choose Your SlopBot's Brain 🧠</h2>
-          <button class="model-button" onclick="selectModel('Qwen2.5-0.5B-Instruct-q4f32_1-MLC')">
+          <h2 style="color: #00ff00; margin-bottom: 20px">
+            Choose Your SlopBot's Brain 🧠
+          </h2>
+          <button
+            class="model-button"
+            onclick="selectModel('Qwen2.5-0.5B-Instruct-q4f32_1-MLC')"
+          >
             Fast but Stupid: Qwen 0.5B
           </button>
-          <button class="model-button" onclick="selectModel('Qwen2.5-1.5B-Instruct-q4f32_1-MLC')">
+          <button
+            class="model-button"
+            onclick="selectModel('Qwen2.5-1.5B-Instruct-q4f32_1-MLC')"
+          >
             Slower but Barely Smart: Qwen 1.5B
           </button>
-          <button class="model-button" onclick="selectModel('gemma-2b-it-q4f32_1-MLC')">
+          <button
+            class="model-button"
+            onclick="selectModel('gemma-2b-it-q4f32_1-MLC')"
+          >
             Slower but Slightly Smart: Gemma 2B
           </button>
-          <button class="model-button" onclick="selectModel('Llama-3.1-8B-Instruct-q4f32_1-MLC')">
+          <button
+            class="model-button"
+            onclick="selectModel('Llama-3.1-8B-Instruct-q4f32_1-MLC')"
+          >
             Slowest but Smartest: Llama 8B
           </button>
         </div>
@@ -351,13 +380,19 @@
       <div id="loading" class="loading">⌛ Loading AI model... ⌛</div>
       <div id="error" class="error"></div>
       <div class="input-area">
-        <input type="text" id="userInput" placeholder="Type your message here..." />
+        <input
+          type="text"
+          id="userInput"
+          placeholder="Type your message here..."
+        />
         <button onclick="sendMessage()">SEND 💬</button>
       </div>
     </div>
     <div id="slopContainer" class="slop-container">
       <h2 class="slop-title">Your Awesome Slop</h2>
-      <button onclick="resetSlop()" class="slop-reset-button">🗑️ CLEAR SLOP 🗑️</button>
+      <button onclick="resetSlop()" class="slop-reset-button">
+        🗑️ CLEAR SLOP 🗑️
+      </button>
       <div id="slopContent" class="slop-content"></div>
     </div>
 
@@ -381,7 +416,10 @@
       window.resetChat = () => {
         messageHistory = [];
         document.getElementById("messages").innerHTML = "";
-        addMessage("SlopBot", "Memory banks cleared! Ready for new instructions.");
+        addMessage(
+          "SlopBot",
+          "Memory banks cleared! Ready for new instructions.",
+        );
       };
 
       function parseNewContent(text) {
@@ -412,22 +450,30 @@
         if (!selectedModel) return;
 
         try {
-          const { CreateMLCEngine } = await import("https://esm.run/@mlc-ai/web-llm");
+          const { CreateMLCEngine } = await import(
+            "https://esm.run/@mlc-ai/web-llm"
+          );
 
           const initProgressCallback = (progress) => {
             const loadingText = document.getElementById("loadingdetailText");
             loadingText.textContent = `${JSON.stringify(progress)}`;
           };
 
-          chatEngine = await CreateMLCEngine(selectedModel, { initProgressCallback });
+          chatEngine = await CreateMLCEngine(selectedModel, {
+            initProgressCallback,
+          });
 
           document.getElementById("loadingModal").style.display = "none";
-          addMessage("SlopBot", "Ready to modify this website! Ask me to add elements, styles, or functionality.");
+          addMessage(
+            "SlopBot",
+            "Ready to modify this website! Ask me to add elements, styles, or functionality.",
+          );
           document.getElementById("loading").style.display = "none";
           setLoadingState(false);
         } catch (error) {
           console.error("Error:", error);
-          document.getElementById("error").textContent = `Error: ${error.message}`;
+          document.getElementById("error").textContent =
+            `Error: ${error.message}`;
           document.getElementById("loading").style.display = "none";
         }
       }
@@ -547,7 +593,8 @@
             messageElement.appendChild(addButton);
           }
         } catch (error) {
-          document.getElementById("error").textContent = `Error: ${error.message}`;
+          document.getElementById("error").textContent =
+            `Error: ${error.message}`;
         } finally {
           setLoadingState(false);
         }
@@ -587,7 +634,10 @@
       document.head.appendChild(style);
 
       function extractCode(response, type) {
-        const regex = new RegExp(`<<<${type}>>>([\\\s\\\S]*?)<<<${type}>>>`, "g");
+        const regex = new RegExp(
+          `<<<${type}>>>([\\\s\\\S]*?)<<<${type}>>>`,
+          "g",
+        );
         const matches = [...response.matchAll(regex)];
         return matches.map((match) => match[1].trim());
       }
@@ -611,7 +661,8 @@
       }
 
       function removeTypingIndicator() {
-        const typingIndicator = document.querySelector(".typing")?.parentElement;
+        const typingIndicator =
+          document.querySelector(".typing")?.parentElement;
         if (typingIndicator) typingIndicator.remove();
       }
 

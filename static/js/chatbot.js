@@ -53,7 +53,8 @@ function sendMessage() {
   messages.innerHTML += `<div class="user-message">${input.value}</div>`;
 
   // Get random response with Clippy container
-  const randomResponse = botResponses[Math.floor(Math.random() * botResponses.length)];
+  const randomResponse =
+    botResponses[Math.floor(Math.random() * botResponses.length)];
   messages.innerHTML += `
   <div class="bot-message">
     <div class="clippy-container">

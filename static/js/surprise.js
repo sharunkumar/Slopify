@@ -3,7 +3,11 @@ function getRandomInt(max) {
   return Math.floor(Math.random() * max);
 }
 
-function showFullScreenImage(imageUrl, displayDuration = 2000, fadeDuration = 1500) {
+function showFullScreenImage(
+  imageUrl,
+  displayDuration = 2000,
+  fadeDuration = 1500,
+) {
   const overlay = document.createElement("div");
   overlay.style.position = "fixed";
   overlay.style.top = "0";

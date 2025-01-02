@@ -1,5 +1,6 @@
 {
-  document.querySelector(".cl-showpos .url").textContent = document.location.host + document.location.pathname;
+  document.querySelector(".cl-showpos .url").textContent =
+    document.location.host + document.location.pathname;
 
   let lastTime = 0;
   let fps = 0;
@@ -52,10 +53,13 @@
 
         const currentVel = distance / (deltaTime / 1000);
 
-        smoothVel = smoothVel * (1 - smoothingFactor) + currentVel * smoothingFactor;
+        smoothVel =
+          smoothVel * (1 - smoothingFactor) + currentVel * smoothingFactor;
 
-        document.querySelector(".cl-showpos .pos").textContent = `pos:  ${x}.00 ${y}.00 0.00`;
-        document.querySelector(".cl-showpos .vel").textContent = `vel:  ${smoothVel.toFixed(2)}`;
+        document.querySelector(".cl-showpos .pos").textContent =
+          `pos:  ${x}.00 ${y}.00 0.00`;
+        document.querySelector(".cl-showpos .vel").textContent =
+          `vel:  ${smoothVel.toFixed(2)}`;
 
         lastX = x;
         lastY = y;
@@ -85,7 +89,10 @@
     const centerY = rect.top + rect.height / 2;
 
     const isInside =
-      e.clientX >= rect.left && e.clientX <= rect.right && e.clientY >= rect.top && e.clientY <= rect.bottom;
+      e.clientX >= rect.left &&
+      e.clientX <= rect.right &&
+      e.clientY >= rect.top &&
+      e.clientY <= rect.bottom;
 
     if (isInside) {
       element.style.opacity = "0";

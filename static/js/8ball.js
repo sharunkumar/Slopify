@@ -86,14 +86,17 @@ class EightBall {
     this.chatBoxElem.appendChild(question);
 
     let answer = document.createElement("p");
-    answer.innerHTML = '<span style="color: blue">8-ball-gpt</span>: <em style="color: gray">thinking...</em>';
+    answer.innerHTML =
+      '<span style="color: blue">8-ball-gpt</span>: <em style="color: gray">thinking...</em>';
     this.chatBoxElem.appendChild(answer);
     // let it Think.
     await new Promise((r) => setTimeout(r, 1000));
     answer.remove();
     answer = document.createElement("p");
     answer.innerHTML = `<span style="color: blue">8-ball-gpt</span>: ${
-      this.possibleAnswers[Math.floor(Math.random() * this.possibleAnswers.length)]
+      this.possibleAnswers[
+        Math.floor(Math.random() * this.possibleAnswers.length)
+      ]
     }`;
     this.chatBoxElem.appendChild(answer);
   }

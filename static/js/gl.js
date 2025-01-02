@@ -18,7 +18,7 @@ gl.shaderSource(
                     void main() {
                         vColor = color;
                         gl_Position = mvp * position;
-                    }`
+                    }`,
 );
 gl.compileShader(vertexShader);
 
@@ -32,7 +32,7 @@ gl.shaderSource(
 
                     void main() {
                         fragColor = vColor;
-                    }`
+                    }`,
 );
 gl.compileShader(fragmentShader);
 
@@ -51,9 +51,11 @@ const positions = new Float32Array([
 
 const colors = new Float32Array([
   // Front - red
-  1.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0,
+  1.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0,
+  1.0,
   // Back - green
-  0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0,
+  0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0,
+  1.0,
 ]);
 
 const indices = new Uint16Array([
@@ -129,7 +131,8 @@ function render() {
 
 // Include gl-matrix library for matrix operations
 const script = document.createElement("script");
-script.src = "https://cdnjs.cloudflare.com/ajax/libs/gl-matrix/2.8.1/gl-matrix-min.js";
+script.src =
+  "https://cdnjs.cloudflare.com/ajax/libs/gl-matrix/2.8.1/gl-matrix-min.js";
 script.onload = () => {
   gl.clearColor(0.0, 0.0, 0.0, 1.0);
   render();

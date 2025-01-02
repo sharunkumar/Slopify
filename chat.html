@@ -231,19 +231,40 @@
       </div>
       <div class="hi">
         <a href="/index.html">
-          <img src="/static/images/4db62b6a70d285b0efb299ee6816504e.jpg" width="100" height="100" />
+          <img
+            src="/static/images/4db62b6a70d285b0efb299ee6816504e.jpg"
+            width="100"
+            height="100"
+          />
           <p style="color: magenta">Go BACK</p>
         </a>
       </div>
       <div id="bottomPanel">
         <div id="inputContainer">
-          <input type="text" id="messageInput" placeholder="Type a message..." maxlength="200" />
-          <button id="sendButton" style="font-weight: bold" onclick="sendMessage()">Send</button>
+          <input
+            type="text"
+            id="messageInput"
+            placeholder="Type a message..."
+            maxlength="200"
+          />
+          <button
+            id="sendButton"
+            style="font-weight: bold"
+            onclick="sendMessage()"
+          >
+            Send
+          </button>
         </div>
         <div id="controls">
-          <button id="createButton" onclick="createOrJoinRoom()">Create or Join a Room</button>
-          <button id="setUsernameButton" onclick="setUserName()">Set Username</button>
-          <button id="toggleImagesButton" onclick="toggleImages()">Hide Images</button>
+          <button id="createButton" onclick="createOrJoinRoom()">
+            Create or Join a Room
+          </button>
+          <button id="setUsernameButton" onclick="setUserName()">
+            Set Username
+          </button>
+          <button id="toggleImagesButton" onclick="toggleImages()">
+            Hide Images
+          </button>
         </div>
 
         <div id="usernameError"></div>
@@ -290,7 +311,7 @@
           room,
           "usernames",
           handleUsernameMessage,
-          { encryption: false, compression: false }
+          { encryption: false, compression: false },
         );
         await window.usernameConnection.init();
         await window.usernameConnection.create();
@@ -311,7 +332,7 @@
                 JSON.stringify({
                   type: "username_taken",
                   username: data.username,
-                })
+                }),
               );
             }
           }
@@ -321,7 +342,9 @@
       }
 
       async function createOrJoinRoom() {
-        let room = prompt("Enter the name of the room you want to join or create, leave it blank to randomize:");
+        let room = prompt(
+          "Enter the name of the room you want to join or create, leave it blank to randomize:",
+        );
         window.chatConnection.close();
         if (window.usernameConnection) {
           // Release old username from previous room
@@ -329,7 +352,7 @@
             JSON.stringify({
               type: "username_released",
               username: window.userName,
-            })
+            }),
           );
           window.usernameConnection.close();
         }
@@ -349,15 +372,20 @@
         window.usernames.clear();
         await initUsernameTracking(room);
 
-        document.getElementById("roomInfo").textContent = `Connected to room: ${room}`;
-        localMessage("System:", `${window.userName} connected to room ${room}. ---`, true);
+        document.getElementById("roomInfo").textContent =
+          `Connected to room: ${room}`;
+        localMessage(
+          "System:",
+          `${window.userName} connected to room ${room}. ---`,
+          true,
+        );
 
         // Announce username in new room
         window.usernameConnection.send(
           JSON.stringify({
             type: "username_taken",
             username: window.userName,
-          })
+          }),
         );
 
         localMessage(localStorage["userName"], "i connected", false, false);
@@ -375,7 +403,7 @@
             JSON.stringify({
               type: "username_request",
               username: username,
-            })
+            }),
           );
 
           // Wait a short time for responses
@@ -400,14 +428,18 @@
         }
 
         if (!/^[a-zA-Z0-9_-]+$/.test(username)) {
-          alert("Username can only contain letters, numbers, underscores, and hyphens");
+          alert(
+            "Username can only contain letters, numbers, underscores, and hyphens",
+          );
           setUserName();
           return;
         }
 
         const available = await isUsernameAvailable(username);
         if (!available) {
-          alert("Username is already taken in this room. Please choose another.");
+          alert(
+            "Username is already taken in this room. Please choose another.",
+          );
           setUserName();
           return;
         }
@@ -418,7 +450,7 @@
             JSON.stringify({
               type: "username_released",
               username: window.userName,
-            })
+            }),
           );
         }
 
@@ -431,17 +463,23 @@
           JSON.stringify({
             type: "username_taken",
             username: username,
-          })
+          }),
         );
 
         localMessage(localStorage["userName"], "i connected", false, false);
       }
 
       function getTunnelConnection(id) {
-        return new TunnelConnection("https://slopify_chat.infernity.dev/", id, "main", processMessage, {
-          encryption: false,
-          compression: false,
-        });
+        return new TunnelConnection(
+          "https://slopify_chat.infernity.dev/",
+          id,
+          "main",
+          processMessage,
+          {
+            encryption: false,
+            compression: false,
+          },
+        );
       }
 
       function textContainsEmoji(text) {
@@ -477,7 +515,10 @@
         let str = "";
         for (let i = 0; i < textSegments.length; i++) {
           const word = textSegments[i];
-          if ((!word.endsWith(".pic") || window.chatState === 1) && !textContainsEmoji(word)) {
+          if (
+            (!word.endsWith(".pic") || window.chatState === 1) &&
+            !textContainsEmoji(word)
+          ) {
             str += " " + word;
             continue;
           }
@@ -487,8 +528,13 @@
             str = "";
           }
 
-          if (word.endsWith(".pic") && window.chatState !== 1 /* Hide images */) {
-            messageTextElement.appendChild(createImageElement(word.slice(0, -4)));
+          if (
+            word.endsWith(".pic") &&
+            window.chatState !== 1 /* Hide images */
+          ) {
+            messageTextElement.appendChild(
+              createImageElement(word.slice(0, -4)),
+            );
           } else if (textContainsEmoji(word)) {
             messageTextElement.appendChild(createEmojiElement(word));
           }
@@ -581,8 +627,13 @@
           } else {
             messageData.bot = true;
           }
-          if (!messageData.username || !messageData.message) throw new Error("Invalid message data: " + message);
-          localMessage(messageData.username, messageData.message, messageData.bot);
+          if (!messageData.username || !messageData.message)
+            throw new Error("Invalid message data: " + message);
+          localMessage(
+            messageData.username,
+            messageData.message,
+            messageData.bot,
+          );
           if (messageData.flash) {
             flashGreen();
           }
@@ -658,7 +709,7 @@
             JSON.stringify({
               type: "username_taken",
               username: window.userName,
-            })
+            }),
           );
         }
 

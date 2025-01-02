@@ -18,7 +18,9 @@ function vibe() {
       title: "Never Gonna Give You Up",
       artist: "Rick Astley",
       album: "Whenever You Need Somebody",
-      artwork: [{ src: "../images/rick.gif", sizes: "256x256", type: "image/png" }],
+      artwork: [
+        { src: "../images/rick.gif", sizes: "256x256", type: "image/png" },
+      ],
     });
   } else {
     vibeAudio.play();
@@ -27,7 +29,9 @@ function vibe() {
         title: "Froggy Jazz",
         artist: "THE FROG",
         album: "Hoppin' Tunes",
-        artwork: [{ src: "../images/frog.webp", sizes: "256x256", type: "image/png" }],
+        artwork: [
+          { src: "../images/frog.webp", sizes: "256x256", type: "image/png" },
+        ],
       });
     }
   }
@@ -40,8 +44,14 @@ moreVibeAudio.addEventListener("ended", function () {
   frog.id = "frog";
   frog.src = "static/images/frog.webp";
 });
-moreVibeAudio.addEventListener("ended", () => (frog.src = "static/images/frog.webp"));
-moreVibeAudio.addEventListener("pause", () => (frog.src = "static/images/frog.webp"));
+moreVibeAudio.addEventListener(
+  "ended",
+  () => (frog.src = "static/images/frog.webp"),
+);
+moreVibeAudio.addEventListener(
+  "pause",
+  () => (frog.src = "static/images/frog.webp"),
+);
 
 if (window.location.search.includes("slopcursion=true")) {
   document.getElementById("slopcursion").style.display = "none";

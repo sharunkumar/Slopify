@@ -17,13 +17,17 @@ function moveDvd() {
   if (dvdX <= 0 || dvdX >= window.innerWidth - dvdWidth) {
     directionX = -directionX;
     // Change speed on bounce and ensure it never hits exactly in the corner
-    directionX = Math.sign(directionX) * (minSpeed + Math.random() * (maxSpeed - minSpeed));
+    directionX =
+      Math.sign(directionX) *
+      (minSpeed + Math.random() * (maxSpeed - minSpeed));
     dvdY += Math.random() * 10 - 5;
   }
   if (dvdY <= 0 || dvdY >= window.innerHeight - dvdHeight) {
     directionY = -directionY;
     // Change speed on bounce and ensure it never hits exactly in the corner
-    directionY = Math.sign(directionY) * (minSpeed + Math.random() * (maxSpeed - minSpeed));
+    directionY =
+      Math.sign(directionY) *
+      (minSpeed + Math.random() * (maxSpeed - minSpeed));
     dvdX += Math.random() * 10 - 5;
   }
 

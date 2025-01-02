@@ -517,7 +517,16 @@ body.wokeMode {
   font-family: "Comic Sans MS", sans-serif;
   font-size: 124px;
   text-decoration: none;
-  background: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet);
+  background: linear-gradient(
+    90deg,
+    red,
+    orange,
+    yellow,
+    green,
+    blue,
+    indigo,
+    violet
+  );
   background-size: 200% auto;
   background-clip: text;
   -webkit-background-clip: text;
@@ -537,7 +546,8 @@ body.wokeMode {
 @supports (color: oklch(0.75 0.1275 180)) {
   :root {
     --scrollbar-hue: 0;
-    scrollbar-color: oklch(0.5 0.1275 var(--scrollbar-hue)) oklch(0.25 0.1275 var(--scrollbar-hue));
+    scrollbar-color: oklch(0.5 0.1275 var(--scrollbar-hue))
+      oklch(0.25 0.1275 var(--scrollbar-hue));
     animation: scrollbar-hue 15s linear infinite;
   }
 }
@@ -579,7 +589,16 @@ body.wokeMode {
   font-family: "Comic Sans MS", sans-serif;
   font-size: 124px;
   text-decoration: none;
-  background: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet);
+  background: linear-gradient(
+    90deg,
+    red,
+    orange,
+    yellow,
+    green,
+    blue,
+    indigo,
+    violet
+  );
   background-size: 200% auto;
   background-clip: text;
   -webkit-background-clip: text;

@@ -10,7 +10,11 @@
           timestamp: new Date().toISOString(),
         };
 
-        document.getElementById("health-response").textContent = JSON.stringify(healthCheck, null, 2);
+        document.getElementById("health-response").textContent = JSON.stringify(
+          healthCheck,
+          null,
+          2,
+        );
       });
     </script>
   </head>

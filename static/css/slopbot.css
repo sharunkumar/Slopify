@@ -7,7 +7,8 @@
   border: 2px solid #00ff00;
   padding: 15px;
   color: #00ff00;
-  font-family: "Comic Sans MS", "Comic Sans", "Chalkboard SE", "Comic Neue", monospace;
+  font-family: "Comic Sans MS", "Comic Sans", "Chalkboard SE", "Comic Neue",
+    monospace;
   z-index: 9999;
   cursor: pointer;
   box-shadow: 4px 4px 0 #008000;

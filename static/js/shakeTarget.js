@@ -10,6 +10,6 @@ document.addEventListener("mouseover", (event) => {
     () => {
       target.classList.remove("shake");
     },
-    { once: true }
+    { once: true },
   );
 });

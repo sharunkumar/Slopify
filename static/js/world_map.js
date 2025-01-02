@@ -88,7 +88,9 @@ function showSuggestions(query) {
   const suggestionsEl = document.getElementById("suggestions");
 
   // Filter by city.name that starts with the typed query
-  const matches = citiesData.filter((city) => city.name.toLowerCase().startsWith(query));
+  const matches = citiesData.filter((city) =>
+    city.name.toLowerCase().startsWith(query),
+  );
 
   // Limit to top 10
   const top10 = matches.slice(0, 10);

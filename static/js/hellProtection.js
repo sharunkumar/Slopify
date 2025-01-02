@@ -25,9 +25,13 @@ class HellProtection {
         const checkedValue = event.currentTarget.value;
 
         if (checkedValue.match(forbiddenActionWordRegex)) {
-          const selectedGoodAction = goodActionsList[Math.floor(Math.random() * goodActionsList.length)];
+          const selectedGoodAction =
+            goodActionsList[Math.floor(Math.random() * goodActionsList.length)];
 
-          event.currentTarget.value = checkedValue.replace(forbiddenActionWordRegex, selectedGoodAction);
+          event.currentTarget.value = checkedValue.replace(
+            forbiddenActionWordRegex,
+            selectedGoodAction,
+          );
         }
       });
     });

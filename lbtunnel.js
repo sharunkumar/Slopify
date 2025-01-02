@@ -17,7 +17,9 @@ const tunnel = (() => {
    */
   const get = async (endpoint, params = {}) => {
     const url = new URL(`${baseUrl}${endpoint}`);
-    Object.keys(params).forEach((key) => url.searchParams.append(key, params[key]));
+    Object.keys(params).forEach((key) =>
+      url.searchParams.append(key, params[key]),
+    );
 
     const response = await fetch(url.toString(), {
       method: "GET",

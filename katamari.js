@@ -1,6 +1,9 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
-import { CSS3DRenderer, CSS3DObject } from "three/addons/renderers/CSS3DRenderer.js";
+import {
+  CSS3DRenderer,
+  CSS3DObject,
+} from "three/addons/renderers/CSS3DRenderer.js";
 
 let camera, scene, renderer, cssRenderer;
 let katamari, controls, ground;
@@ -64,7 +67,12 @@ function init() {
   scene.background = new THREE.Color(0x87ceeb); // Sky blue background
 
   // Camera setup
-  camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+  camera = new THREE.PerspectiveCamera(
+    75,
+    window.innerWidth / window.innerHeight,
+    0.1,
+    1000,
+  );
   camera.position.copy(cameraOffset);
   camera.lookAt(new THREE.Vector3(0, 0, 0));
 
@@ -192,7 +200,10 @@ function updateKatamari() {
   velocity.multiplyScalar(0.95);
 
   // Keep ball on the ground
-  katamari.position.y = Math.max(katamari.geometry.parameters.radius, katamari.position.y);
+  katamari.position.y = Math.max(
+    katamari.geometry.parameters.radius,
+    katamari.position.y,
+  );
 
   // Update katamari position
   katamari.position.add(velocity);
@@ -200,7 +211,11 @@ function updateKatamari() {
   // Roll the ball based on movement
   const movement = velocity.length();
   if (movement > 0.001) {
-    const rotationAxis = new THREE.Vector3(-velocity.z, 0, velocity.x).normalize();
+    const rotationAxis = new THREE.Vector3(
+      -velocity.z,
+      0,
+      velocity.x,
+    ).normalize();
     katamari.rotateOnAxis(rotationAxis, movement);
   }
 
@@ -208,10 +223,14 @@ function updateKatamari() {
   domElements.forEach((element) => {
     if (!element.userData.collected) {
       const distance = element.position.distanceTo(katamari.position);
-      if (distance < katamari.geometry.parameters.radius * katamari.scale.x * 2) {
+      if (
+        distance <
+        katamari.geometry.parameters.radius * katamari.scale.x * 2
+      ) {
         // Attach element to katamari
         element.userData.collected = true;
-        element.userData.orbitRadius = katamari.geometry.parameters.radius * katamari.scale.x * 1.2;
+        element.userData.orbitRadius =
+          katamari.geometry.parameters.radius * katamari.scale.x * 1.2;
         element.userData.orbitSpeed = Math.random() * 0.02 + 0.01;
         element.userData.orbitOffset = Math.random() * Math.PI * 2;
 
@@ -223,10 +242,16 @@ function updateKatamari() {
       // Update collected elements' positions
       element.userData.orbitOffset += element.userData.orbitSpeed;
 
-      element.position.x = katamari.position.x + Math.cos(element.userData.orbitOffset) * element.userData.orbitRadius;
-      element.position.y = katamari.position.y + Math.sin(element.userData.orbitOffset) * element.userData.orbitRadius;
+      element.position.x =
+        katamari.position.x +
+        Math.cos(element.userData.orbitOffset) * element.userData.orbitRadius;
+      element.position.y =
+        katamari.position.y +
+        Math.sin(element.userData.orbitOffset) * element.userData.orbitRadius;
       element.position.z =
-        katamari.position.z + Math.sin(element.userData.orbitOffset * 2) * element.userData.orbitRadius;
+        katamari.position.z +
+        Math.sin(element.userData.orbitOffset * 2) *
+          element.userData.orbitRadius;
 
       // Make elements face outward
       element.lookAt(katamari.position);

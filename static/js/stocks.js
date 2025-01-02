@@ -1,4 +1,5 @@
-var stock_url = "https://raw.githubusercontent.com/rreichel3/US-Stock-Symbols/main/all/all_tickers.txt";
+var stock_url =
+  "https://raw.githubusercontent.com/rreichel3/US-Stock-Symbols/main/all/all_tickers.txt";
 var stock_list;
 var ticker;
 var buy = Math.random() < 0.5;
@@ -16,10 +17,12 @@ function done() {
   var msg = "";
   if (buy) {
     msg = " to the moon! BUY BUY BUY";
-    document.getElementById("stock_img").src = "static/images/wojak_stock_up.webp";
+    document.getElementById("stock_img").src =
+      "static/images/wojak_stock_up.webp";
   } else {
     msg = " down the toilet! SELL SELL SELL";
-    document.getElementById("stock_img").src = "static/images/wojak_stock_down.gif";
+    document.getElementById("stock_img").src =
+      "static/images/wojak_stock_down.gif";
   }
   document.getElementById("stock_ticker").textContent = ticker;
   document.getElementById("stock_msg").textContent = msg;

@@ -142,7 +142,8 @@ class AnnoyingSecurity {
   generatePhilosophicalCaptcha() {
     const challenges = [
       {
-        question: "Are you an attacker? be honest man we're running out of ideas",
+        question:
+          "Are you an attacker? be honest man we're running out of ideas",
       },
       {
         question: "Do you think you're a good person?",
@@ -188,16 +189,20 @@ class AnnoyingSecurity {
       },
       {
         test: (p) => /^(?:[1-9]|[1-9][0-9]).*(?:[1-9]|[1-9][0-9])$/.test(p),
-        message: "Must match this regex /^(?:[1-9]|[1-9][0-9]).*(?:[1-9]|[1-9][0-9])$/",
+        message:
+          "Must match this regex /^(?:[1-9]|[1-9][0-9]).*(?:[1-9]|[1-9][0-9])$/",
       },
       {
-        test: (p) => /[0-9]{8,19}/.test(p.replaceAll("-", "").replaceAll(" ", "")),
+        test: (p) =>
+          /[0-9]{8,19}/.test(p.replaceAll("-", "").replaceAll(" ", "")),
         message:
           "Must contain your credit card number\n(this information may or may not be shared with the maxxus corporation™ to commit fraud)",
       },
     ];
 
-    const failures = validationRules.filter((rule) => !rule.test(password)).map((rule) => rule.message);
+    const failures = validationRules
+      .filter((rule) => !rule.test(password))
+      .map((rule) => rule.message);
 
     if (failures.length > 0) {
       this.showNotification(failures.join("\n"), "error");
@@ -208,12 +213,20 @@ class AnnoyingSecurity {
   }
 
   revealNextRequirement() {
-    const unrevealedRequirements = this.passwordRequirements.filter((req) => !this.revealedRequirements.includes(req));
+    const unrevealedRequirements = this.passwordRequirements.filter(
+      (req) => !this.revealedRequirements.includes(req),
+    );
 
     if (unrevealedRequirements.length > 0) {
-      const newRequirement = unrevealedRequirements[Math.floor(Math.random() * unrevealedRequirements.length)];
+      const newRequirement =
+        unrevealedRequirements[
+          Math.floor(Math.random() * unrevealedRequirements.length)
+        ];
       this.revealedRequirements.push(newRequirement);
-      this.showNotification(`New requirement revealed: ${newRequirement}`, "info");
+      this.showNotification(
+        `New requirement revealed: ${newRequirement}`,
+        "info",
+      );
       this.updateRequirementsList();
     }
   }
@@ -315,11 +328,17 @@ class AnnoyingSecurity {
     }
 
     if (Math.random() < 0.1) {
-      this.showNotification("Everything was perfect, but Mercury is in retrograde. Please try again later.", "error");
+      this.showNotification(
+        "Everything was perfect, but Mercury is in retrograde. Please try again later.",
+        "error",
+      );
       return false;
     }
 
-    this.showNotification("Registration successful! Threat level: harmless", "info");
+    this.showNotification(
+      "Registration successful! Threat level: harmless",
+      "info",
+    );
     return true;
   }
 }

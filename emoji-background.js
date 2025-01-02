@@ -36,13 +36,26 @@ class EmojiBackground {
     } catch (error) {
       console.error("Error loading emojis:", error);
       // Fallback emojis in case the file can't be loaded
-      this.emojis = ["😀", "😃", "😄", "😁", "😆", "😅", "😂", "🤣", "🥲", "🥹", "☺️"];
+      this.emojis = [
+        "😀",
+        "😃",
+        "😄",
+        "😁",
+        "😆",
+        "😅",
+        "😂",
+        "🤣",
+        "🥲",
+        "🥹",
+        "☺️",
+      ];
     }
   }
 
   createEmoji() {
     const emoji = document.createElement("div");
-    const randomEmoji = this.emojis[Math.floor(Math.random() * this.emojis.length)];
+    const randomEmoji =
+      this.emojis[Math.floor(Math.random() * this.emojis.length)];
 
     emoji.textContent = randomEmoji;
     emoji.style.cssText = `
@@ -82,7 +95,8 @@ class EmojiBackground {
       const rect = emoji.getBoundingClientRect();
       const left = parseFloat(emoji.style.left);
       const top = parseFloat(emoji.style.top);
-      const rotation = parseFloat(emoji.style.transform.replace(/[^0-9-]+/g, "")) || 0;
+      const rotation =
+        parseFloat(emoji.style.transform.replace(/[^0-9-]+/g, "")) || 0;
 
       // Update position
       emoji.style.left = `${left - emoji.speedX}%`;

@@ -78,7 +78,9 @@ function traverse(node, undo) {
           node.nodeValue.trim().length != 1 &&
           !parseInt(node.nodeValue.trim())
         ) {
-          node.nodeValue = transform(clicked >= 69 ? node.nodeValue.toUpperCase() : node.nodeValue);
+          node.nodeValue = transform(
+            clicked >= 69 ? node.nodeValue.toUpperCase() : node.nodeValue,
+          );
         }
       }
       break;

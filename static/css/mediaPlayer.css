@@ -88,10 +88,14 @@ button {
   color: #000000;
   background-color: #b5b5b5;
   background-repeat: no-repeat;
-  background-image: linear-gradient(0deg, #000000, #000000), linear-gradient(0deg, #000000, #000000),
-    linear-gradient(0deg, #707070, #707070), linear-gradient(0deg, #707070, #707070),
-    linear-gradient(0deg, #ffffff, #ffffff), linear-gradient(0deg, #ffffff, #ffffff),
-    linear-gradient(0deg, #d9d9d9, #d9d9d9), linear-gradient(0deg, #d9d9d9, #d9d9d9);
+  background-image: linear-gradient(0deg, #000000, #000000),
+    linear-gradient(0deg, #000000, #000000),
+    linear-gradient(0deg, #707070, #707070),
+    linear-gradient(0deg, #707070, #707070),
+    linear-gradient(0deg, #ffffff, #ffffff),
+    linear-gradient(0deg, #ffffff, #ffffff),
+    linear-gradient(0deg, #d9d9d9, #d9d9d9),
+    linear-gradient(0deg, #d9d9d9, #d9d9d9);
   background-position:
     100% 0,
     0 100%,
@@ -125,10 +129,14 @@ button {
   flex-direction: column;
   background-color: #b5b5b5;
   background-repeat: no-repeat;
-  background-image: linear-gradient(0deg, #000000, #000000), linear-gradient(0deg, #000000, #000000),
-    linear-gradient(0deg, #707070, #707070), linear-gradient(0deg, #707070, #707070),
-    linear-gradient(0deg, #d9d9d9, #d9d9d9), linear-gradient(0deg, #d9d9d9, #d9d9d9),
-    linear-gradient(0deg, #ffffff, #ffffff), linear-gradient(0deg, #ffffff, #ffffff);
+  background-image: linear-gradient(0deg, #000000, #000000),
+    linear-gradient(0deg, #000000, #000000),
+    linear-gradient(0deg, #707070, #707070),
+    linear-gradient(0deg, #707070, #707070),
+    linear-gradient(0deg, #d9d9d9, #d9d9d9),
+    linear-gradient(0deg, #d9d9d9, #d9d9d9),
+    linear-gradient(0deg, #ffffff, #ffffff),
+    linear-gradient(0deg, #ffffff, #ffffff);
   background-position:
     100% 0,
     0 100%,
@@ -190,8 +198,10 @@ button {
   align-items: center;
   position: relative;
   background-repeat: no-repeat;
-  background-image: linear-gradient(0deg, #ffffff, #ffffff), linear-gradient(0deg, #ffffff, #ffffff),
-    linear-gradient(0deg, #707070, #707070), linear-gradient(0deg, #707070, #707070);
+  background-image: linear-gradient(0deg, #ffffff, #ffffff),
+    linear-gradient(0deg, #ffffff, #ffffff),
+    linear-gradient(0deg, #707070, #707070),
+    linear-gradient(0deg, #707070, #707070);
   background-position:
     100% 0,
     0 100%,
@@ -249,7 +259,10 @@ button {
     scale: .1;
     position: absolute;
   } */
-.player[data-status]:not([data-status="playing"]) .video-container .noise .dynamic,
+.player[data-status]:not([data-status="playing"])
+  .video-container
+  .noise
+  .dynamic,
 .player[data-status="playing"] .video-container .noise .static {
   display: none;
 }
@@ -269,8 +282,10 @@ button {
   height: 30px;
   cursor: pointer;
   background-repeat: no-repeat;
-  background-image: linear-gradient(0deg, #707070, #707070), linear-gradient(0deg, #707070, #707070),
-    linear-gradient(0deg, #ffffff, #ffffff), linear-gradient(0deg, #ffffff, #ffffff);
+  background-image: linear-gradient(0deg, #707070, #707070),
+    linear-gradient(0deg, #707070, #707070),
+    linear-gradient(0deg, #ffffff, #ffffff),
+    linear-gradient(0deg, #ffffff, #ffffff);
   background-position:
     10px 6px,
     10px 6px,
@@ -288,8 +303,10 @@ button {
   height: 30px;
   cursor: pointer;
   background-repeat: no-repeat;
-  background-image: linear-gradient(0deg, #707070, #707070), linear-gradient(0deg, #707070, #707070),
-    linear-gradient(0deg, #ffffff, #ffffff), linear-gradient(0deg, #ffffff, #ffffff);
+  background-image: linear-gradient(0deg, #707070, #707070),
+    linear-gradient(0deg, #707070, #707070),
+    linear-gradient(0deg, #ffffff, #ffffff),
+    linear-gradient(0deg, #ffffff, #ffffff);
   background-position:
     10px 6px,
     10px 6px,
@@ -302,11 +319,18 @@ button {
     calc(100% - 24px) 2px;
 }
 
-.player[data-status="paused"] .progress-bar input[type="range"]::-webkit-slider-runnable-track,
-.player[data-status="buffering"] .progress-bar input[type="range"]::-webkit-slider-runnable-track,
-.player[data-status="playing"] .progress-bar input[type="range"]::-webkit-slider-runnable-track {
+.player[data-status="paused"]
+  .progress-bar
+  input[type="range"]::-webkit-slider-runnable-track,
+.player[data-status="buffering"]
+  .progress-bar
+  input[type="range"]::-webkit-slider-runnable-track,
+.player[data-status="playing"]
+  .progress-bar
+  input[type="range"]::-webkit-slider-runnable-track {
   background-repeat: no-repeat;
-  background-image: linear-gradient(0deg, #707070, #707070), linear-gradient(0deg, #707070, #707070),
+  background-image: linear-gradient(0deg, #707070, #707070),
+    linear-gradient(0deg, #707070, #707070),
     linear-gradient(0deg, #ffffff, #ffffff);
   background-position:
     10px 6px,
@@ -318,11 +342,18 @@ button {
     calc(100% - 24px) 14px;
 }
 
-.player[data-status="paused"] .progress-bar input[type="range"]::-moz-range-track,
-.player[data-status="buffering"] .progress-bar input[type="range"]::-moz-range-track,
-.player[data-status="playing"] .progress-bar input[type="range"]::-moz-range-track {
+.player[data-status="paused"]
+  .progress-bar
+  input[type="range"]::-moz-range-track,
+.player[data-status="buffering"]
+  .progress-bar
+  input[type="range"]::-moz-range-track,
+.player[data-status="playing"]
+  .progress-bar
+  input[type="range"]::-moz-range-track {
   background-repeat: no-repeat;
-  background-image: linear-gradient(0deg, #707070, #707070), linear-gradient(0deg, #707070, #707070),
+  background-image: linear-gradient(0deg, #707070, #707070),
+    linear-gradient(0deg, #707070, #707070),
     linear-gradient(0deg, #ffffff, #ffffff);
   background-position:
     10px 6px,
@@ -441,7 +472,11 @@ button {
   height: 42px;
 }
 
-.player .controls .sound .sound-bar input[type="range"]::-webkit-slider-runnable-track {
+.player
+  .controls
+  .sound
+  .sound-bar
+  input[type="range"]::-webkit-slider-runnable-track {
   width: 98px;
   height: 42px;
   cursor: pointer;

@@ -30,8 +30,20 @@ function renderFractal() {
     let _xPos = Math.floor(Math.random() * _canvasWidth);
     let _yPos = Math.floor(Math.random() * _canvasHeight);
 
-    let _realPart = mapRange(_xPos, 0, _canvasWidth, _centerX - _zoomFactor, _centerX + _zoomFactor);
-    let _imagPart = mapRange(_yPos, 0, _canvasHeight, _centerY - _zoomFactor, _centerY + _zoomFactor);
+    let _realPart = mapRange(
+      _xPos,
+      0,
+      _canvasWidth,
+      _centerX - _zoomFactor,
+      _centerX + _zoomFactor,
+    );
+    let _imagPart = mapRange(
+      _yPos,
+      0,
+      _canvasHeight,
+      _centerY - _zoomFactor,
+      _centerY + _zoomFactor,
+    );
     let _iterations = mandelbrotSet(_realPart, _imagPart);
     let _color = generateColor(_iterations);
     _context.fillStyle = _color;
@@ -52,7 +64,10 @@ function mandelbrotSet(real, imag) {
   let _zReal = 0;
   let _zImag = 0;
   let _iterations = 0;
-  while (_zReal * _zReal + _zImag * _zImag <= 4 && _iterations < _maxIterations) {
+  while (
+    _zReal * _zReal + _zImag * _zImag <= 4 &&
+    _iterations < _maxIterations
+  ) {
     let _temp = _zReal * _zReal - _zImag * _zImag + _cReal;
     _zImag = 2 * _zReal * _zImag + _cImag;
     _zReal = _temp;

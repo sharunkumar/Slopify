@@ -23,12 +23,38 @@ function getRandomInt(max) {
   return Math.floor(Math.random() * max);
 }
 
-function isPointInRect(pointX, pointY, rectPosX, rectPosY, rectWidth, rectHeight) {
-  return rectPosX < pointX && pointX < rectWidth && rectPosY < pointY && pointY < rectHeight;
+function isPointInRect(
+  pointX,
+  pointY,
+  rectPosX,
+  rectPosY,
+  rectWidth,
+  rectHeight,
+) {
+  return (
+    rectPosX < pointX &&
+    pointX < rectWidth &&
+    rectPosY < pointY &&
+    pointY < rectHeight
+  );
 }
 
-function AABB(rect1PosX, rect1PosY, rect1Width, rect1Height, rect2PosX, rect2PosY, rect2Width, rect2Height) {
-  return rect1PosX < rect2Width && rect1Width > rect2PosX && rect1PosY < rect2Height && rect1Height > rect2PosY;
+function AABB(
+  rect1PosX,
+  rect1PosY,
+  rect1Width,
+  rect1Height,
+  rect2PosX,
+  rect2PosY,
+  rect2Width,
+  rect2Height,
+) {
+  return (
+    rect1PosX < rect2Width &&
+    rect1Width > rect2PosX &&
+    rect1PosY < rect2Height &&
+    rect1Height > rect2PosY
+  );
 }
 
 function BouncyObject(imagePath, width = 100, height = 100) {
@@ -75,7 +101,16 @@ function BouncyObject(imagePath, width = 100, height = 100) {
       .filter((ob) => ob != this)
       .forEach((ob) => {
         if (
-          AABB(this.x, oldY, this.x + this.width, oldY + this.height, ob.x, ob.y, ob.x + ob.width, ob.y + ob.height)
+          AABB(
+            this.x,
+            oldY,
+            this.x + this.width,
+            oldY + this.height,
+            ob.x,
+            ob.y,
+            ob.x + ob.width,
+            ob.y + ob.height,
+          )
         ) {
           this.dx *= -1;
           ob.dx *= -1;
@@ -83,7 +118,16 @@ function BouncyObject(imagePath, width = 100, height = 100) {
           return;
         }
         if (
-          AABB(oldX, this.y, oldX + this.width, this.y + this.height, ob.x, ob.y, ob.x + ob.width, ob.y + ob.height)
+          AABB(
+            oldX,
+            this.y,
+            oldX + this.width,
+            this.y + this.height,
+            ob.x,
+            ob.y,
+            ob.x + ob.width,
+            ob.y + ob.height,
+          )
         ) {
           this.dy *= -1;
           ob.dy *= -1;
@@ -98,7 +142,16 @@ function BouncyObject(imagePath, width = 100, height = 100) {
       .filter((ob) => ob != this)
       .forEach((ob) => {
         if (
-          AABB(this.x, this.y, this.x + this.width, this.y + this.height, ob.x, ob.y, ob.x + ob.width, ob.y + ob.height)
+          AABB(
+            this.x,
+            this.y,
+            this.x + this.width,
+            this.y + this.height,
+            ob.x,
+            ob.y,
+            ob.x + ob.width,
+            ob.y + ob.height,
+          )
         ) {
           objXAverage = (ob.x + ob.width) / 2;
           objYAverage = (ob.y + ob.height) / 2;
@@ -159,7 +212,11 @@ function init() {
   for (i = 0; i < calebNum; i++) {
     const randX = getRandomInt(canvasRef.width);
     const randY = getRandomInt(canvasRef.height);
-    const caleb = new BouncyObject("static/images/caleb.webp", calebWidth, calebHeight);
+    const caleb = new BouncyObject(
+      "static/images/caleb.webp",
+      calebWidth,
+      calebHeight,
+    );
     caleb.x = randX;
     caleb.y = randY;
     caleb.name = "Caleb" + i;
@@ -177,7 +234,16 @@ function init() {
 
   canvasRef.onmousedown = (e) => {
     drawnObjects.forEach((obj) => {
-      if (isPointInRect(e.offsetX, e.offsetY, obj.x, obj.y, obj.x + obj.width, obj.y + obj.height)) {
+      if (
+        isPointInRect(
+          e.offsetX,
+          e.offsetY,
+          obj.x,
+          obj.y,
+          obj.x + obj.width,
+          obj.y + obj.height,
+        )
+      ) {
         drawnObjects = drawnObjects.filter((o) => o != obj);
         mitosis(obj);
       }
@@ -190,7 +256,11 @@ let old = new Date().getTime();
 
 function mitosis(obj) {
   for (i = 0; i < calebSplitNum; i++) {
-    const caleb = new BouncyObject("static/images/caleb.webp", obj.width / calebSplitNum, obj.height / calebSplitNum);
+    const caleb = new BouncyObject(
+      "static/images/caleb.webp",
+      obj.width / calebSplitNum,
+      obj.height / calebSplitNum,
+    );
     caleb.name = obj.name + ">" + i;
     caleb.x = obj.x;
     caleb.y = obj.y;

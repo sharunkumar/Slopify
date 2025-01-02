@@ -148,7 +148,11 @@
     idleTime += 1;
 
     // every ~ 20 seconds
-    if (idleTime > 10 && Math.floor(Math.random() * 200) == 0 && idleAnimation == null) {
+    if (
+      idleTime > 10 &&
+      Math.floor(Math.random() * 200) == 0 &&
+      idleAnimation == null
+    ) {
       let avalibleIdleAnimations = ["sleeping", "scratchSelf"];
       if (nekoPosX < 32) {
         avalibleIdleAnimations.push("scratchWallW");
@@ -162,7 +166,10 @@
       if (nekoPosY > window.innerHeight - 32) {
         avalibleIdleAnimations.push("scratchWallS");
       }
-      idleAnimation = avalibleIdleAnimations[Math.floor(Math.random() * avalibleIdleAnimations.length)];
+      idleAnimation =
+        avalibleIdleAnimations[
+          Math.floor(Math.random() * avalibleIdleAnimations.length)
+        ];
     }
 
     switch (idleAnimation) {

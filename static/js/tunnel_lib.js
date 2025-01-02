@@ -34,7 +34,7 @@ class TunnelConnection {
         this.tunnelId,
         "keyExchange",
         this.#handleKeyExchange.bind(this),
-        null
+        null,
       );
       await this.keyExchange.init();
       this.keyExchange.connect();
@@ -52,7 +52,9 @@ class TunnelConnection {
     const writer = compressedStream.writable.getWriter();
     writer.write(input);
     writer.close();
-    const compressedArrayBuffer = await new Response(compressedStream.readable).arrayBuffer();
+    const compressedArrayBuffer = await new Response(
+      compressedStream.readable,
+    ).arrayBuffer();
     return this.#arrayBufferToBase64(compressedArrayBuffer);
   }
 
@@ -62,7 +64,9 @@ class TunnelConnection {
     const writer = decompressedStream.writable.getWriter();
     writer.write(compressedArrayBuffer);
     writer.close();
-    const decompressedArrayBuffer = await new Response(decompressedStream.readable).arrayBuffer();
+    const decompressedArrayBuffer = await new Response(
+      decompressedStream.readable,
+    ).arrayBuffer();
     const decoder = new TextDecoder();
     return decoder.decode(decompressedArrayBuffer);
   }
@@ -84,7 +88,9 @@ class TunnelConnection {
   }
 
   #arrayBufferToHex(buffer) {
-    return Array.prototype.map.call(new Uint8Array(buffer), (x) => ("00" + x.toString(16)).slice(-2)).join("");
+    return Array.prototype.map
+      .call(new Uint8Array(buffer), (x) => ("00" + x.toString(16)).slice(-2))
+      .join("");
   }
 
   async #decryptData(data, privateKey) {
@@ -98,7 +104,7 @@ class TunnelConnection {
         hash: "SHA-256",
       },
       false,
-      ["decrypt"]
+      ["decrypt"],
     );
 
     const encryptedBuffer = this.#hextoArrayBuffer(data);
@@ -108,7 +114,7 @@ class TunnelConnection {
         name: "RSA-OAEP",
       },
       privateKeyObj,
-      encryptedBuffer
+      encryptedBuffer,
     );
 
     const decryptedText = new TextDecoder().decode(decryptedBuffer);
@@ -127,7 +133,7 @@ class TunnelConnection {
         hash: "SHA-256",
       },
       false,
-      ["encrypt"]
+      ["encrypt"],
     );
 
     const dataBuffer = new TextEncoder().encode(data);
@@ -137,7 +143,7 @@ class TunnelConnection {
         name: "RSA-OAEP",
       },
       publicKeyObj,
-      dataBuffer
+      dataBuffer,
     );
 
     const encryptedHex = this.#arrayBufferToHex(encryptedBuffer);
@@ -158,10 +164,13 @@ class TunnelConnection {
         hash: "SHA-256",
       },
       true,
-      ["encrypt", "decrypt"]
+      ["encrypt", "decrypt"],
     );
     console.log("Key pair generated.");
-    const exportedKey = await window.crypto.subtle.exportKey("spki", this.keyPair.publicKey);
+    const exportedKey = await window.crypto.subtle.exportKey(
+      "spki",
+      this.keyPair.publicKey,
+    );
     this.keys[this.userID] = {
       publicKey: this.#arrayBufferToHex(exportedKey),
     };
@@ -170,9 +179,12 @@ class TunnelConnection {
 
   async #handleKeyExchange(event) {
     try {
-      let keyExchangeData = typeof event === "string" ? JSON.parse(event) : event;
+      let keyExchangeData =
+        typeof event === "string" ? JSON.parse(event) : event;
 
-      console.log(`Received key exchange event from userID: ${keyExchangeData.userID}`);
+      console.log(
+        `Received key exchange event from userID: ${keyExchangeData.userID}`,
+      );
 
       if (!keyExchangeData.userID || !keyExchangeData.publicKey) {
         console.error("Invalid key exchange data received");
@@ -203,7 +215,10 @@ class TunnelConnection {
   }
 
   async #exportPrivateKey() {
-    const exportedKey = await window.crypto.subtle.exportKey("pkcs8", this.keyPair.privateKey);
+    const exportedKey = await window.crypto.subtle.exportKey(
+      "pkcs8",
+      this.keyPair.privateKey,
+    );
     return this.#arrayBufferToHex(exportedKey);
   }
 
@@ -266,7 +281,10 @@ class TunnelConnection {
         if (message[this.userID]) {
           try {
             const privateKeyHex = await this.#exportPrivateKey();
-            const decryptedData = await this.#decryptData(message[this.userID], privateKeyHex);
+            const decryptedData = await this.#decryptData(
+              message[this.userID],
+              privateKeyHex,
+            );
             this.callback(decryptedData);
           } catch (error) {
             console.error("Decryption failed:", error);
@@ -286,8 +304,14 @@ class TunnelConnection {
       for (let userID in this.keys) {
         if (this.keys.hasOwnProperty(userID)) {
           if (userID === this.userID) return;
-          messageBody[userID] = await this.#encryptData(data, this.keys[userID].publicKey);
-          console.log(`Encrypted message for userID: ${userID}`, messageBody[userID]);
+          messageBody[userID] = await this.#encryptData(
+            data,
+            this.keys[userID].publicKey,
+          );
+          console.log(
+            `Encrypted message for userID: ${userID}`,
+            messageBody[userID],
+          );
         }
       }
 
