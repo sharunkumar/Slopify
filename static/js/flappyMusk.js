@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
   let rainbowMode = false;
 
   const elonImage = new Image();
-  elonImage.src = "static/images/elon_head.png";
+  elonImage.src = "/static/images/elon_head.png";
 
   const bird = {
     x: 40,
