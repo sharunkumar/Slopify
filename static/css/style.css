@@ -514,6 +514,10 @@ body.wokeMode {
     }
 }
 
+.nav-link {
+    cursor: pointer !important;
+}
+
 #testpopup {
     position: fixed;
     top: 0;
