@@ -33,7 +33,7 @@ For contributing, check **[CONTRIBUTING.md](https://github.com/DishpitDev/Slopif
 
 <br>
 
-## Current features
+## Current Features
 * Catgirl downloader via [nekos.best](https://nekos.best)
 * Rust
 * "Current features" list
@@ -60,9 +60,8 @@ For contributing, check **[CONTRIBUTING.md](https://github.com/DishpitDev/Slopif
 * Stockify (random stock investment decisions)
 * Enterprise-level security
 * Credit card requirement for security
-* Fourier_transform_time_and_frequency_domains_(small).gif
+* `Fourier_transform_time_and_frequency_domains_(small).gif`
 * Virtual Fish Tank
 * Custom cursor with flags in the trail
 * “Twittermoanials” section (Twitter-style testimonials)
-
-<br>
+* Locked In Alien video in Windows95-style media player in every 404 (i.e. non-existant) page, e.g. [https://slopify.dev/404-420-69](https://slopify.dev/404-420-69)
