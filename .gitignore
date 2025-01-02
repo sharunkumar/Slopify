@@ -176,3 +176,8 @@ dist
 
 # Rust target
 /target
+
+# lock-files
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
