@@ -29,11 +29,12 @@ The Website is a creative playground for shipping slop.
 The app is a dedicated chat app for talking about shipping slop (or whatever tf else you wanna talk about).
 
 ## Contributing
-For coutributing, check **[CONTRIBUTING.md](https://github.com/DishpitDev/Slopify/blob/main/CONTRIBUTING.md)**
+For contributing, check **[CONTRIBUTING.md](https://github.com/DishpitDev/Slopify/blob/main/CONTRIBUTING.md)**
 
 <br>
 
 ## Current features
+* Catgirl downloader via [nekos.best](https://nekos.best)
 * Rust
 * "Current features" list
 * Chat
