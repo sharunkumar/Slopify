@@ -15,7 +15,9 @@ body {
       rgba(255, 0, 0, 1) 100%
     );
   animation: rainbow_animation 6s ease-in-out infinite;
-  background-size: 200% 100%, 400% 100%;
+  background-size:
+    200% 100%,
+    400% 100%;
 }
 
 #shadowBox {
@@ -34,14 +36,7 @@ body {
   letter-spacing: 5px;
 }
 .rainbow_text_animated {
-  background: linear-gradient(
-    to right,
-    #6666ff,
-    #0099ff,
-    #00ff00,
-    #ff3399,
-    #6666ff
-  );
+  background: linear-gradient(to right, #6666ff, #0099ff, #00ff00, #ff3399, #6666ff);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;

@@ -284,4 +284,3 @@ function onKeyUp(event) {
       break;
   }
 }
-

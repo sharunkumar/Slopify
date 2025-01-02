@@ -11,8 +11,8 @@ function playVideo(videoName) {
     process.platform === "darwin"
       ? `afplay "${videoPath}"` // macOS built-in audio player
       : process.platform === "win32"
-      ? `start /min wmplayer "${videoPath}"` // Windows Media Player minimized
-      : `paplay "${videoPath}"`; // PulseAudio on Linux
+        ? `start /min wmplayer "${videoPath}"` // Windows Media Player minimized
+        : `paplay "${videoPath}"`; // PulseAudio on Linux
 
   return new Promise((resolve) => {
     exec(command, (error) => {
@@ -22,8 +22,8 @@ function playVideo(videoName) {
           process.platform === "darwin"
             ? `open "${videoPath}"`
             : process.platform === "win32"
-            ? `start "${videoPath}"`
-            : `xdg-open "${videoPath}"`;
+              ? `start "${videoPath}"`
+              : `xdg-open "${videoPath}"`;
 
         exec(fallbackCommand, (fallbackError) => {
           if (fallbackError) {
@@ -400,4 +400,3 @@ checkCommit().catch((error) => {
   console.error("Error:", error);
   process.exit(1);
 });
-

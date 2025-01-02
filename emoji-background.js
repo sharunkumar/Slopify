@@ -109,4 +109,3 @@ class EmojiBackground {
 window.addEventListener("DOMContentLoaded", () => {
   new EmojiBackground();
 });
-

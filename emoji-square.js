@@ -236,4 +236,3 @@ for (let i = 0; i < size; i++) {
   console.log(); // Add blank line between rows
 }
 console.log(" ".repeat(4));
-
