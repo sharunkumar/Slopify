@@ -275,25 +275,17 @@
         </div>
       </div>
 
-      <div id="slopTVContainer">
-        <div class="marquee">
-          style="
-            background-color: white;
-            color: black;
-            font-family: serif;
-            transform: scaleY(1.5);
-          "
-        >
-          <h1>SlopTV ! Watch free tv online below</h1>
-        </div>
-        <div class="sloptv-iframe-container">
-          <a href="/tv.html" title="Go to SlopTV" class="sloptv-overlay"></a>
-          <iframe
-            src="/tv.html"
-            id="SlopTVFrame"
-            title="SlopTV Preview"
-            class="sloptv-preview"
-          ></iframe>
+      <div class="marquee" id="slopTVContainer">
+        <div id="slopTVInnerFrame">
+          SlopTV! Watch free TV online below
+          <div id="sloptv-iframe-container">
+            <a href="/tv.html" title="Go to SlopTV" id="sloptv-overlay"></a>
+            <iframe
+              src="/tv.html"
+              id="SlopTVFrame"
+              title="SlopTV Preview"
+            ></iframe>
+          </div>
         </div>
       </div>
 
