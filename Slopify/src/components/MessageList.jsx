@@ -21,7 +21,7 @@ export default function MessageList() {
           attachDisplayName(newMessage).then((msgWithDisplayName) => {
             setMessages((prev) => [msgWithDisplayName, ...prev]);
           });
-        },
+        }
       )
       .subscribe();
 
@@ -33,16 +33,23 @@ export default function MessageList() {
   const attachDisplayName = async (message) => {
     const { data: profile, error } = await supabase
       .from("profiles")
-      .select("display_name")
+      .select("display_name, profile_color")
       .eq("id", message.user_id)
       .single();
 
     if (error) {
-      console.error("Error fetching display name:", error.message);
+      console.error(
+        "Error fetching display name and profile color:",
+        error.message
+      );
       throw new Error("Unable to load user profile");
     }
 
-    return { ...message, display_name: profile.display_name };
+    return {
+      ...message,
+      display_name: profile.display_name,
+      profile_color: profile.profile_color,
+    };
   };
 
   const fetchMessages = async (olderThan = null) => {
@@ -66,7 +73,7 @@ export default function MessageList() {
     } else {
       try {
         const messagesWithDisplayNames = await Promise.all(
-          data.map(attachDisplayName),
+          data.map(attachDisplayName)
         );
         setMessages((prev) => [...prev, ...messagesWithDisplayNames]);
         if (data.length < PAGE_SIZE) {
@@ -113,7 +120,9 @@ export default function MessageList() {
                 alignItems: "center",
               }}
             >
-              <strong>{msg.display_name}</strong>
+              <strong style={{ color: msg.profile_color }}>
+                {msg.display_name}
+              </strong>
               <small>{new Date(msg.created_at).toLocaleString()}</small>
             </div>
             <p style={{ margin: 0, marginTop: "0.5rem" }}>{msg.content}</p>
