@@ -44,7 +44,7 @@ export default function ChatPage() {
 
   return (
     <div>
-      <h1>Welcome back to Slopify, {displayName}!</h1>
+      <h2>Welcome back to Slopify, {displayName}!</h2>
       <MessageList />
       <MessageForm />
     </div>

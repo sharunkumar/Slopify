@@ -13,8 +13,8 @@
     "windows": [
       {
         "title": "Slopify",
-        "minWidth": 800,
-        "minHeight": 600,
+        "minWidth": 900,
+        "minHeight": 800,
         "center": true,
         "focus": true
       }

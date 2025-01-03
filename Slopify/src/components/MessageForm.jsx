@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { supabase } from "../supabaseClient";
+import Button from "./Button";
 
 export default function MessageForm() {
   const [message, setMessage] = useState("");
@@ -38,9 +39,12 @@ export default function MessageForm() {
         onChange={(e) => setMessage(e.target.value)}
         style={{ padding: "0.5rem", width: "80%" }}
       />
-      <button type="submit" style={{ padding: "0.5rem" }}>
-        Send
-      </button>
+      <Button
+        action="submit"
+        content="Send"
+        background="#458588"
+        color="white"
+      />
     </form>
   );
 }
