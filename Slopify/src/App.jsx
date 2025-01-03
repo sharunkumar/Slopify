@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import ChatPage from "./pages/ChatPage";
+import SlopboxPage from "./pages/Slopbox";
 import "./styles/global.css";
 
 export default function App() {
@@ -11,6 +12,7 @@ export default function App() {
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/chat" element={<ChatPage />} />
+            <Route path="/slopbox" element={<SlopboxPage />} />
           </Routes>
         </Router>
       </main>

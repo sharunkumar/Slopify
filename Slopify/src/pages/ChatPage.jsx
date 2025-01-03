@@ -3,6 +3,7 @@ import { supabase } from "../supabaseClient";
 import { useNavigate } from "react-router-dom";
 import MessageList from "../components/MessageList";
 import MessageForm from "../components/MessageForm";
+import Button from "../components/Button";
 
 export default function ChatPage() {
   const [displayName, setDisplayName] = useState(null);
@@ -42,11 +43,24 @@ export default function ChatPage() {
     return <div>Loading...</div>;
   }
 
+  const navToSlopbox = async (e) => {
+    e.preventDefault();
+    navigate("/slopbox");
+  };
+
   return (
     <div>
       <h2>Welcome back to Slopify, {displayName}!</h2>
       <MessageList />
       <MessageForm />
+      <form onSubmit={navToSlopbox}>
+        <Button
+          action="submit"
+          content="SLOPBOX"
+          background="#FF00FF"
+          color="black"
+        />
+      </form>
     </div>
   );
 }
