@@ -11,6 +11,13 @@ export default function MessageList() {
   const [scrolling, setScrolling] = useState(false);
 
   useEffect(() => {
+    const messageBox = document.getElementById("message-box");
+    if (messageBox) {
+      messageBox.scrollTop = messageBox.scrollHeight;
+    }
+  }, [messages])
+
+  useEffect(() => {
     fetchMessages();
     const subscription = supabase
       .channel("realtime:messages")
@@ -20,7 +27,7 @@ export default function MessageList() {
         (payload) => {
           const newMessage = payload.new;
           attachDisplayName(newMessage).then((msgWithDisplayName) => {
-            setMessages((prev) => [msgWithDisplayName, ...prev]);
+            setMessages((prev) => [...prev, msgWithDisplayName]);
           });
         },
       )
@@ -101,6 +108,7 @@ export default function MessageList() {
 
   return (
     <div
+      id="message-box"
       style={{
         height: "400px",
         overflowY: "auto",
@@ -111,7 +119,7 @@ export default function MessageList() {
       {loading ? (
         <p>Loading...</p>
       ) : (
-        messages.map((msg) => (
+        messages.slice().reverse().map((msg) => (
           <Message
             key={msg.id}
             name={msg.display_name}
