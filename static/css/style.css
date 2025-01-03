@@ -718,6 +718,7 @@ body.wokeMode {
 #ifrm_shadertoy,
 #slopcursionFrame,
 #ytplayer,
+#ytplayer2,
 #counterWidget,
 #soundcloudPlayer {
   border: none;
@@ -748,6 +749,7 @@ body.wokeMode {
   from {
     transform: translateX(100%);
   }
+
   to {
     transform: translateX(-100%);
   }
@@ -767,4 +769,10 @@ body.wokeMode {
   display: block;
   z-index: 0;
   border: none;
+}
+
+#gravityButton {
+  background-color: red;
+  font-family: fantasy;
+  font-size: 4em;
 }

@@ -10,6 +10,12 @@ export default function RegisterForm() {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
+  const generateRandomHexColor = () => {
+    return `#${Math.floor(Math.random() * 16777215)
+      .toString(16)
+      .padStart(6, "0")}`;
+  };
+
   const handleRegister = async (e) => {
     e.preventDefault();
     setError("");
@@ -51,10 +57,13 @@ export default function RegisterForm() {
         return;
       }
 
+      const randomColor = generateRandomHexColor();
+
       const { error: profileError } = await supabase.from("profiles").insert([
         {
           id: data.user.id,
           display_name: displayName,
+          profile_color: randomColor,
         },
       ]);
 

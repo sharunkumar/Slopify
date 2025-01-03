@@ -13,15 +13,34 @@
     <link rel="stylesheet" href="static/css/page-nav.css" />
     <link rel="stylesheet" href="static/css/error.css" />
     <!-- TODO: don't pull this from CDN -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"
+      referrerpolicy="no-referrer"
+      crossorigin="anonymous"
+    ></script>
     <!-- TODO: don't pull this from CDN -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"
+      referrerpolicy="no-referrer"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/xterm@4.19.0/lib/xterm.js"
+      referrerpolicy="no-referrer"
+      crossorigin="anonymous"
+    ></script>
     <meta property="og:image" content="https://sleepie.dev/rock.gif" />
     <meta property="og:type" content="video.other" />
     <meta property="og:video:url" content="https://sleepie.dev/looking.mp4" />
     <!--https://sleepie.dev/therock.gif-->
     <meta property="og:video:width" content="640" />
     <meta property="og:video:height" content="360" />
+
+    <!-- TODO: avoid CDN -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/xterm@4.19.0/css/xterm.css"
+    />
 
     <!-- TODO: figure out which PRs this was actually part of -->
     <link rel="stylesheet" href="static/css/style.css" />
@@ -54,6 +73,9 @@
 
     <!-- world map styles -->
     <link rel="stylesheet" href="static/css/world_map/styles.css" />
+
+    <!-- luxembourg styles -->
+    <link rel="stylesheet" href="static/css/luxembourg.css" />
 
     <!-- Q: Do we need this? -->
     <script>
@@ -114,7 +136,6 @@
   </head>
 
   <body>
-    <a href="/chatroom.html">CLICK HERE FOR NEW EXPERIMENTAL CHAT!!!</a>
     <div
       data-bs-theme="dark"
       class="use-bootstrap"
@@ -303,18 +324,43 @@
       <!-- Epileptic Mode Button -->
       <button class="top-right-button" id="epicButton">Bustin Mode</button>
       <button class="bottom-left-button" onclick="owoify()">What?</button>
+      <button class="gravitybutton" onclick="activateGravity()">
+        ACTIVATE PHYSICS MODE
+      </button>
       <button
         class="bottom-right-button"
         id="addMoreWokeToTheWebpageSimplyBecauseICanAndUhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh"
       >
         waiter waiter! more woke please
       </button>
+      <div
+        id="terminal-modal"
+        class="window window--active"
+        role="alertdialog"
+        aria-modal="true"
+        aria-labelledby="error-label-0"
+        aria-describedby="error-desc-0"
+        data-window
+      >
+        <div class="window__header" data-header>
+          <div id="error-label-0" class="window__title" data-label>
+            Bash Knoweldge Check
+          </div>
+          <button class="window__button" id="terminalCloseButton" type="button">
+            <span class="window__sprite window__sprite--close"></span>
+            <span class="window__sr">Close</span>
+          </button>
+        </div>
+        <div class="window__body">
+          <div id="term" class="Terminal"></div>
+        </div>
+      </div>
       <a href="astolfo.html" style="text-align: center"
         >ASTOLFOOOO (,,&gt;﹏&lt;,,)</a
       >
       <a href="#maincontent" class="skipnav">Skip to Content (Press Enter)</a>
 
-      <div id="security-overlay">
+      <div id="security-overlay" class="security-overlay">
         <div id="security-overlay-inner">
           <h2 id="security-overlay-title">🔒 Welcome to Slopify 🔒</h2>
 
@@ -351,7 +397,10 @@
         </div>
       </div>
 
-      <header>
+      <header id="schisse">
+        <div id="megaheader">
+          <button class="creationButton" id="creation">Creation!</button>
+        </div>
         <div class="marquee">
           <img src="static/images/epic-logo.gif" alt="Slopify animated logo" />
         </div>
@@ -371,6 +420,7 @@
             of software"</em
           >
         </p>
+        <canvas id="noise-cloud"></canvas>
         <div id="page-nav">
           <label class="hamburger-menu">
             <input type="checkbox" aria-label="Menu" />
@@ -385,7 +435,7 @@
               <a href="/god.html">God</a>
               <a href="/touhouproject.html">Touhou Project</a>
               <a href="/mizdiary.html">miz's weekly diary</a>
-              <a href="/games.html">Games</a>
+              <a href="/games/index.html">Games</a>
             </nav>
           </aside>
         </div>
@@ -429,7 +479,12 @@
         </div>
         <div>
           <h1>Support A Creator</h1>
-          <img src="static/images/sac.png" alt="Support A Creator" />
+          <img
+            src="static/images/sac.png"
+            alt="Support A Creator"
+            decoding="async"
+            loading="lazy"
+          />
         </div>
         <div>
           <p>
@@ -442,13 +497,23 @@
             src="static/images/bobi.jpg"
             alt="Bobi"
             class="gallery-item gallery-item-custom"
+            decoding="async"
+            loading="lazy"
           />
           <img
             src="static/images/kofte.jpg"
             alt="Kofte"
             class="gallery-item gallery-item-custom"
+            decoding="async"
+            loading="lazy"
           />
-          <img src="static/images/frog.webp" alt="Frog" class="gallery-item" />
+          <img
+            src="static/images/frog.webp"
+            alt="Frog"
+            class="gallery-item"
+            decoding="async"
+            loading="lazy"
+          />
         </div>
 
         <canvas id="caleb-canvas"></canvas>
@@ -466,6 +531,9 @@
             title="Counter Widget"
             alt="Visit counter For Websites"
             id="counterWidget"
+            decoding="async"
+            loading="eager"
+            crossorigin="anonymous"
         /></a>
         <button id="worseThemeButton">This can't get any worse, right?</button>
       </header>
@@ -498,8 +566,7 @@
             <blockquote class="twitter-tweet" data-theme="dark">
               <p lang="en" dir="ltr">hahahaha this is fire</p>
               &mdash; ily⚡️ (@0xIlyy)
-              <a
-                href="https://twitter.com/0xIlyy/status/1873179308153553050?ref_src=twsrc%5Etfw"
+              <a href="https://twitter.com/0xIlyy/status/1873179308153553050"
                 >December 29, 2024</a
               >
             </blockquote>
@@ -513,8 +580,7 @@
                 <a href="https://t.co/FYpWT5dycz">pic.twitter.com/FYpWT5dycz</a>
               </p>
               &mdash; Aterron (@_aterron_)
-              <a
-                href="https://twitter.com/_aterron_/status/1873444464255254743?ref_src=twsrc%5Etfw"
+              <a href="https://twitter.com/_aterron_/status/1873444464255254743"
                 >December 29, 2024</a
               >
             </blockquote>
@@ -525,7 +591,7 @@
               </p>
               &mdash; colin ricardo (@_colinricardo)
               <a
-                href="https://twitter.com/_colinricardo/status/1873429683368505464?ref_src=twsrc%5Etfw"
+                href="https://twitter.com/_colinricardo/status/1873429683368505464"
                 >December 29, 2024</a
               >
             </blockquote>
@@ -537,7 +603,7 @@
               </p>
               &mdash; Gil (@TylerGilman01)
               <a
-                href="https://twitter.com/TylerGilman01/status/1873429461410234849?ref_src=twsrc%5Etfw"
+                href="https://twitter.com/TylerGilman01/status/1873429461410234849"
                 >December 29, 2024</a
               >
             </blockquote>
@@ -548,16 +614,27 @@
           <img
             src="static/images/penguin.webp"
             alt="An image of a Club Penguin character"
+            decoding="async"
+            loading="lazy"
           />
           <img
             src="https://secret.kgncengiz.com/F.jpg"
             alt="An image of Yaoi artwork"
+            decoding="async"
+            loading="lazy"
           />
           <img
             src="static/images/Jesus.png"
             alt="Three images of Jesus Christ next to each other"
+            decoding="async"
+            loading="lazy"
           />
-          <img src="static/images/raccoon.jpg" alt="An image of a raccoon" />
+          <img
+            src="static/images/raccoon.jpg"
+            alt="An image of a raccoon"
+            decoding="async"
+            loading="lazy"
+          />
         </div>
         <div class="section">
           <div class="center">
@@ -572,6 +649,8 @@
         <img
           src="https://secret.kgncengiz.com/F.jpg"
           alt="An image of Yaoi artwork"
+          decoding="async"
+          loading="lazy"
         />
 
         <div class="importante" id="mandelbrot-wrapper">
@@ -606,6 +685,8 @@
           >
             <img
               src="https://upload.wikimedia.org/wikipedia/commons/2/2b/Fourier_series_and_transform.gif"
+              decoding="async"
+              loading="lazy"
               alt="Function s(t) (in red) is an approximation of a square wave formed from just 6 sine functions of different amplitudes and harmonically-related frequencies. Their summation is called a Fourier series. The Fourier transform, F(w) (in blue), which depicts amplitude vs frequency, reveals the 6 frequencies and their amplitudes."
             />
           </a>
@@ -626,6 +707,8 @@
           <img
             src="data:,"
             id="stock_img"
+            decoding="async"
+            loading="lazy"
             alt="Stock buy or sell indicator image"
           />
         </div>
@@ -716,6 +799,8 @@
             >
               <img
                 src="static/images/come_here_marisa_kirisame.gif"
+                decoding="async"
+                loading="lazy"
                 alt="Marisa Kirisame from Touhou Project"
               />
             </a>
@@ -748,6 +833,17 @@
           ></iframe>
         </div>
 
+        <iframe
+          width="560"
+          height="315"
+          src="https://www.youtube.com/embed/GXLRGjfykM8?si=AZovsiW7K6P4iTOu"
+          title="YouTube video player - Hawk Tuah Meme Sound Effect"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          id="ytplayer2"
+          referrerpolicy="strict-origin-when-cross-origin"
+          allowfullscreen
+        ></iframe>
+
         <div id="slopcursion">
           <h2>So you can Slopify while you Slopify</h2>
           <iframe
@@ -776,36 +872,48 @@
             alt="Banner 1"
             width="88"
             height="31"
+            decoding="async"
+            loading="lazy"
           />
           <img
             src="static/images/heimdal.png"
             alt="Banner 2"
             width="88"
             height="31"
+            decoding="async"
+            loading="lazy"
           />
           <img
             src="static/images/bestview.gif"
             alt="Banner 3"
             width="88"
             height="31"
+            decoding="async"
+            loading="lazy"
           />
           <img
             src="static/images/w95link.gif"
             alt="Banner 4"
             width="88"
             height="31"
+            decoding="async"
+            loading="lazy"
           />
           <img
             src="static/images/800x600.gif"
             alt="Banner 5"
             width="88"
             height="31"
+            decoding="async"
+            loading="lazy"
           />
           <img
             src="static/images/lowtiergod.gif"
             alt="Banner 6"
             width="88"
             height="31"
+            decoding="async"
+            loading="lazy"
           />
           <!-- this was originally a gif that's ~500 bytes, but I wanted to slow down page load even more by serving a 3 kb png file :3 -->
           <img
@@ -813,6 +921,8 @@
             alt="Banner 7"
             width="88"
             height="31"
+            decoding="async"
+            loading="lazy"
           />
         </div>
 
@@ -842,6 +952,9 @@
               src="static/images/win95error.png"
               width="32"
               height="32"
+              decoding="async"
+              loading="lazy"
+              crossorigin="anonymous"
             />
             <p id="error-desc-0" class="window__body-text" data-desc></p>
           </div>
@@ -939,6 +1052,41 @@
         data-show-count="false"
         >Follow @eepyfemboi</a
       >
+
+      <div
+        id="win2k-container"
+        class="window window--active"
+        style="
+          position: fixed;
+          bottom: 20px;
+          left: 20px;
+          width: 600px;
+          height: 400px;
+          z-index: 1050;
+        "
+      >
+        <div class="window__header" data-header>
+          <div class="window__title">Windows 2000</div>
+          <button
+            class="window__button"
+            type="button"
+            onclick="document.getElementById('win2k-container').remove()"
+          >
+            <span class="window__sprite window__sprite--close"></span>
+            <span class="window__sr">Close</span>
+          </button>
+        </div>
+        <div
+          class="window__body"
+          style="padding: 0; height: calc(100% - 31px); overflow: hidden"
+        >
+          <iframe
+            src="https://bellard.org/jslinux/vm.html?url=win2k.cfg&mem=192&graphic=1&w=1024&h=768"
+            style="width: 100%; height: 100%; border: none"
+            title="Windows 2000 Emulator"
+          ></iframe>
+        </div>
+      </div>
     </div>
 
     <!-- error script -->
@@ -1015,7 +1163,12 @@
     <!-- oneko scripts -->
     <script src="static/js/oneko.js"></script>
     <script src="static/js/icey-oneko.js"></script>
-    <script async src="https://sleepie.uk/oneko.js"></script>
+    <script
+      async
+      src="https://sleepie.uk/oneko.js"
+      referrerpolicy="no-referrer"
+      crossorigin="anonymous"
+    ></script>
 
     <!-- slopify vids loader -->
     <script async src="https://sleepie.dev/slopifyvids/loader.js"></script>
@@ -1027,7 +1180,12 @@
     <script src="static/js/bouncy-caleb.js"></script>
 
     <!-- Twitter widgets -->
-    <script async src="https://platform.twitter.com/widgets.js"></script>
+    <script
+      async
+      src="https://platform.twitter.com/widgets.js"
+      referrerpolicy="no-referrer"
+      crossorigin="anonymous"
+    ></script>
 
     <!-- mandelbrot script -->
     <script src="static/js/mandelbrot_uwu.js"></script>
@@ -1077,13 +1235,47 @@
     <!-- cookie banners script -->
     <script src="static/js/cookieBanners.js"></script>
 
-    <!-- web3 script -->
-    <script src="static/js/web3.js"></script>
-
-    <!-- dyslexifying script -->
-    <script src="static/js/dyslexia.js"></script>
-
     <!-- crypto wallet script -->
     <script src="static/js/crypto_wallet.js"></script>
+
+    <!-- noise cloud background script -->
+    <script src="static/js/noise-cloud.js"></script>
+
+    <!-- reverse scroll direction script -->
+    <script src="static/js/reverseScroll.js" defer></script>
+
+    <!-- xterm script -->
+    <script src="static/js/xterm.js"></script>
+
+    <!-- wednesday script -->
+    <script src="static/js/wednesday.js"></script>
+
+    <!--Epic physics mode stuff-->
+    <script src="static/js/jquery172.js"></script>
+    <script src="static/js/jGravity.js"></script>
+    <script src="static/js/epicPhysics.js"></script>
+
+    <!-- luxembourg script -->
+    <script src="static/js/luxembourg.js"></script>
+
+    <!-- Humans are NOW welcome to this site - Management at The Intergalactic Federation. -->
+    <!--               _                      _______                      _               -->
+    <!--            _dMMMb._              .adOOOOOOOOOba.              _,dMMMb_            -->
+    <!--           dP'  ~YMMb            dOOOOOOOOOOOOOOOb            aMMP~  `Yb           -->
+    <!--                  ~"Mb          dOOOOOOOOOOOOOOOOOb          dM"~      V           -->
+    <!--                    `Mb.       dOOOOOOOOOOOOOOOOOOOb       ,dM'                    -->
+    <!--                     `YMb._   |OOOOOOOOOOOOOOOOOOOOO|   _,dMP'                     -->
+    <!--                __     `YMMM| OP'~"YOOOOOOOOOOOP"~`YO |MMMP'     __                -->
+    <!--              ,dMMMb.     ~~' OO     `YOOOOOP'     OO `~~     ,dMMMb.              -->
+    <!--           _,dP~  `YMba_      OOb      `OOO'      dOO      _aMMP'  ~Yb._           -->
+    <!--                       `YMMMM\`OOOo     OOO     oOOO'/MMMMP'                       -->
+    <!--               ,aa.     `~YMMb `OOOb._,dOOOb._,dOOO'dMMP~'       ,aa.              -->
+    <!--             ,dMYYMba._         `OOOOOOOOOOOOOOOOO'          _,adMYYMb.            -->
+    <!--            ,MP'   `YMMba._      OOOOOOOOOOOOOOOOO       _,adMMP'   `YM.           -->
+    <!--            MP'        ~YMMMba._ YOOOOPVVVVVYOOOOP  _,adMMMMP~       `YM           -->
+    <!--            YMb           ~YMMMM\`OOOOI`````IOOOOO'/MMMMP~           dMP           -->
+    <!--             `Mb.           `YMMMb`OOOI,,,,,IOOOO'dMMMP'           ,dM'            -->
+    <!--               `'                  `OObNNNNNdOO'                   `'              -->
+    <!--                                     `~OOOOO~'                                     -->
   </body>
 </html>

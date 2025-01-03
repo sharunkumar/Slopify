@@ -147,5 +147,5 @@ document.addEventListener("keyup", (event) => {
 });
 
 window.onload = function () {
-  console.log("removed because smelly license nerds are complaining")
+  console.log("removed because smelly license nerds are complaining");
 };
