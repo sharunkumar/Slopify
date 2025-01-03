@@ -172,9 +172,6 @@
                 <a class="nav-link" href="/health-check.html">Health Check</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/katamari.html">Katamari</a>
-              </li>
-              <li class="nav-item">
                 <a class="nav-link" href="/leaderboard.html">Leaderboard</a>
               </li>
               <li class="nav-item">
@@ -193,6 +190,9 @@
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="/uwu.html">UwU</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/games">Games</a>
               </li>
             </ul>
           </div>
@@ -392,6 +392,7 @@
               <a href="/god.html">God</a>
               <a href="/touhouproject.html">Touhou Project</a>
               <a href="/mizdiary.html">miz's weekly diary</a>
+              <a href="/games.html">Games</a>
             </nav>
           </aside>
         </div>
@@ -597,14 +598,6 @@
         <div id="sac-container">
           <img src="static/images/sac.png" alt="SAC" id="sac-image" />
         </div>
-        <div class="katamari-container">
-          <iframe
-            id="katamariFrame"
-            src="katamari.html"
-            title="A game where you roll a ball around on a field."
-          ></iframe>
-        </div>
-        <script src="katamari-loader.js"></script>
         <div class="importante">
           <div class="section">
             <canvas id="glCanvas" width="400" height="400"></canvas>
@@ -673,19 +666,6 @@
               loading="lazy"
             ></iframe>
           </div>
-
-          <div style="margin: auto; width: 75%">
-            <canvas
-              id="nes-canvas"
-              width="256"
-              height="240"
-              style="width: 100%"
-            ></canvas>
-          </div>
-          <p>
-            DPad: Arrow keys<br />Start: Return, Select: Tab<br />A Button: A, B
-            Button: S
-          </p>
         </div>
         <div class="section">
           <h2>Things people should know</h2>
@@ -775,14 +755,6 @@
           ></iframe>
         </div>
 
-        <div class="section">
-          <h2>Flappy Musk</h2>
-          <canvas id="flappyMuskCanvas" width="400" height="600"></canvas>
-          <br />
-          <button id="flappyMuskButton">Make it gayer?</button>
-          <p>Click to make Elon Musk fly! Avoid the obstacles!</p>
-        </div>
-
         <div id="slopcursion">
           <h2>So you can Slopify while you Slopify</h2>
           <iframe
@@ -842,7 +814,7 @@
             width="88"
             height="31"
           />
-          <!-- this was originally a gif thats ~500 bytes, but i wanted to slow down page load even more by serving a 3 kb png file :3 -->
+          <!-- this was originally a gif that's ~500 bytes, but I wanted to slow down page load even more by serving a 3 kb png file :3 -->
           <img
             src="static/images/catgirl_yuri.png"
             alt="Banner 7"
@@ -1064,9 +1036,6 @@
     <!-- Twitter widgets -->
     <script async src="https://platform.twitter.com/widgets.js"></script>
 
-    <!-- Flappy Musk script -->
-    <script src="static/js/flappyMusk.js"></script>
-
     <!-- mandelbrot script -->
     <script src="static/js/mandelbrot_uwu.js"></script>
 
@@ -1117,9 +1086,5 @@
 
     <!-- crypto wallet script -->
     <script src="static/js/crypto_wallet.js"></script>
-
-    <!-- NES scripts -->
-    <script src="https://unpkg.com/jsnes/dist/jsnes.min.js"></script>
-    <script src="static/js/nes-embed.js"></script>
   </body>
 </html>
