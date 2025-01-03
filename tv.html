@@ -68,11 +68,13 @@
 
                 newImage.onerror = function (e) {
                     console.log('Error loading image, will try again next interval');
-                    console.log(e)
+                    console.log(e);
+                    feedImage.src = '/static/images/sloptv/error.webp';
+                    return
                 };
 
                 feedImage.classList.add('loading');
-                newImage.src = `https://sloptv.infernity.dev/screenshot?t=${timestamp}`;
+                newImage.src = `https://127.0.0.1:3000/screenshot?t=${timestamp}`;
             }
 
             // Start the refresh cycle
