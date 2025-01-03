@@ -1,6 +1,5 @@
 import LoginForm from "../components/LoginForm";
 import RegisterForm from "../components/RegisterForm";
-import "../styles/HomePage.css";
 
 export default function HomePage() {
   return (

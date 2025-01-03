@@ -129,7 +129,6 @@ export default function MessageList() {
           </div>
         ))
       )}
-      {!hasMore && <p>No more messages</p>}
     </div>
   );
 }
