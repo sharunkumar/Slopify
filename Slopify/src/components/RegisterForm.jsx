@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { supabase } from "../supabaseClient";
 import { useNavigate } from "react-router-dom";
+import Button from "./Button";
 
 export default function RegisterForm() {
   const [email, setEmail] = useState("");
@@ -109,7 +110,7 @@ export default function RegisterForm() {
         onChange={(e) => setPasswordConfirm(e.target.value)}
         required
       />
-      <button type="submit">Register</button>
+      <Button action="submit" content="Register" background="blue" color="white" />
     </form>
   );
 }
