@@ -57,6 +57,7 @@
         background-color: var(--bg-secondary);
         color: white;
         font-weight: 300;
+        flex-grow: 1;
       }
 
       #bottomPanel {
@@ -214,6 +215,45 @@
         max-height: 1.5em;
         margin-right: 5px;
       }
+
+      .flex {
+        display: flex;
+        height: 100%;
+      }
+
+      #sideSection {
+        width: 170px;
+        flex-shrink: 0;
+      }
+
+      .girlLink {
+        display: block;
+        position: relative;
+      }
+
+      .girlLink img {
+        width: 100%;
+      }
+
+      .girlLink p {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        color: white;
+        text-align: center;
+        animation: glow 1s ease-in-out infinite alternate;
+      }
+
+      @keyframes glow {
+        from {
+          text-shadow: 0 0 5px #fff, 0 0 15px #fff, 0 0 25px #e6a900,
+            0 0 35px #e6a900, 0 0 45px #e6a900;
+        }
+        to {
+          text-shadow: 0 0 15px #fff, 0 0 20px #ffd336, 0 0 30px #ffd336,
+            0 0 40px #ffd336, 0 0 50px #ffd336;
+        }
+      }
     </style>
   </head>
 
@@ -227,7 +267,18 @@
         <div id="roomInfo">
           <p>Connected to room: <strong>global</strong></p>
         </div>
+        <div class="flex">
         <div id="messages"></div>
+          <aside id="sideSection">
+            <a class="girlLink" href="goodstuff.html">
+              <img
+                src="static/images/girl-blurred.png"
+                alt="Blurred image of a nude girl"
+              />
+              <p>Click here to see some good stuff</p>
+            </a>
+          </aside>
+        </div>
       </div>
       <div class="hi">
         <a href="/index.html">
