@@ -31,9 +31,6 @@
   <!-- security overlay styles -->
   <link rel="stylesheet" href="static/css/security.css" />
 
-  <!-- flappy musk styles -->
-  <link rel="stylesheet" href="static/css/flappyMusk.css" />
-
   <!-- news styles -->
   <link rel="stylesheet" href="static/css/news.css" />
 
@@ -90,9 +87,6 @@
               <a class="nav-link" href="/health-check.html">Health Check</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/katamari.html">Katamari</a>
-            </li>
-            <li class="nav-item">
               <a class="nav-link" href="/leaderboard.html">Leaderboard</a>
             </li>
             <li class="nav-item">
@@ -109,6 +103,9 @@
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/uwu.html">UwU</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/games">Games</a>
             </li>
           </ul>
         </div>
@@ -397,10 +394,6 @@
     <div id="sac-container">
       <img src="static/images/sac.png" alt="SAC" id="sac-image" />
     </div>
-    <div class="katamari-container">
-      <iframe id="katamariFrame" src="katamari.html" title="A game where you roll a ball around on a field."></iframe>
-    </div>
-    <script src="katamari-loader.js"></script>
     <section class="importante">
       <section>
         <canvas id="glCanvas" width="400" height="400"></canvas>
@@ -453,22 +446,6 @@
           allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
           title="Spotify playlist 'BRAIN ROT🤮' by 'taylor624'" loading="lazy"></iframe>
       </div>
-
-      <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-        <title>NON ILLEGAL NES GAME HUUUUGE</title>
-
-        <script type="text/javascript" src="https://unpkg.com/jsnes/dist/jsnes.min.js"></script>
-        <script type="text/javascript" src="nes-embed.js"></script>
-        <script>window.onload = function(){nes_load_url("nes-canvas", "InterglacticTransmissing.nes");}</script>
-      </head>
-      <body>
-        <div style="margin: auto; width: 75%;">
-          <canvas id="nes-canvas" width="256" height="240" style="width: 100%"/>
-        </div>
-        <p>DPad: Arrow keys<br/>Start: Return, Select: Tab<br/>A Button: A, B Button: S</p>
-      </body>
-
     </section>
     <section>
       <h2>Things people should know</h2>
@@ -515,11 +492,6 @@
       </center>
     </section>
 
-    <section>
-      <h2>Slopify can now play Doom</h2>
-      <embed src="https://wadcmd.com/" id="doom">
-    </section>
-
     <div id="cookiebanner">
       <p>This site may or may not use cookies. I actually don't know.</p>
       <button id="hmmm yummy cookies" onclick="cookieclick()">Uh ok i guess</button>
@@ -530,14 +502,6 @@
       <iframe width="5%" height="1" scrolling="no" frameborder="no" allow="autoplay"
         src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1633786749&auto_play=true"
         title="The song 'Rich Baby Daddy (feat. Sexyy Red & SZA)' on a SoundCloud widget"></iframe>
-    </section>
-
-    <section>
-      <h2>Flappy Musk</h2>
-      <canvas id="flappyMuskCanvas" width="400" height="600"></canvas>
-      <br />
-      <Button id="flappyMuskButton">Make it gayer?</Button>
-      <p>Click to make Elon Musk fly! Avoid the obstacles!</p>
     </section>
 
     <section id="slopcursion">
@@ -714,9 +678,6 @@
 
   <!-- Twitter widgets -->
   <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-
-  <!-- Flappy Musk script -->
-  <script src="static/js/flappyMusk.js"></script>
 
   <!-- mandelbrot script -->
   <script src="static/js/mandelbrot_uwu.js"></script>
