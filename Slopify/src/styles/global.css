@@ -8,6 +8,14 @@ h2 {
   font-size: 3rem;
 }
 
+.message {
+  padding: 1rem;
+}
+
+.message:hover {
+  background-color: #393939;
+}
+
 .home-page {
   display: flex;
   justify-content: space-around;
@@ -19,7 +27,6 @@ h2 {
   border-radius: 10px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
 }
-
 
 :root {
   --bg-dark: #282828;

@@ -39,7 +39,12 @@ export default function MessageForm() {
         onChange={(e) => setMessage(e.target.value)}
         style={{ padding: "0.5rem", width: "80%" }}
       />
-      <Button action="submit" content="Send" background="#458588" color="white" />
+      <Button
+        action="submit"
+        content="Send"
+        background="#458588"
+        color="white"
+      />
     </form>
   );
 }

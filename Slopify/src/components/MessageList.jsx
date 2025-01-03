@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { supabase } from "../supabaseClient";
+import Message from "./Message";
 
 const PAGE_SIZE = 50;
 
@@ -104,7 +105,6 @@ export default function MessageList() {
         height: "400px",
         overflowY: "auto",
         border: "1px solid #ccc",
-        padding: "1rem",
       }}
       onScroll={handleScroll}
     >
@@ -112,21 +112,13 @@ export default function MessageList() {
         <p>Loading...</p>
       ) : (
         messages.map((msg) => (
-          <div key={msg.id} style={{ marginBottom: "1rem" }}>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
-              <strong style={{ color: msg.profile_color }}>
-                {msg.display_name}
-              </strong>
-              <small>{new Date(msg.created_at).toLocaleString()}</small>
-            </div>
-            <p style={{ margin: 0, marginTop: "0.5rem" }}>{msg.content}</p>
-          </div>
+          <Message
+            key={msg.id}
+            name={msg.display_name}
+            color={msg.profile_color}
+            date={new Date(msg.created_at).toLocaleString()}
+            message={msg.content}
+          />
         ))
       )}
     </div>
