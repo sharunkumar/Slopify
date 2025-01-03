@@ -15,7 +15,7 @@ export default function MessageList() {
     if (messageBox) {
       messageBox.scrollTop = messageBox.scrollHeight;
     }
-  }, [messages])
+  }, [messages]);
 
   useEffect(() => {
     fetchMessages();
@@ -37,6 +37,40 @@ export default function MessageList() {
       subscription.unsubscribe();
     };
   }, []);
+
+  const formatDate = (utcDateString) => {
+    const messageDate = new Date(`${utcDateString}Z`);
+    const now = new Date();
+
+    const isToday = messageDate.toDateString() === now.toDateString();
+
+    const isYesterday =
+      messageDate.toDateString() ===
+      new Date(now.setDate(now.getDate() - 1)).toDateString();
+
+    if (isToday) {
+      return `Today, ${messageDate.toLocaleTimeString(undefined, {
+        hour: "numeric",
+        minute: "2-digit",
+        second: "2-digit",
+      })}`;
+    } else if (isYesterday) {
+      return `Yesterday, ${messageDate.toLocaleTimeString(undefined, {
+        hour: "numeric",
+        minute: "2-digit",
+        second: "2-digit",
+      })}`;
+    } else {
+      return messageDate.toLocaleString(undefined, {
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+        hour: "numeric",
+        minute: "2-digit",
+        second: "2-digit",
+      });
+    }
+  };
 
   const attachDisplayName = async (message) => {
     const { data: profile, error } = await supabase
@@ -119,15 +153,18 @@ export default function MessageList() {
       {loading ? (
         <p>Loading...</p>
       ) : (
-        messages.slice().reverse().map((msg) => (
-          <Message
-            key={msg.id}
-            name={msg.display_name}
-            color={msg.profile_color}
-            date={new Date(msg.created_at).toLocaleString()}
-            message={msg.content}
-          />
-        ))
+        messages
+          .slice()
+          .reverse()
+          .map((msg) => (
+            <Message
+              key={msg.id}
+              name={msg.display_name}
+              color={msg.profile_color}
+              date={formatDate(msg.created_at)}
+              message={msg.content}
+            />
+          ))
       )}
     </div>
   );
