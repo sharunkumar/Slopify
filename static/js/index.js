@@ -4,6 +4,7 @@ const vibeAudio = document.getElementById("vibeAudio");
 let allQuotes = [];
 
 function vibe() {
+  console.log("~~~ wobble wobble wobble ~~~");
   document.getElementById("soundCloudIFrame").src = "";
   moreVibeAudio.pause();
   moreVibeAudio.currentTime = 0;
