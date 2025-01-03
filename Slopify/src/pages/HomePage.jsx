@@ -4,6 +4,8 @@ import "../styles/HomePage.css";
 
 export default function HomePage() {
   return (
+    <>
+    <h1>Slopify</h1>
     <div className="home-page">
       <div className="form-container">
         <LoginForm />
@@ -13,5 +15,6 @@ export default function HomePage() {
         <RegisterForm />
       </div>
     </div>
+    </>
   );
 }

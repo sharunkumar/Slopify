@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { supabase } from "../supabaseClient";
 import { useNavigate } from "react-router-dom";
+import Button from "./Button";
 
 export default function LoginForm() {
   const [email, setEmail] = useState("");
@@ -40,7 +41,7 @@ export default function LoginForm() {
         onChange={(e) => setPassword(e.target.value)}
         required
       />
-      <button type="submit">Login</button>
+      <Button action="submit" content="Login" background="#458588" color="white" />
     </form>
   );
 }

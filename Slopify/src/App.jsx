@@ -14,9 +14,6 @@ export default function App() {
           </Routes>
         </Router>
       </main>
-      <footer>
-        <p>Powered by Gruvbox</p>
-      </footer>
     </div>
   );
 }

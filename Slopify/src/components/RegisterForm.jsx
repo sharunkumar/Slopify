@@ -110,7 +110,7 @@ export default function RegisterForm() {
         onChange={(e) => setPasswordConfirm(e.target.value)}
         required
       />
-      <Button action="submit" content="Register" background="blue" color="white" />
+      <Button action="submit" content="Register" background="#458588" color="white" />
     </form>
   );
 }
