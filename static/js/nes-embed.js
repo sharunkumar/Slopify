@@ -147,5 +147,5 @@ document.addEventListener("keyup", (event) => {
 });
 
 window.onload = function () {
-  nes_load_url("nes-canvas", "InterglacticTransmissing.nes");
+  console.log("removed because smelly license nerds are complaining")
 };
