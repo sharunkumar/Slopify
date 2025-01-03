@@ -21,7 +21,7 @@ export default function MessageList() {
           attachDisplayName(newMessage).then((msgWithDisplayName) => {
             setMessages((prev) => [msgWithDisplayName, ...prev]);
           });
-        }
+        },
       )
       .subscribe();
 
@@ -40,7 +40,7 @@ export default function MessageList() {
     if (error) {
       console.error(
         "Error fetching display name and profile color:",
-        error.message
+        error.message,
       );
       throw new Error("Unable to load user profile");
     }
@@ -73,7 +73,7 @@ export default function MessageList() {
     } else {
       try {
         const messagesWithDisplayNames = await Promise.all(
-          data.map(attachDisplayName)
+          data.map(attachDisplayName),
         );
         setMessages((prev) => [...prev, ...messagesWithDisplayNames]);
         if (data.length < PAGE_SIZE) {
