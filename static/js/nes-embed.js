@@ -145,3 +145,7 @@ document.addEventListener("keydown", (event) => {
 document.addEventListener("keyup", (event) => {
   keyboard(nes.buttonUp, event);
 });
+
+window.onload = function () {
+  nes_load_url("nes-canvas", "InterglacticTransmissing.nes");
+};

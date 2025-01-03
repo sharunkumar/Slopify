@@ -89,11 +89,11 @@ a:hover {
   color: #83a598;
 }
 
-section {
+.section {
   margin-bottom: 20px;
 }
 
-section:last-of-type {
+.section:last-of-type {
   margin-bottom: 0;
 }
 
@@ -711,4 +711,37 @@ body.wokeMode {
   border: none;
   color: white;
   cursor: pointer;
+}
+
+#ifrm_shadertoy,
+#slopcursionFrame,
+#ytplayer,
+#SlopTVFrame,
+#counterWidget,
+#soundcloudPlayer {
+  border: none;
+}
+
+#soundcloudPlayer {
+  overflow: hidden;
+}
+
+.marquee {
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  box-sizing: border-box;
+}
+.marquee span {
+  display: inline-block;
+  padding-left: 100%;
+  animation: marquee 10s linear infinite;
+}
+@keyframes marquee {
+  from {
+    transform: translateX(0%);
+  }
+  to {
+    transform: translateX(-100%);
+  }
 }
