@@ -246,12 +246,20 @@
 
       @keyframes glow {
         from {
-          text-shadow: 0 0 5px #fff, 0 0 15px #fff, 0 0 25px #e6a900,
-            0 0 35px #e6a900, 0 0 45px #e6a900;
+          text-shadow:
+            0 0 5px #fff,
+            0 0 15px #fff,
+            0 0 25px #e6a900,
+            0 0 35px #e6a900,
+            0 0 45px #e6a900;
         }
         to {
-          text-shadow: 0 0 15px #fff, 0 0 20px #ffd336, 0 0 30px #ffd336,
-            0 0 40px #ffd336, 0 0 50px #ffd336;
+          text-shadow:
+            0 0 15px #fff,
+            0 0 20px #ffd336,
+            0 0 30px #ffd336,
+            0 0 40px #ffd336,
+            0 0 50px #ffd336;
         }
       }
     </style>
@@ -269,7 +277,7 @@
           <p>Connected to room: <strong>global</strong></p>
         </div>
         <div class="flex">
-        <div id="messages"></div>
+          <div id="messages"></div>
           <aside id="sideSection">
             <a class="girlLink" href="goodstuff.html">
               <img
@@ -735,7 +743,9 @@
 
         // TODO: move this to a separate function once we have more commands
         if (segments.length !== 2 || !isValidUsernameLength(segments[1])) {
-          alert("Invalid command. Usage:\n~mute <username> or ~unmute <username>.\nUsername must also be between 3 and 15 characters.");
+          alert(
+            "Invalid command. Usage:\n~mute <username> or ~unmute <username>.\nUsername must also be between 3 and 15 characters.",
+          );
           return false;
         }
 

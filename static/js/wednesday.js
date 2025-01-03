@@ -1,5 +1,5 @@
 // Wednesdayify wednesdays, my dudes
-const wednesday = document.createElement('div');
+const wednesday = document.createElement("div");
 wednesday.style = `
 position: absolute;
 left: 0;
@@ -15,16 +15,15 @@ background-size: 100% 100%;
 `;
 
 const clock = setInterval(() => {
-    if (Date().substr(0, 3) === 'Wed') {
-        if (wednesday.parentElement) {
-            return;
-        }
-        document.body.appendChild(wednesday);
+  if (Date().substr(0, 3) === "Wed") {
+    if (wednesday.parentElement) {
+      return;
     }
-    else {
-        if (!wednesday.parentElement) {
-            return;
-        }
-        wednesday.remove()
+    document.body.appendChild(wednesday);
+  } else {
+    if (!wednesday.parentElement) {
+      return;
     }
-}, 60*60);
+    wednesday.remove();
+  }
+}, 60 * 60);

@@ -1,6 +1,5 @@
-var canvas = document.getElementById('game');
-var context = canvas.getContext('2d');
-
+var canvas = document.getElementById("game");
+var context = canvas.getContext("2d");
 
 var grid = 16;
 var count = 0;
@@ -15,11 +14,11 @@ var snake = {
   cells: [],
 
   // length of the snake. grows when eating an apple
-  maxCells: 4
+  maxCells: 4,
 };
 var apple = {
   x: 320,
-  y: 320
+  y: 320,
 };
 
 // get random whole numbers in a specific range
@@ -38,7 +37,7 @@ function loop() {
   }
 
   count = 0;
-  context.clearRect(0,0,canvas.width,canvas.height);
+  context.clearRect(0, 0, canvas.width, canvas.height);
 
   // move snake by it's velocity
   snake.x += snake.dx;
@@ -47,31 +46,29 @@ function loop() {
   // wrap snake position horizontally on edge of screen
   if (snake.x < 0) {
     snake.x = canvas.width - grid;
-  }
-  else if (snake.x >= canvas.width) {
+  } else if (snake.x >= canvas.width) {
     snake.x = 0;
   }
 
   // wrap snake position vertically on edge of screen
   if (snake.y < 0) {
     snake.y = canvas.height - grid;
-  }
-  else if (snake.y >= canvas.height) {
+  } else if (snake.y >= canvas.height) {
     snake.y = 0;
   }
 
   // keep track of where snake has been. front of the array is always the head
-  snake.cells.unshift({x: snake.x, y: snake.y});
+  snake.cells.unshift({ x: snake.x, y: snake.y });
 
   // remove cells as we move away from them
   if (snake.cells.length > snake.maxCells) {
     snake.cells.pop();
   }
-  context.fillStyle = 'white';
-  context.fillRect(apple.x, apple.y, grid-1, grid-1);
-  context.fillStyle = 'white';
-  snake.cells.forEach(function(cell, index) {
-    context.fillRect(cell.x, cell.y, grid-1, grid-1);
+  context.fillStyle = "white";
+  context.fillRect(apple.x, apple.y, grid - 1, grid - 1);
+  context.fillStyle = "white";
+  snake.cells.forEach(function (cell, index) {
+    context.fillRect(cell.x, cell.y, grid - 1, grid - 1);
     if (cell.x === apple.x && cell.y === apple.y) {
       snake.maxCells++;
       apple.x = getRandomInt(0, 25) * grid;
@@ -92,8 +89,7 @@ function loop() {
     }
   });
 }
-document.addEventListener('keydown', function(e) {
-
+document.addEventListener("keydown", function (e) {
   // left arrow key
   if (e.which === 37 && snake.dx === 0) {
     snake.dx = -grid;

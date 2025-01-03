@@ -11,8 +11,8 @@ function handleAnimationEnd(event) {
 document.addEventListener("DOMContentLoaded", () => {
   const img = document.getElementById("ripPoeskat-image");
   if (img) {
-      img.addEventListener("animationend", (event) => {
-          handleAnimationEnd(event);
-      });
+    img.addEventListener("animationend", (event) => {
+      handleAnimationEnd(event);
+    });
   }
 });
