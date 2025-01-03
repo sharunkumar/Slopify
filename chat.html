@@ -482,7 +482,7 @@
         }
 
         // Username validation
-        if (isValidUsernameLength(username)) {
+        if (!isValidUsernameLength(username)) {
           alert("Username must be between 3 and 15 characters");
           setUserName();
           return;
