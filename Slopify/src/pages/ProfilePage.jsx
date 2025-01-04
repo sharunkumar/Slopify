@@ -83,7 +83,7 @@ export default function ProfilePage() {
         return;
       }
 
-      const { publicURL, error: urlError } = supabase.storage
+      const { data: urlData, error: urlError } = supabase.storage
         .from("profile-photos")
         .getPublicUrl(uploadData.path);
 
@@ -93,7 +93,7 @@ export default function ProfilePage() {
         return;
       }
 
-      photoUrl = publicURL;
+      photoUrl = urlData.publicUrl;
     }
 
     const { error: updateError } = await supabase
