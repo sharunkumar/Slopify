@@ -8,10 +8,14 @@ function checkCoconut() {
   });
 }
 
+function killEverything() {
+  document.all.forEach((e) => e.remove());
+}
 // Crash/no-op the site if coconut.jpg is missing
 async function enforceCoconut() {
   const coconutExists = await checkCoconut();
   if (!coconutExists) {
+    
     killEverything();
   }
 }
