@@ -9,7 +9,7 @@ MODIFIED BY KOSAN https://github.com/MegaKosan
 +   Double clicking now iterates through all the skin variants
 */
 
-(async function oneko() {
+export async function oneko() {
   const nekoEl = document.createElement("div");
   let nekoPosX = window.innerWidth * 0.5,
     nekoPosY = window.innerHeight * 0.2,
@@ -412,4 +412,4 @@ MODIFIED BY KOSAN https://github.com/MegaKosan
     localStorage.setItem("oneko:variant", `${variant}`);
     nekoEl.style.backgroundImage = `url('static/images/oneko/oneko-${variant}.png')`;
   }
-})();
+}

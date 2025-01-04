@@ -1,5 +1,5 @@
-function downloadCatgirl() {
-  const imageUrl = document.getElementById("catgirl").src;
+function downloadCatgirl(catgirlImg) {
+  const imageUrl = catgirlImg.src;
   const fileName = imageUrl.split("/").pop().split("\\").pop();
 
   fetch(imageUrl)
@@ -25,20 +25,54 @@ function downloadCatgirl() {
     });
 }
 
-function anotherCatgirl() {
-  const catgirl = document.getElementById("catgirl");
-  catgirl.src = "#";
-  catgirl.alt = "loading!! be patient etc uwu meow nyaaaa";
+function loadCatgirl(catgirlImg) {
+  catgirlImg.src = "#";
+  catgirlImg.alt = "loading!! be patient etc uwu meow nyaaaa";
+
   try {
-    console.log("trying");
     fetch("https://nekos.best/api/v2/neko")
       .then((response) => response.json())
-      .then((json) => (catgirl.src = json.results[0].url));
-    catgirl.alt = "catgirl";
+      .then((json) => (catgirlImg.src = json.results[0].url));
+    catgirlImg.alt = "catgirl";
   } catch (e) {
-    catgirl.alt = `shit happened: ${e}`;
+    catgirlImg.alt = `shit happened: ${e}`;
     console.error(e);
   }
 }
 
-anotherCatgirl();
+function init() {
+  const catgirlDiv = document.getElementById("catgirl-container");
+
+  if (catgirlDiv == null) {
+    console.error("catgirl-container not found");
+    return;
+  }
+
+  if (catgirlDiv.childElementCount > 0) {
+    console.error("catgirl-container already populated");
+    return;
+  }
+
+  const catgirlImg = document.createElement("img");
+  catgirlImg.id = "catgirl";
+  catgirlImg.height = 1000;
+
+  const br = document.createElement("br");
+
+  const rerollButton = document.createElement("button");
+  rerollButton.textContent = "Get another neko!";
+  rerollButton.onclick = () => loadCatgirl(catgirlImg);
+
+  const downloadButton = document.createElement("button");
+  downloadButton.textContent = "Cute!!";
+  downloadButton.onclick = () => downloadCatgirl(catgirlImg);
+
+  catgirlDiv.appendChild(catgirlImg);
+  catgirlDiv.appendChild(br);
+  catgirlDiv.appendChild(rerollButton);
+  catgirlDiv.appendChild(downloadButton);
+
+  loadCatgirl(catgirlImg);
+}
+
+document.addEventListener("DOMContentLoaded", init);

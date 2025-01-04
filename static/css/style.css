@@ -11,7 +11,7 @@ img {
   margin: 0;
   padding: 0;
   cursor:
-    url(static/images/win95_cursor_regular.png) 0 0,
+    url("/static/images/win95_cursor_regular.png") 0 0,
     default;
 }
 
@@ -218,12 +218,12 @@ canvas {
 #foxy {
   height: 600px;
   width: auto;
-  background: url("static/images/cute.jpg");
+  background: url("/static/images/cute.jpg");
   background-repeat: no-repeat;
 }
 
 #foxy:hover {
-  background: url("static/images/snarl.jpg");
+  background: url("/static/images/snarl.jpg");
   background-repeat: no-repeat;
 }
 
@@ -584,28 +584,6 @@ body.wokeMode {
   }
 }
 
-.rainbow-text {
-  font-family: "Comic Sans MS", sans-serif;
-  font-size: 124px;
-  text-decoration: none;
-  background: linear-gradient(90deg,
-      red,
-      orange,
-      yellow,
-      green,
-      blue,
-      indigo,
-      violet);
-  background-size: 200% auto;
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  display: inline-block;
-  font-weight: bold;
-  animation: rainbow 2s linear infinite;
-  cursor: pointer;
-}
-
 #astolfoButton {
   text-align: center;
 }
@@ -768,9 +746,29 @@ body.wokeMode {
   height: 790px;
 }
 
-
 #gravityButton {
   background-color: red;
   font-family: fantasy;
   font-size: 4em;
+}
+
+#win2k-container {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  width: 600px;
+  height: 400px;
+  z-index: 1050;
+}
+
+#win2k-container .window__body {
+  padding: 0;
+  height: calc(100% - 31px);
+  overflow: hidden
+}
+
+#win2k-container iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
 }

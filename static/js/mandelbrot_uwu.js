@@ -6,26 +6,25 @@ let _canvasWidth = 400; // w
 let _canvasHeight = 400; // h
 let _renderSpeed = 8; // plotSpeed
 let _fontStyle;
-let _fractalCanvas;
 
-function initializeCanvas() {
-  _fractalCanvas = document.getElementById("fractalCanvas");
-  let _context = _fractalCanvas.getContext("2d");
+function initializeCanvas(fractalCanvas) {
+  fractalCanvas = document.getElementById("fractalCanvas");
+  let _context = fractalCanvas.getContext("2d");
 
   if (!_context) {
     console.error("No se puede inicializar el contexto de canvas.");
     return;
   }
 
-  _fractalCanvas.width = _canvasWidth;
-  _fractalCanvas.height = _canvasHeight;
+  fractalCanvas.width = _canvasWidth;
+  fractalCanvas.height = _canvasHeight;
   _context.clearRect(0, 0, _canvasWidth, _canvasHeight);
   _context.font = "15px Arial";
   _context.textAlign = "center";
 }
 
-function renderFractal() {
-  let _context = _fractalCanvas.getContext("2d");
+function renderFractal(fractalCanvas) {
+  let _context = fractalCanvas.getContext("2d");
   for (let _i = 0; _i < _renderSpeed; _i++) {
     let _xPos = Math.floor(Math.random() * _canvasWidth);
     let _yPos = Math.floor(Math.random() * _canvasHeight);
@@ -92,7 +91,20 @@ function mapRange(value, inMin, inMax, outMin, outMax) {
   return ((value - inMin) * (outMax - outMin)) / (inMax - inMin) + outMin;
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  initializeCanvas();
-  setInterval(renderFractal, 1000 / 30); // Llamar renderFractal() 30 veces por segundo
-});
+export function initMandelbrotUwu() {
+  const mandelbrotDiv = document.getElementById('mandelbrot-wrapper');
+
+  const mandelbrotSectionDiv = document.createElement("div");
+  mandelbrotSectionDiv.id = "mandelbrot-section";
+
+  const mandelbrotCanvas = document.createElement("canvas");
+  mandelbrotCanvas.id = "fractalCanvas";
+  mandelbrotCanvas.width = _canvasWidth;
+  mandelbrotCanvas.height = _canvasHeight;
+
+  mandelbrotSectionDiv.appendChild(mandelbrotCanvas);
+  mandelbrotDiv.appendChild(mandelbrotSectionDiv);
+
+  initializeCanvas(mandelbrotCanvas);
+  setInterval(() => renderFractal(mandelbrotCanvas), 1000 / 30); // Llamar renderFractal() 30 veces por segundo
+}

@@ -45,7 +45,7 @@ const messageSound = new Audio("static/audio/droid.mp3");
 
 function sendMessage() {
   const input = document.getElementById("userInput");
-  const messages = document.getElementById("chatMessages");
+  const messages = document.getElementById("chat-messages");
 
   if (input.value.trim() === "") return;
 
@@ -58,7 +58,7 @@ function sendMessage() {
   messages.innerHTML += `
   <div class="bot-message">
     <div class="clippy-container">
-      <img src="https://static.wikia.nocookie.net/the-scrappy/images/c/cb/Clippy.png/revision/latest?cb=20231027172058" class="clippy-image" alt="Clippy">
+      <img src="/static/images/Clippy.png" class="clippy-image" alt="Clippy">
       <span>${randomResponse}</span>
     </div>
   </div>`;
@@ -68,16 +68,75 @@ function sendMessage() {
   messages.scrollTop = messages.scrollHeight;
 }
 
-// Update event listeners
-const userInput = document.getElementById("userInput");
+document.addEventListener("DOMContentLoaded", () => {
+  const chatbotDiv = document.getElementById("chatbot");
 
-userInput.addEventListener("keydown", function (e) {
-  e.stopPropagation();
-});
+  const chatHeader = document.createElement("div");
+  chatHeader.id = "chat-header";
 
-userInput.addEventListener("keypress", function (e) {
-  if (e.key === "Enter") {
-    e.preventDefault();
-    sendMessage();
-  }
+  const chatHeaderSpan = document.createElement("span");
+  chatHeaderSpan.textContent = "Chat Support";
+
+  const chatHeaderButton = document.createElement("button");
+  chatHeaderButton.textContent = "×";
+  chatHeaderButton.addEventListener("click", toggleChat);
+  chatHeaderButton.id = "chatToggleButton";
+
+  chatHeader.appendChild(chatHeaderSpan);
+  chatHeader.appendChild(chatHeaderButton);
+
+  const chatMessagesDiv = document.createElement("div");
+  chatMessagesDiv.id = "chat-messages";
+
+  const botMessageDiv = document.createElement("div");
+  botMessageDiv.className = "bot-message";
+
+  const clippyContainerDiv = document.createElement("div");
+  clippyContainerDiv.className = "clippy-container";
+
+  const clippyImage = document.createElement("img");
+  clippyImage.src = "/static/images/Clippy.png";
+  clippyImage.className = "clippy-image";
+  clippyImage.alt = "Clippy";
+
+  const clippySpan = document.createElement("span");
+  clippySpan.textContent = "how can i help you today?";
+
+  clippyContainerDiv.appendChild(clippyImage);
+  clippyContainerDiv.appendChild(clippySpan);
+
+  botMessageDiv.appendChild(clippyContainerDiv);
+
+  chatMessagesDiv.appendChild(botMessageDiv);
+
+  const chatInputDiv = document.createElement("div");
+  chatInputDiv.className = "chat-input";
+
+  const userInput = document.createElement("input");
+  userInput.id = "userInput";
+  userInput.type = "text";
+  userInput.placeholder = "Type a message...";
+
+  // Update event listeners
+  userInput.addEventListener("keydown", e => {
+    e.stopPropagation();
+  });
+
+  userInput.addEventListener("keypress", e => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      sendMessage();
+    }
+  });
+
+  const sendButton = document.createElement("button");
+  sendButton.textContent = "Send";
+  sendButton.addEventListener("click", sendMessage);
+
+  chatInputDiv.appendChild(userInput);
+  chatInputDiv.appendChild(sendButton);
+
+  chatbotDiv.appendChild(chatHeader);
+  chatbotDiv.appendChild(chatMessagesDiv);
+  chatbotDiv.appendChild(chatInputDiv);
 });
