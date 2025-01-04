@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en">
+<meta charset="UTF-8" />
+    <head>
+        <title>calc</title>
+        <style>
+            body {
+            background: linear-gradient(
+            270deg,
+            #ff0000,
+            #ff7f00,
+            #ffff00,
+            #00ff00,
+            #0000ff,
+            #4b0082,
+            #8b00ff
+            );
+            background-size: 1400% 1400%;
+            animation: rainbow 10s ease infinite;
+            color: white;
+            text-align: center;
+            padding: 50px;
+            font-family: "'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', sans-serif;"
+        }
+        .calculator {
+            background: url("static/images/maths.gif");
+            padding: 30px;
+            width: 1000px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            text-align: center;
+        }
+        
+        input[type="button"] {
+            font-size: 20px;
+            padding: 20px;
+            width: 100px;
+            height: 100px;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            background-size: contain !important
+        }
+        #zero{
+            background: url("static/images/calc/0.gif")
+        }
+        #one{
+            background: url("static/images/calc/1.gif")
+        }
+        #two{
+            background: url("static/images/calc/2.webp")
+        }
+        #three{
+            background: url("static/images/calc/3.gif")
+        }
+        #four{
+            background: url("static/images/calc/4.gif")
+        }
+        #five{
+            background: url("static/images/calc/5.gif")
+        }
+        #six{
+            background: url("static/images/calc/6.gif")
+        }
+        #seven{
+            background: url("static/images/calc/7.gif")
+        }
+        #eight{
+            background: url("static/images/calc/8.gif")
+        }
+        #nine{
+            background: url("static/images/calc/9.gif")
+        }
+        #zero{
+            background: url("static/images/calc/0.gif")
+        }
+        #plus, #mult{
+            background: url("static/images/calc/plusmult.gif")
+        }
+        #minus{
+            background: url("static/images/calc/minus.gif")
+        }
+        #divide{
+            background: url("static/images/calc/divide.gif")
+        }
+        #equals{
+            background: url("static/images/calc/equals.gif")
+        }
+        #clear{
+            background: url("static/images/calc/clear.gif")
+        }
+        #decimal{
+            background: url("static/images/calc/decimal.webp")
+        }
+
+        @keyframes rainbow {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+        </style>
+    </head>
+    <body>
+        <div class="calculator">
+            <img src="static/images/calc/math.gif" style="height: 100px;">
+            <input type="text" id="result" disabled style="margin-bottom: 10px;">
+            <div class="row">
+                <input type="button" id="seven"onclick="appendNumber(7)">
+                <input type="button" id="eight"onclick="appendNumber(8)">
+                <input type="button" id="nine"onclick="appendNumber(9)">
+                <input type="button" id="divide" onclick="appendOperator('/')">
+            </div>
+            <div class="row">
+                <input type="button" id="four" onclick="appendNumber(4)">
+                <input type="button" id="five" onclick="appendNumber(5)">
+                <input type="button" id="six" onclick="appendNumber(6)">
+                <input type="button" id="mult" onclick="appendOperator('*')">
+            </div>
+            <div class="row">
+                <input type="button" id="one" onclick="appendNumber(1)">
+                <input type="button" id="two" onclick="appendNumber(2)">
+                <input type="button" id="three" onclick="appendNumber(3)">
+                <input type="button" id="minus" onclick="appendOperator('-')">
+            </div>
+            <div class="row">
+                <input type="button" id="zero" onclick="appendNumber(0)">
+                <input type="button" id="decimal" onclick="appendDecimal()">
+                <input type="button" id="clear" onclick="clearResult()">
+                <input type="button" id="plus" onclick="appendOperator('+')">
+            </div>
+            <div class="row">
+                <input type="button" id="equals" onclick="calculateResult()">
+            </div>
+        </div>
+
+        <script>
+            let currentInput = "";
+            let previousInput = "";
+            let operator = "";
+
+            function play_audio(audio){
+                var audio = new Audio("static/audio/"+audio+".mp3");
+                audio.play();
+            }
+            function appendNumber(number) {
+                play_audio("fart")
+                currentInput += number;
+                document.getElementById("result").value = currentInput;
+            }
+    
+            function appendOperator(op) {
+                if (currentInput === "") return;
+                if (previousInput !== "") {
+                    calculateResult();
+                }
+                operator = op;
+                previousInput = currentInput;
+                currentInput = "";
+            }
+    
+            function appendDecimal() {
+                play_audio("fart")
+                if (currentInput.includes(".")) return;
+                currentInput += ".";
+                document.getElementById("result").value = currentInput;
+            }
+    
+            function clearResult() {
+                currentInput = "";
+                previousInput = "";
+                operator = "";
+                document.getElementById("result").value = "";
+            }
+    
+            function calculateResult() {
+                play_audio("skippidy")
+                if (previousInput === "" || currentInput === "") return;
+                let result;
+                switch (operator) {
+                    case "+":
+                        result = parseFloat(previousInput) + parseFloat(currentInput);
+                        break;
+                    case "-":
+                        result = parseFloat(previousInput) - parseFloat(currentInput);
+                        break;
+                    case "*":
+                        result = parseFloat(previousInput) * parseFloat(currentInput);
+                        break;
+                    case "/":
+                        if (currentInput === "0") {
+                            alert("Cannot divide by zero");
+                            return;
+                        }
+                        result = parseFloat(previousInput) / parseFloat(currentInput);
+                        break;
+                    default:
+                        return;
+                }
+                currentInput = result.toString();
+                operator = "";
+                previousInput = "";
+                document.getElementById("result").value = currentInput;
+            }
+        </script>
+    </body>
+</html>
