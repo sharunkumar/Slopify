@@ -56,7 +56,7 @@ export default function ChatPage() {
   return (
     <div>
       <h2>Welcome back to Slopify, {displayName}!</h2>
-      <MessageList />
+      <MessageList currentUser={displayName} />
       <MessageForm />
       {/* <form onSubmit={navToSlopbox}>
         <Button

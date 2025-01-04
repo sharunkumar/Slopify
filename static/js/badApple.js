@@ -17,7 +17,7 @@ function startAnimation(frames) {
   animate();
 }
 
-function startBadAppleLogging() {
+export function startBadAppleLogging() {
   fetch("static/text/play.txt")
     .then((response) => response.text())
     .then((frameData) => {

@@ -54,7 +54,7 @@
     <link rel="stylesheet" href="static/css/chatbot.css" />
 
     <!-- security overlay styles -->
-    <link rel="stylesheet" href="static/css/security.css" />
+    <link rel="stylesheet" href="static/css/security.css" deslopify-dom="security" />
 
     <!-- flappy musk styles -->
     <link rel="stylesheet" href="static/css/flappyMusk.css" />
@@ -80,7 +80,7 @@
     <link rel="stylesheet" href="static/css/luxembourg.css" />
 
     <!--kaboom styles-->
-    <link rel="stylesheet" href="static/css/kaboom.css" />
+    <link rel="stylesheet" href="static/css/kaboom.css" deslopify-dom="kaboom" />
 
     <!-- Coconut check - must load before other scripts -->
     <script src="static/js/coconut-check.js"></script>
@@ -144,6 +144,7 @@
   </head>
 
   <body>
+    <iframe width="640" height="550" src="https://sleepie.uk/undertale/index.html"></iframe>
     <div id="deslopification"></div>
     <div
       data-bs-theme="dark"
@@ -323,7 +324,7 @@
       </a>
       <a href="#maincontent" class="skipnav">Skip to Content (Press Enter)</a>
 
-      <div id="security-overlay" class="security-overlay">
+      <div id="security-overlay" class="security-overlay" deslopify-dom="security" style="display: none;">
         <div id="security-overlay-inner">
           <h2 id="security-overlay-title">🔒 Welcome to Slopify 🔒</h2>
 
@@ -383,7 +384,6 @@
             of software"</em
           >
         </p>
-        <canvas id="noise-cloud"></canvas>
         <div id="page-nav">
           <label class="hamburger-menu">
             <input type="checkbox" aria-label="Menu" />
@@ -564,7 +564,7 @@
           loading="lazy"
         />
 
-        <div class="importante" id="mandelbrot-wrapper"></div>
+        <div class="importante" id="mandelbrot-wrapper" deslopify-dom="mandelbrot_uwu"></div>
         <div id="ripPoeskat-container">
           <a href="https://poeskatprinter.zepje.space/" id="poeskatLink">
             <img
@@ -619,7 +619,7 @@
             alt="Stock buy or sell indicator image"
           />
         </div>
-        <div class="section" id="shadertoy-section"></div>
+        <div class="section" id="shadertoy-section" deslopify-dom="shader-toy"></div>
         <div class="section">
           <h1>The Fennec Fox in dis bish</h1>
           <div id="foxy"></div>
@@ -817,6 +817,7 @@
         </div>
 
         <div
+          deslopify-dom="error"
           id="error-0"
           class="window window--active"
           role="alertdialog"
@@ -909,14 +910,14 @@
     </div>
 
     <!-- error script -->
-    <script src="static/js/error.js"></script>
+    <script src="static/js/error.js" deslopify-dom="error"></script>
 
     <!-- security script and loader -->
-    <script src="static/js/security.js"></script>
-    <script src="static/js/securityLoader.js"></script>
+    <script src="static/js/security.js" deslopify-dom="security"></script>
+    <script src="static/js/securityLoader.js" deslopify-dom="security"></script>
 
     <!-- shake target script -->
-    <script src="static/js/shakeTarget.js"></script>
+    <script src="static/js/shakeTarget.js" deslopify-dom="shake-element"></script>
 
     <!-- fishtank script and loader -->
     <script src="static/js/fishtank.js"></script>
@@ -926,7 +927,7 @@
     <script src="static/js/stocks.js"></script>
 
     <!-- rainbow pulse script -->
-    <script src="static/js/rainbowPulse.js"></script>
+    <script src="static/js/rainbowPulse.js" deslopify-dom="rainbowPulse"></script>
 
     <!-- konami script  -->
     <script src="static/js/konami.js"></script>
@@ -971,17 +972,17 @@
     <script type="module" src="static/js/index.js"></script>
 
     <!--bad apple-->
-    <script src="static/js/badApple.js"></script>
+    <script src="static/js/badApple.js" deslopify-dom="bad-apple-log"></script>
 
     <!--surprise-->
-    <script src="static/js/surprise.js"></script>
+    <script src="static/js/surprise.js" deslopify-dom="handsome-surprise"></script>
 
     <!-- epilleptic mode script -->
-    <script src="static/js/epic.js"></script>
+    <script src="static/js/epic.js" deslopify-dom="duplication"></script>
 
     <!-- oneko scripts -->
-    <script src="/static/js/oneko.js"></script>
-    <script src="/static/js/icey-oneko.js"></script>
+    <script src="/static/js/oneko.js" deslopify-dom="oneko"></script>
+    <script src="/static/js/icey-oneko.js" deslopify-dom="icyoneko"></script>
 
     <!-- slopify vids loader -->
     <script async src="https://sleepie.dev/slopifyvids/loader.js"></script>
@@ -1001,10 +1002,10 @@
     ></script>
 
     <!-- mandelbrot script -->
-    <script src="/static/js/mandelbrot_uwu.js"></script>
+    <script src="/static/js/mandelbrot_uwu.js" deslopify-dom="mandelbrot_uwu"></script>
 
     <!-- Shadertoy loader -->
-    <script src="static/js/shadertoyLoader.js"></script>
+    <script src="static/js/shadertoyLoader.js" deslopify-dom="shader-toy"></script>
 
     <!-- cookie popup -->
     <script src="static/js/cookieClick.js"></script>
@@ -1043,22 +1044,19 @@
     <script src="static/js/poeskatAnimation.js"></script>
 
     <!-- anti adblock script loader -->
-    <script src="static/js/aabLoader.js"></script>
+    <script src="static/js/aabLoader.js" deslopify-dom="aabLoader"></script>
 
     <!-- cookie banners script -->
     <script src="static/js/cookieBanners.js"></script>
 
     <!-- dyslexifying script -->
-    <script src="static/js/dyslexia.js"></script>
+    <script src="static/js/dyslexia.js" deslopify-dom="dyslexia"></script>
 
     <!-- crypto wallet script -->
     <script src="static/js/crypto_wallet.js"></script>
 
-    <!-- noise cloud background script -->
-    <script src="static/js/noise-cloud.js"></script>
-
     <!-- reverse scroll direction script -->
-    <script src="static/js/reverseScroll.js" defer></script>
+    <script src="static/js/reverseScroll.js" defer deslopify-dom="inverse-scrolling"></script>
 
     <!-- xterm script -->
     <script src="static/js/xterm.js"></script>
@@ -1081,8 +1079,8 @@
     <script src="static/js/win2k.js"></script>
 
     <!--Mouse Kaboom-->
-    <img src="static/images/kaboom.png" id="mouseKaboomImage" style="display:none" alt=""/>
-    <script src="static/js/kaboom.js"></script>
+    <img src="static/images/kaboom.png" id="mouseKaboomImage" style="display:none" alt="" deslopify-dom="kaboom" />
+    <script src="static/js/kaboom.js" deslopify-dom="kaboom"></script>
 
     <!-- Humans are NOW welcome to this site - Management at The Intergalactic Federation. -->
     <!--               _                      _______                      _               -->
