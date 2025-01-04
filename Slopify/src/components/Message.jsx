@@ -9,7 +9,6 @@ export default function Message(data) {
             alignItems: "center",
           }}
         >
-          {data.photo && (
             <div style={{ display: "flex", gap: "10px" }}>
               <img
                 src={data.photo}
@@ -26,7 +25,6 @@ export default function Message(data) {
                 <p style={{ margin: 0, marginTop: "0.5rem" }}>{data.message}</p>
               </div>
             </div>
-          )}
           <small>{data.date}</small>
         </div>
       </div>
