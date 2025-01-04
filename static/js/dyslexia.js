@@ -1,3 +1,5 @@
+let dyslexiaModeEnabled = false;
+
 function getTextNodes(node) {
   const textNodes = [];
 
@@ -51,10 +53,14 @@ function dyslexifyPage(baseNode = undefined) {
   });
 }
 
-document.addEventListener("DOMContentLoaded", () => {
+export function initDyslexia() {
+  dyslexiaModeEnabled = true;
   dyslexifyPage();
-});
+}
 
 document.addEventListener("DOMNodeInserted", (event) => {
+  if (!dyslexiaModeEnabled) {
+    return;
+  }
   dyslexifyPage(event.target);
 });

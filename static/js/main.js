@@ -5,6 +5,7 @@ import { setDuplication } from "./epic.js";
 import { setShaking } from "./shakeTarget.js";
 import { initReverseScroll } from "./reverseScroll.js";
 import { initShaderToy } from "./shadertoyLoader.js";
+import { initDyslexia } from "./dyslexia.js";
 
 // Welcome to "main.js". This is where all the ~magic~ SLOP happens.
 
@@ -40,7 +41,11 @@ const INIT_FUNCTIONS = {
   "shader-toy": {
     name: "Shader Toy",
     run: () => initShaderToy(),
-  }
+  },
+  "dyslexia": {
+    name: "Dyslexia",
+    run: () => initDyslexia(),
+  },
 };
 
 document.addEventListener("DOMContentLoaded", () => {
