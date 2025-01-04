@@ -75,7 +75,7 @@ export default function MessageList() {
   const attachDisplayName = async (message) => {
     const { data: profile, error } = await supabase
       .from("profiles")
-      .select("display_name, profile_color")
+      .select("display_name, profile_color, profile_photo_url")
       .eq("id", message.user_id)
       .single();
 
@@ -91,6 +91,7 @@ export default function MessageList() {
       ...message,
       display_name: profile.display_name,
       profile_color: profile.profile_color,
+      profile_photo_url: profile.profile_photo_url,
     };
   };
 
@@ -154,14 +155,15 @@ export default function MessageList() {
         <p>Loading...</p>
       ) : (
         messages.map((msg) => (
-            <Message
-              key={msg.id}
-              name={msg.display_name}
-              color={msg.profile_color}
-              date={formatDate(msg.created_at)}
-              message={msg.content}
-            />
-          ))
+          <Message
+            key={msg.id}
+            name={msg.display_name}
+            color={msg.profile_color}
+            photo={msg.profile_photo_url}
+            date={formatDate(msg.created_at)}
+            message={msg.content}
+          />
+        ))
       )}
     </div>
   );

@@ -9,10 +9,24 @@ export default function Message(data) {
             alignItems: "center",
           }}
         >
-          <strong style={{ color: data.color }}>{data.name}</strong>
-          <small>{data.date}</small>
+          <div style={{ display: "flex", gap: "10px", maxWidth: "90%" }}>
+            <img
+              src={data.photo}
+              alt="Profile"
+              style={{
+                width: "50px",
+                height: "50px",
+                objectFit: "cover",
+                borderRadius: "50%",
+              }}
+            />
+            <div style={{ maxWidth: "90%" }}>
+              <strong style={{ color: data.color }}>{data.name}</strong>
+              <p style={{ margin: 0, marginTop: "0.5rem" }}>{data.message}</p>
+            </div>
+          </div>
+          <small style={{ minWidth: "15%" }}>{data.date}</small>
         </div>
-        <p style={{ margin: 0, marginTop: "0.5rem" }}>{data.message}</p>
       </div>
     </>
   );
