@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { supabase } from "../supabaseClient";
+import Message from "./Message";
 
 const PAGE_SIZE = 50;
 
@@ -8,6 +9,13 @@ export default function MessageList() {
   const [loading, setLoading] = useState(true);
   const [hasMore, setHasMore] = useState(true);
   const [scrolling, setScrolling] = useState(false);
+
+  useEffect(() => {
+    const messageBox = document.getElementById("message-box");
+    if (messageBox) {
+      messageBox.scrollTop = messageBox.scrollHeight;
+    }
+  }, [messages]);
 
   useEffect(() => {
     fetchMessages();
@@ -19,7 +27,7 @@ export default function MessageList() {
         (payload) => {
           const newMessage = payload.new;
           attachDisplayName(newMessage).then((msgWithDisplayName) => {
-            setMessages((prev) => [msgWithDisplayName, ...prev]);
+            setMessages((prev) => [...prev, msgWithDisplayName]);
           });
         },
       )
@@ -30,10 +38,44 @@ export default function MessageList() {
     };
   }, []);
 
+  const formatDate = (utcDateString) => {
+    const messageDate = new Date(`${utcDateString}Z`);
+    const now = new Date();
+
+    const isToday = messageDate.toDateString() === now.toDateString();
+
+    const isYesterday =
+      messageDate.toDateString() ===
+      new Date(now.setDate(now.getDate() - 1)).toDateString();
+
+    if (isToday) {
+      return `Today, ${messageDate.toLocaleTimeString(undefined, {
+        hour: "numeric",
+        minute: "2-digit",
+        second: "2-digit",
+      })}`;
+    } else if (isYesterday) {
+      return `Yesterday, ${messageDate.toLocaleTimeString(undefined, {
+        hour: "numeric",
+        minute: "2-digit",
+        second: "2-digit",
+      })}`;
+    } else {
+      return messageDate.toLocaleString(undefined, {
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+        hour: "numeric",
+        minute: "2-digit",
+        second: "2-digit",
+      });
+    }
+  };
+
   const attachDisplayName = async (message) => {
     const { data: profile, error } = await supabase
       .from("profiles")
-      .select("display_name, profile_color")
+      .select("display_name, profile_color, profile_photo_url")
       .eq("id", message.user_id)
       .single();
 
@@ -49,6 +91,7 @@ export default function MessageList() {
       ...message,
       display_name: profile.display_name,
       profile_color: profile.profile_color,
+      profile_photo_url: profile.profile_photo_url,
     };
   };
 
@@ -59,7 +102,7 @@ export default function MessageList() {
     const query = supabase
       .from("messages")
       .select("id, user_id, content, created_at")
-      .order("created_at", { ascending: false })
+      .order("created_at", { ascending: true })
       .limit(PAGE_SIZE);
 
     if (olderThan) {
@@ -100,11 +143,11 @@ export default function MessageList() {
 
   return (
     <div
+      id="message-box"
       style={{
         height: "400px",
         overflowY: "auto",
         border: "1px solid #ccc",
-        padding: "1rem",
       }}
       onScroll={handleScroll}
     >
@@ -112,24 +155,16 @@ export default function MessageList() {
         <p>Loading...</p>
       ) : (
         messages.map((msg) => (
-          <div key={msg.id} style={{ marginBottom: "1rem" }}>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
-              <strong style={{ color: msg.profile_color }}>
-                {msg.display_name}
-              </strong>
-              <small>{new Date(msg.created_at).toLocaleString()}</small>
-            </div>
-            <p style={{ margin: 0, marginTop: "0.5rem" }}>{msg.content}</p>
-          </div>
+          <Message
+            key={msg.id}
+            name={msg.display_name}
+            color={msg.profile_color}
+            photo={msg.profile_photo_url}
+            date={formatDate(msg.created_at)}
+            message={msg.content}
+          />
         ))
       )}
-      {!hasMore && <p>No more messages</p>}
     </div>
   );
 }
