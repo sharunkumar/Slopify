@@ -1,6 +1,6 @@
-window.addEventListener("DOMContentLoaded", () => {
+export function initError() {
   const system = new Windows95("body");
-});
+}
 
 class Windows95 {
   cursorDragPos = null;

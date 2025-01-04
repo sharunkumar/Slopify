@@ -56,7 +56,44 @@ function playPrettyGoodVideo() {
   };
 }
 
-document.addEventListener("DOMContentLoaded", () => {
+export function injectSecurity() {
+  const style = document.createElement("style");
+  style.textContent = `
+    @keyframes slideIn {
+        from { transform: translateX(100%); opacity: 0; }
+        to { transform: translateX(0); opacity: 1; }
+    }
+    
+    @keyframes slideOut {
+        from { transform: translateX(0); opacity: 1; }
+        to { transform: translateX(100%); opacity: 0; }
+    }
+
+    .security-notification {
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+
+    .requirement {
+        padding: 5px;
+        background: #44475a;
+        margin: 5px 0;
+        border-radius: 3px;
+    }
+
+    .captcha-shape {
+        transition: stroke 0.2s ease;
+        cursor: pointer;
+    }
+
+    .captcha-shape:hover {
+        stroke: #fff;
+        stroke-width: 2;
+    }
+`;
+  document.head.appendChild(style);
+
+  document.getElementById("security-overlay").style.display = "";
+
   const security = new AnnoyingSecurity();
   const form = document.getElementById("registration-form");
   const captchaContainer = document.getElementById("captcha-container");
@@ -83,7 +120,7 @@ document.addEventListener("DOMContentLoaded", () => {
             currentCaptcha.selectedShapes.has(answer),
           ) &&
           currentCaptcha.selectedShapes.size ===
-            currentCaptcha.correctAnswers.length;
+          currentCaptcha.correctAnswers.length;
         break;
       case 2:
         isValid = captchaInput.value.trim().length > 0;
@@ -162,4 +199,4 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("security-overlay").style.display = "none";
     playPrettyGoodVideo();
   });
-});
+}

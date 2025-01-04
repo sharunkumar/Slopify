@@ -1,4 +1,4 @@
-(function () {
+export function injectAAB() {
   const script = document.createElement("script");
   script.src = "/rightad.js";
   script.onload = () => {};
@@ -83,4 +83,4 @@
     });
   };
   document.head.appendChild(script);
-})();
+};
