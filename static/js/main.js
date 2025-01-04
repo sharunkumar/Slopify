@@ -6,6 +6,7 @@ import { setShaking } from "./shakeTarget.js";
 import { initReverseScroll } from "./reverseScroll.js";
 import { initShaderToy } from "./shadertoyLoader.js";
 import { initDyslexia } from "./dyslexia.js";
+import { initKaboom } from "./kaboom.js";
 
 // Welcome to "main.js". This is where all the ~magic~ SLOP happens.
 
@@ -45,6 +46,10 @@ const INIT_FUNCTIONS = {
   "dyslexia": {
     name: "Dyslexia",
     run: () => initDyslexia(),
+  },
+  "kaboom": {
+    name: "Mouse Kaboom",
+    run: () => initKaboom(),
   },
 };
 
