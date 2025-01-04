@@ -53,7 +53,7 @@ jobs:
         uses: swatinem/rust-cache@v2
         with:
           workspaces: './src-tauri -> target'
-          working-directory: './Slopify'
+          directory: './Slopify'
 
       - name: install frontend dependencies
         run: npm install
@@ -62,7 +62,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          workingDirectory: './Slopify'
+          projectPath: './Slopify'
           tagName: app-v__VERSION__
           releaseName: 'App v__VERSION__'
           releaseBody: 'See the assets to download this version and install.'
