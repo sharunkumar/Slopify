@@ -23,6 +23,7 @@ body {
   color: #ebdbb2;
   display: grid;
   height: 100vh;
+  overflow-x: hidden;
 }
 
 .skipnav {
@@ -693,6 +694,7 @@ body.wokeMode {
 #ytplayer,
 #ytplayer2,
 #counterWidget,
+#slopTVFrame,
 #soundcloudPlayer {
   border: none;
 }
@@ -702,11 +704,57 @@ body.wokeMode {
 }
 
 .marquee {
-  display: flex;
   overflow: hidden;
+  position: relative;
+  padding-left: 100%;
+  animation: reduce 20s linear infinite;
+}
+
+.marquee__inner {
   white-space: nowrap;
-  box-sizing: border-box;
-  animation: marquee 10s linear infinite;
+  display: inline-block;
+  animation: scroll 20s linear infinite;
+}
+
+.marquee::before,
+.marquee::after {
+  z-index: 1;
+  top: 0;
+  left: 0;
+  position: absolute;
+  width: 50px;
+  height: 100%;
+  content: "";
+  display: block;
+}
+
+.marquee::after {
+  left: auto;
+  right: 0;
+  transform: rotate(180deg);
+}
+
+@keyframes reduce {
+  to {
+    padding-left: 0;
+  }
+}
+
+@keyframes scroll {
+  to {
+    transform: translateX( -100%);
+  }
+}
+
+#slopTVFrame {
+  pointer-events: none;
+}
+
+#slopTVTitle {
+  background-color: white;
+  color: black;
+  font-family: serif;
+  transform: scaleY(1.5);
 }
 
 #slopTVInnerFrame {
@@ -716,16 +764,6 @@ body.wokeMode {
   color: black;
   font-family: serif;
   transform: scaleY(1.5);
-}
-
-@keyframes marquee {
-  from {
-    transform: translateX(100%);
-  }
-
-  to {
-    transform: translateX(-100%);
-  }
 }
 
 

@@ -287,13 +287,13 @@
       <div id="chatbot"></div>
 
       <div id="slopTVContainer">
-        <marquee style="background-color:white;color:black;font-family:serif;transform:scaleY(1.5);">
-          <h1>SlopTV ! Watch free tv online below</h1>
-        </marquee>
-        <a href="/tv.html">
-          <iframe src="/tv.html" frameborder="0"></iframe>
-        </a>
-      </div>
+        <div class="marquee">
+          <h1 class="marquee__inner" id="slopTVTitle">SlopTV! Watch free TV online below</h1>
+        </div>
+        <div style="cursor: pointer;" onclick="window.location.href='/tv.html'">
+          <iframe id="slopTVFrame" src="/tv.html" title="SlopTV"></iframe>
+        </div>
+      </div>      
 
       <div id="chatContainer">
         <a href="/chat.html" title="Go to SlopChat">
@@ -362,10 +362,10 @@
 
       <header id="schisse">
         <div id="megaheader">
-          <button style="transform: scale(0.25) !important;"class="creationButton" id="creation">Creation!</button>
+          <button style="transform: scale(0.25) !important;" class="creationButton" id="creation">Creation!</button>
         </div>
         <div class="marquee">
-          <img src="static/images/epic-logo.gif" alt="Slopify animated logo" />
+          <img class="marquee__inner" src="static/images/epic-logo.gif" alt="Slopify animated logo" />
         </div>
         <img src="SlopifyLogo.png" width="400" alt="Slopify logo" />
         <h1>
@@ -1081,7 +1081,7 @@
     <script src="static/js/win2k.js"></script>
 
     <!--Mouse Kaboom-->
-    <img src="static/images/kaboom.png" id="mouseKaboomImage" style="display:none"/>
+    <img src="static/images/kaboom.png" id="mouseKaboomImage" style="display:none" alt=""/>
     <script src="static/js/kaboom.js"></script>
 
     <!-- Humans are NOW welcome to this site - Management at The Intergalactic Federation. -->
