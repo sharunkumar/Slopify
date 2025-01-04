@@ -101,7 +101,7 @@ export default function MessageList() {
     const query = supabase
       .from("messages")
       .select("id, user_id, content, created_at")
-      .order("created_at", { ascending: false })
+      .order("created_at", { ascending: true })
       .limit(PAGE_SIZE);
 
     if (olderThan) {
@@ -153,10 +153,7 @@ export default function MessageList() {
       {loading ? (
         <p>Loading...</p>
       ) : (
-        messages
-          .slice()
-          .reverse()
-          .map((msg) => (
+        messages.map((msg) => (
             <Message
               key={msg.id}
               name={msg.display_name}
