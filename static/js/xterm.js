@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
   closeButton.id = "terminalCloseButton";
   closeButton.type = "button";
   closeButton.addEventListener("click", () => {
-    terminalModal.setAttribute("hidden", "");
+    terminalModal.remove();
   });
 
   const closeSprite = document.createElement("span");

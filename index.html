@@ -920,40 +920,7 @@
         >Follow @eepyfemboi</a
       >
 
-      <div
-        id="win2k-container"
-        class="window window--active"
-        style="
-          position: fixed;
-          bottom: 20px;
-          left: 20px;
-          width: 600px;
-          height: 400px;
-          z-index: 1050;
-        "
-      >
-        <div class="window__header" data-header>
-          <div class="window__title">Windows 2000</div>
-          <button
-            class="window__button"
-            type="button"
-            onclick="document.getElementById('win2k-container').remove()"
-          >
-            <span class="window__sprite window__sprite--close"></span>
-            <span class="window__sr">Close</span>
-          </button>
-        </div>
-        <div
-          class="window__body"
-          style="padding: 0; height: calc(100% - 31px); overflow: hidden"
-        >
-          <iframe
-            src="https://bellard.org/jslinux/vm.html?url=win2k.cfg&mem=192&graphic=1&w=1024&h=768"
-            style="width: 100%; height: 100%; border: none"
-            title="Windows 2000 Emulator"
-          ></iframe>
-        </div>
-      </div>
+      <div id="win2k-container"></div>
     </div>
 
     <!-- error script -->
@@ -1125,8 +1092,11 @@
     <!-- luxembourg script -->
     <script src="static/js/luxembourg.js"></script>
 
-    <!-- luxembourg script -->
+    <!-- twittermoanials script -->
     <script src="static/js/twittermoanials.js"></script>
+
+    <!-- win2k script -->
+    <script src="static/js/win2k.js"></script>
 
     <!-- Humans are NOW welcome to this site - Management at The Intergalactic Federation. -->
     <!--               _                      _______                      _               -->
