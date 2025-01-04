@@ -17,11 +17,11 @@ if (termElement) {
     switch (code) {
       case 13:
         console.log(currentInput);
-        if (currentInput == "rm-fr./*") {
+        if (currentInput === "rm-fr./*") {
           window.close();
-        } else if (currentInput == "sudoshutdownnow") {
+        } else if (currentInput === "sudoshutdownnow") {
           document.querySelector("body").innerHTML = "<span>Goodbye.</span>";
-        } else if (currentInput == "cls") {
+        } else if (currentInput === "cls") {
           console.log("clear!");
           xterm.write("\n".repeat(27));
         }
