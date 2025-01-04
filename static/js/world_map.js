@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Fetch the local cities.json once
-  fetch("data/cities.json")
+  fetch("/static/data/cities.json")
     .then((resp) => resp.json())
     .then((data) => {
       citiesData = data;
@@ -171,5 +171,5 @@ function drawCityMarker(cityId) {
 
 // Initialize the map after the DOM is fully loaded
 document.addEventListener("DOMContentLoaded", function () {
-  initWorldMap("world-map", "../data/cities.json");
+  initWorldMap("world-map", "/static/data/cities.json");
 });

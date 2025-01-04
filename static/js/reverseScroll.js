@@ -1,7 +1,16 @@
 let isReversed = false;
 let lastScrollTop = 0;
+let reverseScrollEnabled = false;
+
+export function setReverseScroll(enabled) {
+  reverseScrollEnabled = enabled;
+}
 
 function reverseScroll(e) {
+  if (!reverseScrollEnabled) {
+    return;
+  }
+
   e.preventDefault();
 
   const currentScrollTop =
@@ -17,7 +26,7 @@ function reverseScroll(e) {
 
 function toggleScrollDirection() {
   isReversed = !isReversed;
-  console.log(`Scroll direction ${isReversed ? "reversed" : "normal"}`);
+  // console.log(`Scroll direction ${isReversed ? "reversed" : "normal"}`);
 }
 
 function setRandomInterval() {
@@ -32,7 +41,10 @@ function setRandomInterval() {
   }, randomTime);
 }
 
+export function initReverseScroll() {
+  setRandomInterval();
+  setReverseScroll(true);
+}
+
 window.addEventListener("wheel", reverseScroll, { passive: false });
 window.addEventListener("DOMMouseScroll", reverseScroll, { passive: false });
-
-setRandomInterval();

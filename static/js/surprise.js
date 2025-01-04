@@ -47,14 +47,23 @@ function showFullScreenImage(
   }, displayDuration + fadeDuration);
 }
 
-var audio = new Audio("static/audio/protocol.mp3");
-document.addEventListener("click", function (event) {
+let surpriseEnabled = false;
+
+export function setSurpriseEnabled(enabled) {
+  surpriseEnabled = enabled;
+}
+
+const audio = new Audio("static/audio/protocol.mp3");
+document.addEventListener("click", () => {
+  if (!surpriseEnabled) {
+    return;
+  }
   // Check if the clicked element is a button
 
-  var LUCKY_NUMBER = getRandomInt(THE_OPPENHEIMER_INDEX);
+  let LUCKY_NUMBER = getRandomInt(THE_OPPENHEIMER_INDEX);
   if (LUCKY_NUMBER === 0) {
     audio.volume = 1;
     audio.play();
-    showFullScreenImage("static/images/handsome.jpg", 1500, 1500);
+    showFullScreenImage("/static/images/handsome.jpg", 1500, 1500);
   }
 });

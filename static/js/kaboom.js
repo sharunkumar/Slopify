@@ -47,7 +47,7 @@ function updateMouseKabooms() {
         }
         return boom.age < 15
     });
-    
+
     MOUSE_KABOOMS.forEach(boom => {
         boom.age += 1;
 
@@ -67,9 +67,8 @@ function playKaboomSound() {
     kaboomSound.play();
 }
 
-document.addEventListener('DOMContentLoaded', function() {
+export function initKaboom() {
     KABOOM_IMG = document.getElementById("mouseKaboomImage");
     initMouseKaboom();
-}, false);
-
-window.setInterval(updateMouseKabooms, 50);
+    window.setInterval(updateMouseKabooms, 50);
+}
