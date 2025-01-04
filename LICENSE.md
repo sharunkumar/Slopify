@@ -53,3 +53,8 @@ Violations of these terms will result in the immediate termination of the licens
 
 - The original authors or maintainers of this software.
 - Third-party organizations explicitly authorized by the authors to monitor and enforce compliance.
+
+## 11. Perpetual Slop Grindset Clause
+
+- By contributing to this software, you are given a license to use Slopify in perpetuity at no cost for non-commercial purposes pursuant to Section 2 (permitted uses).
+- By contributing to this software AND using it non-transformatively in a commercial fashion, you must tip your fellow sloplords (aka code contributors) 4.20% of your gross profit, pooled and distributed equally in a manner agreed-upon by the majority of the maintainers. As you grow, the slop must too.
