@@ -5,8 +5,12 @@ function setShaderToy(ifrm_shadertoy) {
   ifrm_shadertoy.src = `https://www.shadertoy.com/embed/${id}?gui=true&paused=false&muted=false`;
 }
 
-document.addEventListener("DOMContentLoaded", () => {
+export function initShaderToy() {
   const shaderToySection = document.getElementById("shadertoy-section");
+
+  if (!shaderToySection) {
+    return;
+  }
 
   const shaderButton = document.createElement("input");
   shaderButton.type = "button";
@@ -27,4 +31,4 @@ document.addEventListener("DOMContentLoaded", () => {
   shaderToySection.appendChild(shaderButton);
   shaderToySection.appendChild(br);
   shaderToySection.appendChild(ifrm_shadertoy);
-});
+}

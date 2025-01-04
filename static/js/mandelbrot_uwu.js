@@ -91,7 +91,7 @@ function mapRange(value, inMin, inMax, outMin, outMax) {
   return ((value - inMin) * (outMax - outMin)) / (inMax - inMin) + outMin;
 }
 
-function init() {
+export function initMandelbrotUwu() {
   const mandelbrotDiv = document.getElementById('mandelbrot-wrapper');
 
   const mandelbrotSectionDiv = document.createElement("div");
@@ -108,5 +108,3 @@ function init() {
   initializeCanvas(mandelbrotCanvas);
   setInterval(() => renderFractal(mandelbrotCanvas), 1000 / 30); // Llamar renderFractal() 30 veces por segundo
 }
-
-document.addEventListener("DOMContentLoaded", init)

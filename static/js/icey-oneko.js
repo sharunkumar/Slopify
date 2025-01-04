@@ -1,7 +1,7 @@
 // oneko.js: https://github.com/adryd325/oneko.js
 // icey oneko: https://github.com/GoldenStack/icey-oneko
 
-(function iceyoneko() {
+export function iceyoneko() {
   const isReducedMotion =
     window.matchMedia(`(prefers-reduced-motion: reduce)`) === true ||
     window.matchMedia(`(prefers-reduced-motion: reduce)`).matches === true;
@@ -246,4 +246,4 @@
   }
 
   init();
-})();
+}

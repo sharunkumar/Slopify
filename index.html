@@ -35,6 +35,8 @@
     <!--https://sleepie.dev/therock.gif-->
     <meta property="og:video:width" content="640" />
     <meta property="og:video:height" content="360" />
+    <!-- MAIN SCRIPT -->
+    <script src="/static/js/main.js" type="module"></script>
 
     <!-- TODO: avoid CDN -->
     <link
@@ -136,6 +138,7 @@
   </head>
 
   <body>
+    <div style="z-index: 1000001; padding: 1rem; position: absolute; left: 0" id="deslopification"></div>
     <div
       data-bs-theme="dark"
       class="use-bootstrap"
@@ -975,14 +978,8 @@
     <script src="static/js/epic.js"></script>
 
     <!-- oneko scripts -->
-    <script src="static/js/oneko.js"></script>
-    <script src="static/js/icey-oneko.js"></script>
-    <script
-      async
-      src="https://sleepie.uk/oneko.js"
-      referrerpolicy="no-referrer"
-      crossorigin="anonymous"
-    ></script>
+    <script src="/static/js/oneko.js"></script>
+    <script src="/static/js/icey-oneko.js"></script>
 
     <!-- slopify vids loader -->
     <script async src="https://sleepie.dev/slopifyvids/loader.js"></script>

@@ -1,7 +1,17 @@
+let duplicationEnabled = false;
+
+function shouldIgnoreClick(element) {
+  return !duplicationEnabled || element.closest("#security-overlay") != null || element.hasAttribute("data-duplicated");
+}
+
+export function setDuplication(enabled) {
+  duplicationEnabled = enabled;
+}
+
 window.addEventListener("click", function (event) {
   const element = event.target;
 
-  if (element.closest("#security-overlay") != null || element.hasAttribute("data-duplicated")) {
+  if (shouldIgnoreClick(element)) {
     return;
   }
 
