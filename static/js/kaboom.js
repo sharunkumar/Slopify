@@ -43,7 +43,7 @@ function updateMouseKabooms() {
 
     MOUSE_KABOOMS = MOUSE_KABOOMS.filter(function (boom) {
         if (boom.age >= 15) {
-            //boom.canvas.remove();
+            boom.canvas.remove();
         }
         return boom.age < 15
     });
