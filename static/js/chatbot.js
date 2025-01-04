@@ -45,7 +45,7 @@ const messageSound = new Audio("static/audio/droid.mp3");
 
 function sendMessage() {
   const input = document.getElementById("userInput");
-  const messages = document.getElementById("chatMessages");
+  const messages = document.getElementById("chat-messages");
 
   if (input.value.trim() === "") return;
 
@@ -80,12 +80,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const chatHeaderButton = document.createElement("button");
   chatHeaderButton.textContent = "×";
   chatHeaderButton.addEventListener("click", toggleChat);
+  chatHeaderButton.id = "chatToggleButton";
 
   chatHeader.appendChild(chatHeaderSpan);
   chatHeader.appendChild(chatHeaderButton);
 
   const chatMessagesDiv = document.createElement("div");
-  chatMessagesDiv.id = "chatMessages";
+  chatMessagesDiv.id = "chat-messages";
 
   const botMessageDiv = document.createElement("div");
   botMessageDiv.className = "bot-message";
