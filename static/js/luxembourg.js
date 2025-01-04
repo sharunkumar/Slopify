@@ -36,7 +36,6 @@ function main() {
   anthem.loop = true;
 
   creation.onclick = () => {
-    alert("Hello?");
     setInterval(() => {
       body.innerHTML = "Click anywhere to spawn Luxembourg";
       schisse.innerHTML = "";
@@ -75,8 +74,6 @@ function main() {
         anthem.play();
         anthemPlaying = true;
       }
-
-      alert("something");
     }, 10);
   };
 }
