@@ -17,15 +17,12 @@ jobs:
         with:
           script: |
             const slangWords = [
-              // Original words
               'fanum',
               'ohio',
               'rizz',
               'rizzler',
               'gyatt',
               'ong',
-              
-              // Internet/Gaming terms
               'brain rot',
               'skibidi',
               'sigma',
@@ -34,8 +31,6 @@ jobs:
               'yeet',
               'simp',
               'og',
-              
-              // Personality/Characteristics
               'mewing',
               'aura',
               'delulu',
@@ -43,8 +38,6 @@ jobs:
               'pookie',
               'chad alpha',
               'mog',
-              
-              // Common expressions
               'bruh',
               'salty',
               'ate',
@@ -65,9 +58,7 @@ jobs:
               'slay',
               'fam',
               'yapping',
-              'yap'
-              
-              // Compound terms
+              'yap',
               'skibidi ohio rizz',
               'skibidi rizz',
               'what the sigma',
@@ -76,12 +67,8 @@ jobs:
               'mad lit',
               'just put the fries in the bag',
               'hits different',
-              
-              // Truth/Lie related
               'cap',
               'no cap',
-              
-              // Style/Status
               'drip',
               'flex',
               'tea',
