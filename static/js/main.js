@@ -7,6 +7,7 @@ import { initReverseScroll } from "./reverseScroll.js";
 import { initShaderToy } from "./shadertoyLoader.js";
 import { initDyslexia } from "./dyslexia.js";
 import { initKaboom } from "./kaboom.js";
+import { setSurpriseEnabled } from "./surprise.js";
 
 // Welcome to "main.js". This is where all the ~magic~ SLOP happens.
 
@@ -51,6 +52,10 @@ const INIT_FUNCTIONS = {
     name: "Mouse Kaboom",
     run: () => initKaboom(),
   },
+  "handsome-surprise": {
+    name: "Handsome Surprise",
+    run: () => setSurpriseEnabled(true),
+  }
 };
 
 document.addEventListener("DOMContentLoaded", () => {
