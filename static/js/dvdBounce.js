@@ -1,4 +1,3 @@
-const dvdElement = document.getElementById("dvd-bounce");
 const minSpeed = 0.2;
 const maxSpeed = 4;
 const dvdWidth = 500;
@@ -8,7 +7,7 @@ let dvdY = Math.random() * (window.innerHeight - dvdHeight);
 let directionX = minSpeed + Math.random() * (maxSpeed - minSpeed);
 let directionY = minSpeed + Math.random() * (maxSpeed - minSpeed);
 
-function moveDvd() {
+function moveDvd(dvdElement) {
   // Update position
   dvdX += directionX;
   dvdY += directionY;
@@ -37,15 +36,26 @@ function moveDvd() {
 
   // Apply position
   dvdElement.style.transform = `translate(${dvdX}px, ${dvdY}px)`;
-  requestAnimationFrame(moveDvd);
+  requestAnimationFrame(() => moveDvd(dvdElement));
 }
-
-// Start the animation
-requestAnimationFrame(moveDvd);
 
 // Handle window resize
 window.addEventListener("resize", () => {
   // Ensure both width and height stay within bounds on resize
   dvdX = Math.min(dvdX, window.innerWidth - dvdWidth);
   dvdY = Math.min(dvdY, window.innerHeight - dvdHeight);
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  const dvdElement = document.getElementById("dvd-bounce");
+
+  const img = document.createElement("img");
+  img.src = "/static/images/DVD_logo.png";
+  img.width = dvdWidth;
+  img.height = dvdHeight;
+  img.alt = "Bouncing DVD Logo";
+
+  dvdElement.appendChild(img);
+
+  moveDvd(dvdElement);
 });

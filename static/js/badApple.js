@@ -17,10 +17,12 @@ function startAnimation(frames) {
   animate();
 }
 
-fetch("static/text/play.txt")
-  .then((response) => response.text())
-  .then((frameData) => {
-    const frames = frameData.split("SPLIT");
-    startAnimation(frames);
-  })
-  .catch((error) => console.error("Error loading play.txt:", error));
+function startBadAppleLogging() {
+  fetch("static/text/play.txt")
+    .then((response) => response.text())
+    .then((frameData) => {
+      const frames = frameData.split("SPLIT");
+      startAnimation(frames);
+    })
+    .catch((error) => console.error("Error loading play.txt:", error));
+}
