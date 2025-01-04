@@ -158,6 +158,7 @@
             }
     
             function appendOperator(op) {
+                play_audio("sigma")
                 if (currentInput === "") return;
                 if (previousInput !== "") {
                     calculateResult();
