@@ -48,6 +48,11 @@ export default function ChatPage() {
     navigate("/slopbox");
   };
 
+  const navToProfile = async (e) => {
+    e.preventDefault();
+    navigate("/profile");
+  };
+
   return (
     <div>
       <h2>Welcome back to Slopify, {displayName}!</h2>
@@ -57,6 +62,14 @@ export default function ChatPage() {
         <Button
           action="submit"
           content="SLOPBOX"
+          background="#FF00FF"
+          color="black"
+        />
+      </form>
+      <form onSubmit={navToProfile}>
+        <Button
+          action="submit"
+          content="EDIT PROFILE"
           background="#FF00FF"
           color="black"
         />
