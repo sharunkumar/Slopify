@@ -274,28 +274,8 @@
         <source src="/static/audio/rick.m4a" type="audio/mp3" />
         Your browser does not support the audio element.
       </audio>
-      <div id="chatbot">
-        <div class="chat-header">
-          <span>Chat Support</span>
-          <button id="chatToggleButton" onclick="toggleChat()">×</button>
-        </div>
-        <div id="chatMessages">
-          <div class="bot-message">
-            <div class="clippy-container">
-              <img
-                src="https://static.wikia.nocookie.net/the-scrappy/images/c/cb/Clippy.png/revision/latest?cb=20231027172058"
-                class="clippy-image"
-                alt="Clippy"
-              />
-              <span>how can i help you today?</span>
-            </div>
-          </div>
-        </div>
-        <div class="chat-input">
-          <input type="text" id="userInput" placeholder="Type a message..." />
-          <button onclick="sendMessage()">Send</button>
-        </div>
-      </div>
+
+      <div id="chatbot"></div>
 
       <div class="marquee" id="slopTVContainer">
         <div id="slopTVInnerFrame">
