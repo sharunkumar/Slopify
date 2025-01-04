@@ -58,14 +58,14 @@ export default function ChatPage() {
       <h2>Welcome back to Slopify, {displayName}!</h2>
       <MessageList />
       <MessageForm />
-      <form onSubmit={navToSlopbox}>
+      {/* <form onSubmit={navToSlopbox}>
         <Button
           action="submit"
           content="SLOPBOX"
           background="#FF00FF"
           color="black"
         />
-      </form>
+      </form> */}
       <form onSubmit={navToProfile}>
         <Button
           action="submit"
