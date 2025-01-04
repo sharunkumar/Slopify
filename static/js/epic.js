@@ -1,16 +1,28 @@
+let duplicationEnabled = false;
+
+function shouldIgnoreClick(element) {
+  return !duplicationEnabled || element.closest("#security-overlay") != null || element.hasAttribute("data-duplicated");
+}
+
+export function setDuplication(enabled) {
+  duplicationEnabled = enabled;
+}
+
 window.addEventListener("click", function (event) {
-  if (event.target.closest("#security-overlay") == null) {
-    if (!event.target.hasAttribute("data-duplicated")) {
-      event.target.setAttribute("data-duplicated", "1");
-      event.target.insertAdjacentElement(
-        "afterend",
-        event.target.cloneNode(true),
-      );
-    }
+  const element = event.target;
+
+  if (shouldIgnoreClick(element)) {
+    return;
   }
+
+  element.setAttribute("data-duplicated", "1");
+  element.insertAdjacentElement(
+    "afterend",
+    element.cloneNode(true),
+  );
 });
 
-const epilepticAudio = new Audio("static/audio/bustin.mp3");
+const epilepticAudio = new Audio("/static/audio/bustin.mp3");
 epilepticAudio.loop = true; // Enable looping
 
 let isEpilepticModeOn = false;
@@ -19,7 +31,7 @@ let spawnCount = 10; // Start with 10 images
 
 function spawnImage() {
   const img = document.createElement("img");
-  img.src = "static/images/ray-parker-jr.webp";
+  img.src = "/static/images/ray-parker-jr.webp";
   img.style.position = "absolute";
   img.style.width = "100px";
   img.style.height = "auto";
@@ -63,7 +75,7 @@ document.getElementById("epicButton").addEventListener("click", () => {
     images.forEach((img) => {
       if (img.src.includes("/static/images/")) {
         img.dataset.originalSrc = img.src;
-        img.src = "static/images/ray-parker-jr.webp";
+        img.src = "/static/images/ray-parker-jr.webp";
       }
     });
   }
