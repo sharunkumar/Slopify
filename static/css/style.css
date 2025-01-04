@@ -772,3 +772,46 @@ body.wokeMode {
   height: 100%;
   border: none;
 }
+
+#deslopification button {
+  padding: 10px 20px;
+  background-color: #315f9b;
+  color: #dedede;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 5px;
+  transition: all 0.3s ease-in-out;
+  border: 2px solid #315f9b;
+  margin-top: 20px;
+}
+
+#deslopification button:hover {
+  background-color: #507cb7;
+  transform: scale(1.05);
+  border: 2px solid #dedede;
+}
+
+#deslopification {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 1000001;
+  border: 2px solid #dedede;
+  border-radius: 5px;
+  padding: 1.5rem;
+}
+
+.deslopify-checkbox {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  gap: 10px;
+}
+
+.deslopify-button-container {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  margin-top: 20px;
+  gap: 10px;
+}
