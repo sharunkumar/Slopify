@@ -1,0 +1,7 @@
+.kaboom {
+  position: fixed !important;
+  display: block !important;
+  border: none !important;
+  left: unset !important;
+  top: unset !important;
+}
