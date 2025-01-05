@@ -60,6 +60,5 @@ dist
 .idea
 .DS_Store
 /target
-package-lock.json
 yarn.lock
 pnpm-lock.yaml
