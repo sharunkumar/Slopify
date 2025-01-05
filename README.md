@@ -36,6 +36,7 @@ For contributing, check **[CONTRIBUTING.md](https://github.com/DishpitDev/Slopif
 
 ## Current Features
 
+- SlopTV featuring high-quality productions such as "Chinese Propaganda"
 - Catgirl downloader via [nekos.best](https://nekos.best)
 - Rust
 - "Current features" list
