@@ -1,1 +1,30 @@
-<p>welcome to slopify s1</p>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Slopify - Dev Tools for Developers</title>
+    <script src="src/static/js/speech.js"></script>
+    <link rel="stylesheet" href="src/static/css/main.css">
+</head>
+
+<body>
+    <header>
+        <h1>Welcome to slopify.dev season 1 LIVE AND DIRECT</h1>
+    </header>
+    <section class="container">
+        <div id="intro-haiku">
+            <h3>Haiku of the day:</h3>
+            <p id="haiku">
+                Dishpit's idea<br>
+                Wanna commit? go ahead<br>
+                See what u can do</p>
+        </div>
+    </section>
+    <script> speak(document.getElementById("haiku").innerText)</script>
+</body>
+
+</html>
