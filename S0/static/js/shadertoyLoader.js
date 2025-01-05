@@ -22,9 +22,11 @@ export function initShaderToy() {
   ifrm_shadertoy.id = "ifrm_shadertoy";
   ifrm_shadertoy.width = "640";
   ifrm_shadertoy.height = "360";
-  ifrm_shadertoy.src = "https://www.shadertoy.com/embed/ld3Gz2?gui=false&paused=false&muted=false";
+  ifrm_shadertoy.src =
+    "https://www.shadertoy.com/embed/ld3Gz2?gui=false&paused=false&muted=false";
   ifrm_shadertoy.allowFullscreen = true;
-  ifrm_shadertoy.title = "An image showing a snail staring at a leaf with water droplets on it.";
+  ifrm_shadertoy.title =
+    "An image showing a snail staring at a leaf with water droplets on it.";
 
   shaderButton.onclick = () => setShaderToy(ifrm_shadertoy);
 

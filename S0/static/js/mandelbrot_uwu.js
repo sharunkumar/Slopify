@@ -92,7 +92,7 @@ function mapRange(value, inMin, inMax, outMin, outMax) {
 }
 
 export function initMandelbrotUwu() {
-  const mandelbrotDiv = document.getElementById('mandelbrot-wrapper');
+  const mandelbrotDiv = document.getElementById("mandelbrot-wrapper");
 
   const mandelbrotSectionDiv = document.createElement("div");
   mandelbrotSectionDiv.id = "mandelbrot-section";

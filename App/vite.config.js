@@ -8,7 +8,7 @@ export default defineConfig(async () => ({
   plugins: [react()],
   esbuild: {
     supported: {
-      "top-level-await": true
+      "top-level-await": true,
     },
   },
 

@@ -36,7 +36,8 @@ document.addEventListener("DOMContentLoaded", () => {
   windowBody.classList.add("window__body");
 
   const win2k = document.createElement("iframe");
-  win2k.src = "https://bellard.org/jslinux/vm.html?url=win2k.cfg&mem=192&graphic=1&w=1024&h=768";
+  win2k.src =
+    "https://bellard.org/jslinux/vm.html?url=win2k.cfg&mem=192&graphic=1&w=1024&h=768";
   win2k.title = "Windows 2000 Emulator";
 
   windowBody.appendChild(win2k);

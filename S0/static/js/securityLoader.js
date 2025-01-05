@@ -120,7 +120,7 @@ export function injectSecurity() {
             currentCaptcha.selectedShapes.has(answer),
           ) &&
           currentCaptcha.selectedShapes.size ===
-          currentCaptcha.correctAnswers.length;
+            currentCaptcha.correctAnswers.length;
         break;
       case 2:
         isValid = captchaInput.value.trim().length > 0;

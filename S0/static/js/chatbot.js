@@ -118,11 +118,11 @@ document.addEventListener("DOMContentLoaded", () => {
   userInput.placeholder = "Type a message...";
 
   // Update event listeners
-  userInput.addEventListener("keydown", e => {
+  userInput.addEventListener("keydown", (e) => {
     e.stopPropagation();
   });
 
-  userInput.addEventListener("keypress", e => {
+  userInput.addEventListener("keypress", (e) => {
     if (e.key === "Enter") {
       e.preventDefault();
       sendMessage();

@@ -1,7 +1,11 @@
 let enableShaking = false;
 
 function shouldIgnore(element) {
-  return !enableShaking || element.closest("#security-overlay") != null || element.hasAttribute("data-duplicated");
+  return (
+    !enableShaking ||
+    element.closest("#security-overlay") != null ||
+    element.hasAttribute("data-duplicated")
+  );
 }
 
 export function setShaking(enabled) {

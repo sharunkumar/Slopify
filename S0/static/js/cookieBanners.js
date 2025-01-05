@@ -31,7 +31,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const cookieBannerDiv = document.getElementById("cookie-banners");
 
   for (let i = 0; i < COOKIE_BANNER_MESSAGES.length; i++) {
-    const cookieBanner = createCookieBanner(COOKIE_BANNER_MESSAGES[i], `cookie-banner${i + 1}`);
+    const cookieBanner = createCookieBanner(
+      COOKIE_BANNER_MESSAGES[i],
+      `cookie-banner${i + 1}`,
+    );
     cookieBannerDiv.appendChild(cookieBanner);
   }
 });

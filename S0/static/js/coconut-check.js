@@ -4,7 +4,7 @@ function checkCoconut() {
     const img = new Image();
     img.onload = () => resolve(true);
     img.onerror = () => resolve(false);
-    img.src = '/static/images/coconut.jpg';
+    img.src = "/static/images/coconut.jpg";
   });
 }
 
@@ -15,10 +15,9 @@ function killEverything() {
 async function enforceCoconut() {
   const coconutExists = await checkCoconut();
   if (!coconutExists) {
-    
     killEverything();
   }
 }
 
 // Run check immediately
-enforceCoconut(); 
+enforceCoconut();

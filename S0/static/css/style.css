@@ -229,7 +229,6 @@ canvas {
 }
 
 @keyframes shake {
-
   0%,
   100% {
     transform: translate(0, 0);
@@ -303,7 +302,6 @@ canvas {
 }
 
 @keyframes epilepticFlash {
-
   0%,
   100% {
     background-color: white;
@@ -357,7 +355,7 @@ canvas {
   width: 100%;
 }
 
-#slopTVContainer>a>iframe {
+#slopTVContainer > a > iframe {
   width: 720px;
   height: 790px;
 }
@@ -469,19 +467,21 @@ canvas {
 }
 
 body.wokeMode {
-  background: linear-gradient(#78d8ef 20%,
+  background: linear-gradient(
+      #78d8ef 20%,
       #ffb2ca 20%,
       #ffb2ca 40%,
       #fff 40%,
       #fff 60%,
       #ffb2ca 60%,
       #ffb2ca 80%,
-      #78d8ef 0) fixed !important;
+      #78d8ef 0
+    )
+    fixed !important;
   /* important because i can't bother to disable the code that's putting style="" in body */
 }
 
 @keyframes bob {
-
   0%,
   100% {
     transform: translateY(0);
@@ -520,14 +520,16 @@ body.wokeMode {
   font-family: "Comic Sans MS", sans-serif;
   font-size: 124px;
   text-decoration: none;
-  background: linear-gradient(90deg,
-      red,
-      orange,
-      yellow,
-      green,
-      blue,
-      indigo,
-      violet);
+  background: linear-gradient(
+    90deg,
+    red,
+    orange,
+    yellow,
+    green,
+    blue,
+    indigo,
+    violet
+  );
   background-size: 200% auto;
   background-clip: text;
   -webkit-background-clip: text;
@@ -547,7 +549,8 @@ body.wokeMode {
 @supports (color: oklch(0.75 0.1275 180)) {
   :root {
     --scrollbar-hue: 0;
-    scrollbar-color: oklch(0.5 0.1275 var(--scrollbar-hue)) oklch(0.25 0.1275 var(--scrollbar-hue));
+    scrollbar-color: oklch(0.5 0.1275 var(--scrollbar-hue))
+      oklch(0.25 0.1275 var(--scrollbar-hue));
     animation: scrollbar-hue 15s linear infinite;
   }
 }
@@ -742,7 +745,7 @@ body.wokeMode {
 
 @keyframes scroll {
   to {
-    transform: translateX( -100%);
+    transform: translateX(-100%);
   }
 }
 
@@ -766,7 +769,6 @@ body.wokeMode {
   transform: scaleY(1.5);
 }
 
-
 #slopTVContainer {
   position: absolute;
   top: 800px;
@@ -779,7 +781,7 @@ body.wokeMode {
   cursor: pointer;
 }
 
-#slopTVContainer>a>iframe {
+#slopTVContainer > a > iframe {
   width: 720px;
   height: 790px;
 }
@@ -802,7 +804,7 @@ body.wokeMode {
 #win2k-container .window__body {
   padding: 0;
   height: calc(100% - 31px);
-  overflow: hidden
+  overflow: hidden;
 }
 
 #win2k-container iframe {

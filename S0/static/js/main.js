@@ -17,22 +17,22 @@ import { initError } from "./error.js";
 // Welcome to "main.js". This is where all the ~magic~ SLOP happens.
 
 const INIT_FUNCTIONS = {
-  "mandelbrot_uwu": {
+  mandelbrot_uwu: {
     name: "UWU Mandelbrot",
     run: initMandelbrotUwu,
     cleanup: () => cleanDOM("mandelbrot_uwu"),
   },
-  "oneko": {
+  oneko: {
     name: "Oneko",
     run: initOneko,
     cleanup: () => cleanDOM("oneko"),
   },
-  "icyoneko": {
+  icyoneko: {
     name: "Icyoneko",
     run: initIcyOneko,
     cleanup: () => cleanDOM("icyoneko"),
   },
-  "duplication": {
+  duplication: {
     name: "Element Duplication",
     run: () => setDuplication(true),
     cleanup: () => cleanDOM("duplication"),
@@ -57,12 +57,12 @@ const INIT_FUNCTIONS = {
     run: () => initShaderToy(),
     cleanup: () => cleanDOM("shader-toy"),
   },
-  "dyslexia": {
+  dyslexia: {
     name: "Dyslexia",
     run: () => initDyslexia(),
     cleanup: () => cleanDOM("dyslexia"),
   },
-  "kaboom": {
+  kaboom: {
     name: "Mouse Kaboom",
     run: () => initKaboom(),
     cleanup: () => cleanDOM("kaboom"),
@@ -72,22 +72,22 @@ const INIT_FUNCTIONS = {
     run: () => setSurpriseEnabled(true),
     cleanup: () => cleanDOM("handsome-surprise"),
   },
-  "aabLoader": {
+  aabLoader: {
     name: "Anti-Adblock Loader",
     run: () => injectAAB(),
     cleanup: () => cleanDOM("aabLoader"),
   },
-  "rainbowPulse": {
+  rainbowPulse: {
     name: "Rainbow Pulse Background",
     run: () => rainbowPulse(),
     cleanup: () => cleanDOM("rainbowPulse"),
   },
-  "security": {
+  security: {
     name: "Security",
     run: () => injectSecurity(),
     cleanup: () => cleanDOM("security"),
   },
-  "error": {
+  error: {
     name: "Errors",
     run: () => initError(),
     cleanup: () => cleanDOM("error"),
@@ -142,7 +142,9 @@ document.addEventListener("DOMContentLoaded", () => {
   deslopifyButton.id = "deslopify-button";
 
   deslopifyButton.addEventListener("click", () => {
-    const checkboxes = document.querySelectorAll("#deslopification input[type=checkbox]");
+    const checkboxes = document.querySelectorAll(
+      "#deslopification input[type=checkbox]",
+    );
     checkboxes.forEach((checkbox) => {
       const key = checkbox.value;
       const isChecked = checkbox.checked;
@@ -164,8 +166,10 @@ document.addEventListener("DOMContentLoaded", () => {
   selectAllButton.id = "select-all-deslopifications-button";
 
   selectAllButton.addEventListener("click", () => {
-    const checkboxes = document.querySelectorAll("#deslopification input[type=checkbox]");
-    checkboxes.forEach((checkbox) => checkbox.checked = true);
+    const checkboxes = document.querySelectorAll(
+      "#deslopification input[type=checkbox]",
+    );
+    checkboxes.forEach((checkbox) => (checkbox.checked = true));
   });
 
   const deselectAllButton = document.createElement("button");
@@ -173,8 +177,10 @@ document.addEventListener("DOMContentLoaded", () => {
   deselectAllButton.id = "deselect-all-deslopifications-button";
 
   deselectAllButton.addEventListener("click", () => {
-    const checkboxes = document.querySelectorAll("#deslopification input[type=checkbox]");
-    checkboxes.forEach((checkbox) => checkbox.checked = false);
+    const checkboxes = document.querySelectorAll(
+      "#deslopification input[type=checkbox]",
+    );
+    checkboxes.forEach((checkbox) => (checkbox.checked = false));
   });
 
   buttonDiv.appendChild(deslopifyButton);

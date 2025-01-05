@@ -1,7 +1,11 @@
 let duplicationEnabled = false;
 
 function shouldIgnoreClick(element) {
-  return !duplicationEnabled || element.closest("#security-overlay") != null || element.hasAttribute("data-duplicated");
+  return (
+    !duplicationEnabled ||
+    element.closest("#security-overlay") != null ||
+    element.hasAttribute("data-duplicated")
+  );
 }
 
 export function setDuplication(enabled) {
@@ -16,10 +20,7 @@ window.addEventListener("click", function (event) {
   }
 
   element.setAttribute("data-duplicated", "1");
-  element.insertAdjacentElement(
-    "afterend",
-    element.cloneNode(true),
-  );
+  element.insertAdjacentElement("afterend", element.cloneNode(true));
 });
 
 const epilepticAudio = new Audio("/static/audio/bustin.mp3");

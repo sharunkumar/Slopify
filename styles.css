@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Ubuntu+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Ubuntu+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap");
 
 :root {
   --bg-dark: #282828;
@@ -52,7 +52,8 @@ header p {
   border-collapse: collapse;
 }
 
-.leaderboard th, .leaderboard td {
+.leaderboard th,
+.leaderboard td {
   padding: 10px;
   border: 1px solid #ebdbb2;
   text-align: left;
@@ -113,10 +114,11 @@ header p {
   width: 30px;
 }
 
-
 a {
   color: #d3869b;
-  transition: color 0.3s, text-decoration 0.3s;
+  transition:
+    color 0.3s,
+    text-decoration 0.3s;
   font-weight: bold;
 }
 

@@ -6,19 +6,22 @@ const TWITTERMONIALS = [
     date: new Date("2024-12-29"),
   },
   {
-    content: "WHO THE FUCK ADDED PASSWORD GAME TO THE REGISTRATION PAGE\n<a href=\"https://t.co/FYpWT5dycz\">pic.twitter.com/FYpWT5dycz</a>",
+    content:
+      'WHO THE FUCK ADDED PASSWORD GAME TO THE REGISTRATION PAGE\n<a href="https://t.co/FYpWT5dycz">pic.twitter.com/FYpWT5dycz</a>',
     author: "Aterron (@_aterron_)",
     link: "https://twitter.com/_aterron_/status/1873444464255254743",
     date: new Date("2024-12-29"),
   },
   {
-    content: "help i played the sexy frog music and now it keeps playing even after i close the browser",
+    content:
+      "help i played the sexy frog music and now it keeps playing even after i close the browser",
     author: "colin ricardo (@_colinricardo)",
     link: "https://twitter.com/_colinricardo/status/1873429683368505464",
     date: new Date("2024-12-29"),
   },
   {
-    content: "This project is awesome the amount of random slop added in the last 24 hours alone is crazy. Check it out\n<a href=\"https://t.co/GDD8ut9A4S\">https://t.co/GDD8ut9A4S</a>",
+    content:
+      'This project is awesome the amount of random slop added in the last 24 hours alone is crazy. Check it out\n<a href="https://t.co/GDD8ut9A4S">https://t.co/GDD8ut9A4S</a>',
     author: "Gil (@TylerGilman01)",
     link: "https://twitter.com/TylerGilman01/status/1873429461410234849",
     date: new Date("2024-12-29"),
@@ -40,7 +43,11 @@ function createTwittermonial(tweet) {
 
   const linkNode = document.createElement("a");
   linkNode.href = link;
-  linkNode.textContent = date.toLocaleDateString("en", { year: "numeric", month: "long", day: "numeric" });
+  linkNode.textContent = date.toLocaleDateString("en", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
 
   tweetBlockquote.appendChild(linkNode);
   tweetBlockquote.appendChild(contentP);

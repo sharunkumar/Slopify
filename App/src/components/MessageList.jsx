@@ -22,11 +22,14 @@ export default function MessageList(data) {
           const newMessage = payload.new;
           attachDisplayName(newMessage).then((msgWithDisplayName) => {
             setMessages((prev) => [...prev, msgWithDisplayName]);
-            if (data.currentUser && msgWithDisplayName.content.includes(`@${data.currentUser}`)) {
+            if (
+              data.currentUser &&
+              msgWithDisplayName.content.includes(`@${data.currentUser}`)
+            ) {
               triggerNotification(msgWithDisplayName);
             }
           });
-        }
+        },
       )
       .subscribe();
 

@@ -83,4 +83,4 @@ export function injectAAB() {
     });
   };
   document.head.appendChild(script);
-};
+}
