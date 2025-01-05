@@ -36,6 +36,7 @@ For contributing, check **[CONTRIBUTING.md](https://github.com/DishpitDev/Slopif
 
 ## Current Features
 
+- SlopTV featuring high-quality productions such as "Chinese Propaganda"
 - Catgirl downloader via [nekos.best](https://nekos.best)
 - Rust
 - "Current features" list
@@ -67,3 +68,4 @@ For contributing, check **[CONTRIBUTING.md](https://github.com/DishpitDev/Slopif
 - Custom cursor with flags in the trail
 - “Twittermoanials” section (Twitter-style testimonials)
 - Locked In Alien video in Windows95-style media player in every 404 (i.e. non-existant) page, e.g. [https://slopify.dev/404-420-69](https://slopify.dev/404-420-69)
+- Personal diary of a certain Miz (me)

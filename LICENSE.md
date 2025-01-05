@@ -1,4 +1,4 @@
-# DishpitDev Ethical Open Source License (DDEOSL) v1.0.0
+# DishpitDev Ethical Open Source License (DDEOSL)
 
 ## 1. Permission to Use, Modify, and Distribute
 

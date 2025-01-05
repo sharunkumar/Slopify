@@ -1,0 +1,191 @@
+@import url("https://fonts.googleapis.com/css2?family=Ubuntu+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap");
+
+:root {
+  --bg-dark: #282828;
+  --bg-light: #fbf1c7;
+  --fg-dark: #ebdbb2;
+  --fg-light: #3c3836;
+  --accent-blue: #83a598;
+  --accent-green: #8ec07c;
+  --accent-red: #fb4934;
+  --accent-yellow: #fabd2f;
+}
+
+body {
+  font-family: "Ubuntu Mono", serif;
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg-dark);
+  color: var(--fg-dark);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+header {
+  background-color: #b8bb26;
+  color: #282828;
+  padding: 20px 0;
+  text-align: center;
+  width: 100%;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 3rem;
+}
+
+header p {
+  font-size: 1.2rem;
+}
+
+.container {
+  max-width: 800px;
+  margin: 20px;
+  text-align: center;
+}
+
+.leaderboard {
+  width: 100%;
+  margin-top: 20px;
+  border-collapse: collapse;
+}
+
+.leaderboard th,
+.leaderboard td {
+  padding: 10px;
+  border: 1px solid #ebdbb2;
+  text-align: left;
+}
+
+.leaderboard th {
+  background-color: #b8bb26;
+  color: #282828;
+}
+
+.leaderboard td {
+  background-color: #3c3836;
+}
+
+.download-btns {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 30px;
+  flex-wrap: wrap;
+}
+
+.download-btn {
+  background-color: #d79921;
+  color: #282828;
+  font-size: 16px;
+  padding: 15px 30px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 250px;
+  min-width: 180px;
+}
+
+.download-btn:hover {
+  background-color: #fabd2f;
+}
+
+.download-btn img {
+  width: 24px;
+  margin-right: 10px;
+}
+
+#windows-btn img {
+  width: 30px;
+}
+
+#linux-btn img {
+  width: 30px;
+}
+
+#macos-btn img {
+  width: 30px;
+}
+
+a {
+  color: #d3869b;
+  transition:
+    color 0.3s,
+    text-decoration 0.3s;
+  font-weight: bold;
+}
+
+a:hover {
+  color: #d79921;
+  text-decoration: underline;
+}
+
+footer {
+  margin-top: 40px;
+  font-size: 14px;
+  color: #928374;
+  text-align: center;
+}
+
+footer a {
+  color: #d79921;
+  text-decoration: none;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}
+
+.season-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+.season-card {
+  background-color: var(--bg-light);
+  border-radius: 8px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  color: var(--fg-dark);
+  transition: transform 0.3s ease;
+}
+
+.season-card:hover {
+  transform: translateY(-10px);
+}
+
+.season-card h3 {
+  font-size: 1.5rem;
+  color: var(--accent-blue);
+}
+
+.season-card p {
+  font-size: 1rem;
+  margin: 10px 0;
+  color: var(--fg-light);
+}
+
+.season-link {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: var(--accent-green);
+  color: var(--bg-dark);
+  text-decoration: none;
+  border-radius: 5px;
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+.season-link:hover {
+  background-color: var(--accent-yellow);
+}
