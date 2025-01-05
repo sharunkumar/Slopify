@@ -7,4 +7,5 @@ Thank you for your interest in contributing to Slopify!
 3. Run `bun start` to run index.html
 4. Make desired changes
 5. Open a Pull Request from your fork back into `main`
-6. Profit
+6. ???
+7. Profit
