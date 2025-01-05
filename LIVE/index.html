@@ -27,6 +27,16 @@
         </div>
     </section>
     <script> speak(document.getElementById("haiku").innerText)</script>
+
+    <audio id="pageLoadUwUSound" autoplay><source src="sound.mp3" type="audio/mpeg" /></audio>
+    const pageLoadUwUSound = document.getElementById("pageLoadUwUSound");
+    document.addEventListener("DOMContentLoaded", () => {
+      if (pageLoadUwUSound.paused) {
+        pageLoadUwUSound.play().catch((error) => {
+          console.error("Audio playback failed:", error);
+        });
+      }
+    });
 </body>
 
 </html>
