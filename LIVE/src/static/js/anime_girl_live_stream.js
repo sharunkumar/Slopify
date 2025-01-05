@@ -38,6 +38,7 @@ document.addEventListener('DOMContentLoaded', function() {
         popup.classList.remove('is-active');
         speak("Welcome to the land of slop.");
         speak("Go to SlopTV to see wonderful content such as Chinese Propaganda and Rick And Morty.");
+        speak("Also, don't forget to upload all your sensitive information to SlopCloud");
     });
 });
 
