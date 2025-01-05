@@ -71,104 +71,290 @@
             }
         }
 
-        function createMarquee() {
-            var marq = document.createElement('marquee');
+        function updateExistingMarquees() {
+                const marquees = document.querySelectorAll('marquee');
+                marquees.forEach((marq) => {
+                    let behaviour = getRandomElement(behaviours);
+                    let direction = getCompatibleDirection(behaviour);
+                    let width, height;
 
-            let behaviour = getRandomElement(behaviours);
-            let direction = getCompatibleDirection(behaviour);
-            let width = 0;
-            let height = 0;
+                    if (verticalDirections.includes(direction)) {
+                        width = randomNumber(minWidth, maxWidth / 4);
+                        height = randomNumber(minHeight, maxHeight);
+                    } else {
+                        width = randomNumber(minWidth, maxWidth);
+                        height = randomNumber(minHeight, maxHeight / 4);
+                    }
 
-            if (verticalDirections.includes(direction)) {
-                width = randomNumber(minWidth, maxWidth / 4);
-                height = randomNumber(minHeight, maxHeight);
-            } else {
-                width = randomNumber(minWidth, maxWidth);
-                height = randomNumber(minHeight, maxHeight / 4);
+                    let borderWidth = randomNumber(1, 5);
+                    let borderRadius = randomNumber(0, 20);
+                    let borderStyle = getRandomElement(borderStyles);
+                    let borderColor = getRandomRGBA(0.5, 1);
+                    let boxShadow = Math.random() > 0.5 ? getRandomBoxShadow() : 'none';
+                    let textDecoration = getRandomElement(textDecorations);
+                    let filter = getRandomElement(filterEffects);
+                    let letterSpacing = randomNumber(-2, 4);
+
+                    let styleatr =
+                        `position:fixed;` +
+                        `top:${randomNumber(0, window.innerHeight)}px;` +
+                        `left:${randomNumber(0, window.innerWidth)}px;` +
+                        `font-family:${getRandomElement(fontFamilies)};` +
+                        `font-size:${randomNumber(minFontSize, maxFontSize)}px;` +
+                        `text-transform:${getRandomElement(textTransforms)};` +
+                        `width:${width}px;` +
+                        `height:${height}px;` +
+                        `background:${getRandomRGBA()};` +
+                        `color:${getRandomRGBA(0.8, 1)};` +
+                        `border:${borderWidth}px ${borderStyle} ${borderColor};` +
+                        `border-radius:${borderRadius}px;` +
+                        `box-shadow:${boxShadow};` +
+                        `text-decoration:${textDecoration};` +
+                        `filter:${filter};` +
+                        `letter-spacing:${letterSpacing}px;` +
+                        `padding:${randomNumber(5, 15)}px;` +
+                        'transform: ' +
+                        'scale3d(' +
+                        `${1 + randomFloat(-scale3dRanges[0], scale3dRanges[0])},` +
+                        `${1 + randomFloat(-scale3dRanges[1], scale3dRanges[1])},` +
+                        `${1 + randomFloat(-scale3dRanges[2], scale3dRanges[2])}` +
+                        ') ' +
+                        'rotate3d(' +
+                        `${randomFloat(-rotate3dRanges[0], rotate3dRanges[0])},` +
+                        `${randomFloat(-rotate3dRanges[1], rotate3dRanges[1])},` +
+                        `${randomFloat(-rotate3dRanges[2], rotate3dRanges[2])}` +
+                        ', ' +
+                        `${randomFloat(-30, 30)}deg` +
+                        ') ' +
+                        'translate3d(' +
+                        `${randomFloat(-translate3dRanges[0], translate3dRanges[0])}px,` +
+                        `${randomFloat(-translate3dRanges[1], translate3dRanges[1])}px,` +
+                        `${randomFloat(-translate3dRanges[2], translate3dRanges[2])}px` +
+                        ')';
+
+                    marq.setAttribute('behavior', behaviour);
+                    marq.setAttribute('direction', direction);
+                    marq.setAttribute('scrollamount', randomNumber(minScrollAmount, maxScrollAmount));
+                    marq.setAttribute('style', styleatr);
+                    marq.textContent = "marquee updated";
+                });
             }
 
-            let borderWidth = randomNumber(1, 5);
-            let borderRadius = randomNumber(0, 20);
-            let borderStyle = getRandomElement(borderStyles);
-            let borderColor = getRandomRGBA(0.5, 1);
-            let boxShadow = Math.random() > 0.5 ? getRandomBoxShadow() : 'none';
-            let textDecoration = getRandomElement(textDecorations);
-            let filter = getRandomElement(filterEffects);
-            let letterSpacing = randomNumber(-2, 4);
-
-            let styleatr =
-                `position:fixed;` +
-                `top:${randomNumber(0, window.innerHeight)}px;` +
-                `left:${randomNumber(0, window.innerWidth)}px;` +
-                `font-family:${getRandomElement(fontFamilies)};` +
-                `font-size:${randomNumber(minFontSize, maxFontSize)}px;` +
-                `text-transform:${getRandomElement(textTransforms)};` +
-                `width:${width}px;` +
-                `height:${height}px;` +
-                `background:${getRandomRGBA()};` +
-                `color:${getRandomRGBA(0.8, 1)};` +
-                `border:${borderWidth}px ${borderStyle} ${borderColor};` +
-                `border-radius:${borderRadius}px;` +
-                `box-shadow:${boxShadow};` +
-                `text-decoration:${textDecoration};` +
-                `filter:${filter};` +
-                `letter-spacing:${letterSpacing}px;` +
-                `padding:${randomNumber(5, 15)}px;` +
-                'transform: ' +
-                'scale3d(' +
-                `${1 + randomFloat(-scale3dRanges[0], scale3dRanges[0])},` +
-                `${1 + randomFloat(-scale3dRanges[1], scale3dRanges[1])},` +
-                `${1 + randomFloat(-scale3dRanges[2], scale3dRanges[2])}` +
-                ') ' +
-                'rotate3d(' +
-                `${randomFloat(-rotate3dRanges[0], rotate3dRanges[0])},` +
-                `${randomFloat(-rotate3dRanges[1], rotate3dRanges[1])},` +
-                `${randomFloat(-rotate3dRanges[2], rotate3dRanges[2])}` +
-                ', ' +
-                `${randomFloat(-30, 30)}deg` +
-                ') ' +
-                'translate3d(' +
-                `${randomFloat(-translate3dRanges[0], translate3dRanges[0])}px,` +
-                `${randomFloat(-translate3dRanges[1], translate3dRanges[1])}px,` +
-                `${randomFloat(-translate3dRanges[2], translate3dRanges[2])}px` +
-                ')';
-
-            marq.setAttribute('behavior', behaviour);
-            marq.setAttribute('direction', direction);
-            marq.setAttribute('scrollamount', randomNumber(minScrollAmount, maxScrollAmount));
-            marq.setAttribute('style', styleatr);
-            marq.textContent = "marquee";
-
-            return marq;
-        }
-
-        function createAllMarquees() {
-            const body = document.body;
-            const existingMarquees = document.querySelectorAll('marquee');
-            existingMarquees.forEach(marquee => {
-                setTimeout(() => marquee.remove(), 500);
+            document.addEventListener('DOMContentLoaded', function () {
+                updateExistingMarquees();
+                setInterval(updateExistingMarquees, REFRESH_INTERVAL);
             });
-            setTimeout(() => {
-                for (let i = 0; i < NUMBER_OF_MARQUEES; i++) {
-                    const marq = createMarquee();
-                    body.appendChild(marq);
-                }
-            }, 500);
-        }
 
-        document.addEventListener('DOMContentLoaded', function () {
-            createAllMarquees();
-            setInterval(createAllMarquees, REFRESH_INTERVAL);
-        });
     </script>
 </head>
 
 <body>
     <p>problem?</p>
     <audio loop autoplay>
-        <source src="/trolololo.mp3" type="audio/mpeg">
+        <source src="/trololololo.mp3" type="audio/mpeg">
         Your browser does not suppor t the audio element.
     </audio>
+
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
+    <marquee></marquee>
 </body>
 
 </html>
