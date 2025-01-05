@@ -36,6 +36,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // Add event listener to the close button
     document.querySelector('.modal-close').addEventListener('click', function() {
         popup.classList.remove('is-active');
+        speak("Welcome to the land of slop.");
+        speak("Go to SlopTV to see wonderful content such as Chinese Propaganda and Rick And Morty.");
     });
 });
 
