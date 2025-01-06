@@ -1,5 +1,3 @@
-console.log("meow");
-
 function replaceWordInDOM(word, replacement) {
     function traverse(node) {
         if (node.nodeType === Node.TEXT_NODE) {
